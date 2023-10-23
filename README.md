@@ -23,7 +23,7 @@ This visualization uses the HTML `canvas` element to draw the node graphics, on 
 4. draw a dotted line from all nodes to a central node
 
 ## Call 4 Help
-I welcome any and all feedback to make this better and more usable. I am not a developer and recognize that there may be better ways to accomplish what I'm envisioning. I just couldn't find any developers that wanted to do this project with me so I did it myself with lots of back and forth between chatGPT and stackoverflow.
+I welcome any and all feedback to make this better and more usable. I am not a developer and recognize that there may be better ways to accomplish what I'm envisioning. I couldn't find any developer that was interested to do this project with me so I did it with lots of back and forth between chatGPT and stackoverflow.
 
 ## Milestone Tracking
 - [x] Write the readme content
