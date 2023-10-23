@@ -1,8 +1,8 @@
 # Introduction to MerzCake Data Visualization Technique
 MerzCake takes its inspiration from the stacked column chart and a pie chart to create another interesting view of the dataset. The cool features that I like from this data visualization that are hard in other visualizations is the ability to:
-- ✅ Spatially arrange the nodes, which is great for GIS applications
-- ✅ Dynamic Sizing of nodes based on the total of each layer of the cake
-- ✅ Show a central node that is sized according to all the contributing node sizes at each layer 
+🌐 Spatially arrange the nodes, which is great for GIS applications
+↔️ Dynamic Sizing of nodes based on the total of each layer of the cake
+🕸️ Show a central node that is sized according to all the contributing node sizes at each layer 
 
 ## Milestone Tracking
 - [x] Write the readme content
