@@ -6,19 +6,21 @@
     <script>
         const canvas = document.createElement('canvas');
         document.body.appendChild(canvas);
+
+        // Need to recalculate this when window size is not sufficient
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
         const ctx = canvas.getContext('2d');
 
-        // Define the node colors for all square nodes and the central node
+        // Define the node colors for all nodes and the central node
         const nodeColors = ['#ef476f', '#ffd166', '#06d6a0', '#118ab2'];
 
         // Define the central node and its position and set initial heights
         const centralNode = {x: 400, y: 300, heights: [0, 0, 0, 0]};
 
-        // Define the square nodes dynamically using smaller heights
-        const squareNodesData = [
+        // Define the nodes dynamically using smaller heights
+        const nodesData = [
             { x: 100, y: 100, heights: [20, 15, 15, 5] },
             { x: 1100, y: 550, heights: [10, 35, 15, 35] },
             { x: 100, y: 500, heights: [15, 35, 55, 0] },
@@ -28,15 +30,15 @@
             { x: 300, y: 400, heights: [5, 25, 20, 15] }
         ];
 
-        // Calculate the width for each node based on the total height
+        // Calculate the width for each node based on the total height (this needs to take into account area and be completely redone)
         const calculateWidth = (heights) => {
             const totalHeight = heights.reduce((acc, height) => acc + height, 0);
-            const squareSize = 100; // Desired square size
-            return (totalHeight / squareSize) * squareSize;
+            const nodeSize = 100; // Desired node size
+            return (totalHeight / nodeSize) * nodeSize;
         };
 
-        // Calculate the central node's heights based on the sum of square nodes
-        centralNode.heights = squareNodesData.reduce((acc, node) => node.heights.map((h, i) => acc[i] + h), centralNode.heights);
+        // Calculate the central node's heights based on the sum of nodes
+        centralNode.heights = nodesData.reduce((acc, node) => node.heights.map((h, i) => acc[i] + h), centralNode.heights);
 
         const drawNode = (node, x, y, colors) => {
             const totalHeight = node.heights.reduce((acc, height) => acc + height, 0);
@@ -78,22 +80,22 @@
 
             // Add a total label
             const labelX = x + calculateWidth(node.heights) / 2;
-            const labelY = y - 10; // Position the label above the square node
+            const labelY = y - 10; // Position the label above the node
             ctx.fillStyle = '#3e9c35';
             ctx.font = 'bold 24px Arial';
             ctx.textAlign = 'center';
             ctx.fillText("$" + totalHeight + "k", labelX, labelY);
         };
 
-        // Draw lines from each square node to the central node
+        // Draw lines from each node to the central node
         const drawLines = () => {
-            squareNodesData.forEach(nodeData => {
+            nodesData.forEach(nodeData => {
                 const centerX = nodeData.x + calculateWidth(nodeData.heights) / 2;
                 const centerY = nodeData.y + calculateWidth(nodeData.heights) / 2;
                 const centralX = centralNode.x + calculateWidth(centralNode.heights) / 2;
                 const centralY = centralNode.y + calculateWidth(centralNode.heights) / 2;
 
-                // Draw lines from each square node to the central node
+                // Draw lines from each node to the central node
                 ctx.beginPath();
                 ctx.setLineDash([8, 5]);
                 ctx.moveTo(centerX, centerY);
@@ -105,9 +107,9 @@
         };
 
 
-        // Draw the square nodes and lines
-        const drawSquareNodes = () => {
-            squareNodesData.forEach((nodeData, index) => {
+        // Draw the nodes and lines
+        const drawNodes = () => {
+            nodesData.forEach((nodeData, index) => {
                 drawNode(nodeData, nodeData.x, nodeData.y, nodeColors);
             });
         };
@@ -128,11 +130,11 @@
             ctx.stroke();
         };
 
-         // Draw lines connecting square nodes to the central node
+         // Draw lines connecting nodes to the central node
         drawLines();
         
-        // Draw the square nodes and lines
-        drawSquareNodes();
+        // Draw the nodes and lines
+        drawNodes();
 
         // Draw the central node
         drawCentralNode();
