@@ -1,5 +1,5 @@
 # Introduction to MerzCake Data Visualization Technique
-MerzCake offers a new way to convey the 'part-to-whole' relationship within your data, which enabls your audience to easily comprehend how a total amount is distributed across various categories in time and space. MerzCake draws inspiration from stacked column charts and pie charts.
+MerzCake offers a new way to convey the 'part-to-whole' relationship within your data, which enables your audience to easily comprehend how a total amount is distributed across various categories in time and space. MerzCake draws inspiration from stacked column charts and pie charts.
 
 <img width="400" alt="image" src="https://github.com/yaboyanees/MerzCake/assets/498666/0d92d424-2cc0-4b05-b5c1-d1ffd1d05ceb">
 
