@@ -1,0 +1,95 @@
+{
+  "nodes": [
+    // --- Commanders (C2) ---
+    { "id": "c2_jtf_hq", "name": "Joint Task Force HQ", "type": "Commander", "importance": 10 },
+    { "id": "c2_corps_toc", "name": "V Corps Main TOC", "type": "Commander", "importance": 9 },
+    { "id": "c2_fires_bde", "name": "Fires Brigade HQ", "type": "Commander", "importance": 8 },
+    { "id": "c2_div_tac", "name": "1st Armored Div TAC", "type": "Commander", "importance": 7 },
+
+    // --- Connectors (Network) ---
+    { "id": "conn_jadc2", "name": "JADC2 Fabric", "type": "Connector", "importance": 10 },
+    { "id": "conn_itn", "name": "Integrated Tactical Network (ITN)", "type": "Connector", "importance": 9 },
+    { "id": "conn_link16", "name": "Link 16 Datalink", "type": "Connector", "importance": 8 },
+    { "id": "conn_satcom", "name": "TACSAT Network", "type": "Connector", "importance": 7 },
+    { "id": "conn_cloud", "name": "Tactical Cloud Node", "type": "Connector", "importance": 8 },
+
+    // --- Sensors (ISR) ---
+    { "id": "sensor_space", "name": "Space-Based ISR", "type": "Sensor", "importance": 10 },
+    { "id": "sensor_jstars", "name": "JSTARS Aircraft", "type": "Sensor", "importance": 9 },
+    { "id": "sensor_gray_eagle", "name": "MQ-1C Gray Eagle", "type": "Sensor", "importance": 8 },
+    { "id": "sensor_fwd_observer", "name": "Forward Observer Team", "type": "Sensor", "importance": 6 },
+    { "id": "sensor_cyber_intel", "name": "Cyber Intel Cell", "type": "Sensor", "importance": 7 },
+    { "id": "sensor_ivas", "name": "IVAS Squad", "type": "Sensor", "importance": 5 },
+
+    // --- Shooters (Fires) ---
+    { "id": "shooter_lrpfg", "name": "Precision Strike Missile (PrSM)", "type": "Shooter", "importance": 10 },
+    { "id": "shooter_himars", "name": "M142 HIMARS Battery", "type": "Shooter", "importance": 9 },
+    { "id": "shooter_apache", "name": "AH-64E Apache Attack Heli", "type": "Shooter", "importance": 8 },
+    { "id": "shooter_paladin", "name": "M109A6 Paladin Platoon", "type": "Shooter", "importance": 7 },
+    { "id": "shooter_cyber_effects", "name": "Cyber Effects Team", "type": "Shooter", "importance": 8 },
+    { "id": "shooter_ew_jammer", "name": "EW Jamming Pod", "type": "Shooter", "importance": 7 },
+
+    // --- Sustainers (Logistics) ---
+    { "id": "sustain_ammo_depot", "name": "Ammo Supply Point", "type": "Sustainer", "importance": 9 },
+    { "id": "sustain_logistics", "name": "Logistics Resupply Convoy", "type": "Sustainer", "importance": 8 },
+    { "id": "sustain_maint", "name": "Maintenance Support Team", "type": "Sustainer", "importance": 7 },
+    { "id": "sustain_medevac", "name": "MEDEVAC Helicopter", "type": "Sustainer", "importance": 8 },
+
+    // --- Targets ---
+    { "id": "target_iads", "name": "Enemy IADS", "type": "Target", "importance": 9 },
+    { "id": "target_c2_node", "name": "Enemy C2 Node", "type": "Target", "importance": 10 },
+    { "id": "target_armor", "name": "Enemy Armor Formation", "type": "Target", "importance": 8 },
+    { "id": "target_artillery", "name": "Enemy Artillery Battery", "type": "Target", "importance": 8 },
+    { "id": "target_comm_relay", "name": "Enemy Comms Relay", "type": "Target", "importance": 7 }
+  ],
+  "links": [
+    // --- Command & Control Links ---
+    { "source": "c2_jtf_hq", "target": "c2_corps_toc", "relationship": "Directs", "flow": 10 },
+    { "source": "c2_corps_toc", "target": "c2_fires_bde", "relationship": "Directs", "flow": 9 },
+    { "source": "c2_corps_toc", "target": "c2_div_tac", "relationship": "Directs", "flow": 8 },
+    { "source": "c2_jtf_hq", "target": "shooter_lrpfg", "relationship": "Tasks Deep Strike", "flow": 10 },
+    { "source": "c2_fires_bde", "target": "shooter_himars", "relationship": "Allocates Fires", "flow": 9 },
+    { "source": "c2_div_tac", "target": "shooter_paladin", "relationship": "Tasks", "flow": 7 },
+    { "source": "c2_div_tac", "target": "shooter_apache", "relationship": "Requests Air Support", "flow": 8 },
+    { "source": "c2_jtf_hq", "target": "shooter_cyber_effects", "relationship": "Authorizes", "flow": 8 },
+
+    // --- Sensor-to-Shooter & Sensor-to-C2 Links ---
+    { "source": "sensor_space", "target": "c2_jtf_hq", "relationship": "Provides Strategic Intel", "flow": 10 },
+    { "source": "sensor_jstars", "target": "c2_corps_toc", "relationship": "Provides Ground Picture", "flow": 9 },
+    { "source": "sensor_jstars", "target": "shooter_lrpfg", "relationship": "Cues High-Value Target", "flow": 9 },
+    { "source": "sensor_gray_eagle", "target": "c2_fires_bde", "relationship": "Provides BDA", "flow": 7 },
+    { "source": "sensor_gray_eagle", "target": "shooter_himars", "relationship": "Provides Targeting Data", "flow": 8 },
+    { "source": "sensor_cyber_intel", "target": "shooter_ew_jammer", "relationship": "Provides Emitter Location", "flow": 8 },
+    { "source": "sensor_fwd_observer", "target": "shooter_paladin", "relationship": "Calls for Fire", "flow": 7 },
+    { "source": "sensor_ivas", "target": "c2_div_tac", "relationship": "Sends Local Intel", "flow": 5 },
+
+    // --- Shooter-to-Target Links ---
+    { "source": "shooter_lrpfg", "target": "target_c2_node", "relationship": "Neutralizes", "flow": 10 },
+    { "source": "shooter_himars", "target": "target_iads", "relationship": "Destroys", "flow": 9 },
+    { "source": "shooter_himars", "target": "target_artillery", "relationship": "Counter-fires", "flow": 8 },
+    { "source": "shooter_apache", "target": "target_armor", "relationship": "Engages", "flow": 8 },
+    { "source": "shooter_paladin", "target": "target_armor", "relationship": "Suppresses", "flow": 7 },
+    { "source": "shooter_cyber_effects", "target": "target_c2_node", "relationship": "Disrupts", "flow": 9 },
+    { "source": "shooter_ew_jammer", "target": "target_comm_relay", "relationship": "Jams", "flow": 7 },
+    
+    // --- Sustainer Links ---
+    { "source": "sustain_ammo_depot", "target": "sustain_logistics", "relationship": "Issues Munitions", "flow": 9 },
+    { "source": "sustain_logistics", "target": "shooter_himars", "relationship": "Resupplies Rockets", "flow": 9 },
+    { "source": "sustain_logistics", "target": "shooter_paladin", "relationship": "Resupplies Shells", "flow": 7 },
+    { "source": "sustain_maint", "target": "shooter_apache", "relationship": "Maintains", "flow": 8 },
+    { "source": "sustain_medevac", "target": "c2_div_tac", "relationship": "On Standby For", "flow": 8 },
+
+    // --- Connector Links (The Network Fabric) ---
+    { "source": "conn_jadc2", "target": "c2_jtf_hq", "relationship": "Integrates", "flow": 10 },
+    { "source": "conn_jadc2", "target": "sensor_space", "relationship": "Downlinks Data", "flow": 10 },
+    { "source": "conn_jadc2", "target": "shooter_lrpfg", "relationship": "Passes Fire Control Data", "flow": 10 },
+    { "source": "conn_cloud", "target": "c2_corps_toc", "relationship": "Hosts Data", "flow": 8 },
+    { "source": "conn_cloud", "target": "sensor_jstars", "relationship": "Processes Data", "flow": 9 },
+    { "source": "conn_satcom", "target": "c2_jtf_hq", "relationship": "Provides BLOS Comms", "flow": 8 },
+    { "source": "conn_link16", "target": "shooter_apache", "relationship": "Transmits Mission Data", "flow": 8 },
+    { "source": "conn_link16", "target": "sensor_gray_eagle", "relationship": "Transmits Video Feed", "flow": 7 },
+    { "source": "conn_itn", "target": "c2_div_tac", "relationship": "Connects", "flow": 9 },
+    { "source": "conn_itn", "target": "sensor_fwd_observer", "relationship": "Connects", "flow": 6 },
+    { "source": "conn_itn", "target": "sensor_ivas", "relationship": "Connects", "flow": 6 }
+  ]
+}
