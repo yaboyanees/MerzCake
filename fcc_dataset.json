@@ -1,4 +1,3 @@
-{
   "nodes": [
     // --- Commanders (C2) ---
     { "id": "c2_jtf_hq", "name": "Joint Task Force HQ", "type": "Commander", "importance": 10 },
@@ -92,4 +91,3 @@
     { "source": "conn_itn", "target": "sensor_fwd_observer", "relationship": "Connects", "flow": 6 },
     { "source": "conn_itn", "target": "sensor_ivas", "relationship": "Connects", "flow": 6 }
   ]
-}
