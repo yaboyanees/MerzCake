@@ -1,0 +1,146 @@
+<!DOCTYPE html><html lang="en" class="bg-gray-900"><head><meta
+              charset="UTF-8"><meta name="viewport" content="width=device-width,
+              initial-scale=1.0"><title>Logistics Placemat</title><script
+              src="https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/tailwindcss.js"></script><script
+              src="https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/d3.v7.min.js"></script><script
+              src="https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/topojson.v3.min.js"></script><script
+              src="https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/d3-sankey.min.js"></script><style>body{font-family:sans-serif;color:#e5e7eb}.tooltip{position:absolute;text-align:left;padding:8px
+              12px;font-size:.875rem;background-color:#1f2937;color:#e5e7eb;border:1px
+              solid
+              #4b5563;border-radius:8px;pointer-events:none;transition:opacity
+              .2s;opacity:0;box-shadow:0 4px 6px
+              rgba(0,0,0,.3);z-index:10}.chart
+              svg{width:100%;height:auto}.sankey-link{transition:stroke-opacity
+              .3s ease-in-out;cursor:pointer}.sankey-node
+              rect{cursor:pointer;transition:fill-opacity .3s
+              ease-in-out}.table-wrapper::-webkit-scrollbar{width:8px;height:8px}.table-wrapper::-webkit-scrollbar-track{background:#1f2937}.table-wrapper::-webkit-scrollbar-thumb{background-color:#4b5563;border-radius:20px;border:2px
+              solid #1f2937}</style></head><body class="bg-gray-900
+              antialiased"><div class="p-4 sm:p-6 lg:p-8 max-w-screen-2xl
+              mx-auto"><header class="mb-8"><h1 class="text-3xl font-bold
+              text-white">Logistics Overview Dashboard</h1><p
+              class="text-gray-400 mt-1">As of 18 July 2025</p></header><main
+              class="grid grid-cols-1 lg:grid-cols-3 gap-6"><div
+              class="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6"><div
+              class="bg-gray-800 p-4 rounded-xl shadow-lg"><h2 class="text-lg
+              font-semibold text-white mb-3">Active Orders</h2><input
+              type="text" id="activeOrdersSearch" placeholder="Search..."
+              class="w-full bg-gray-700 text-gray-200 placeholder-gray-400
+              border border-gray-600 rounded-md py-2 px-3 mb-3
+              focus:outline-none focus:ring-2 focus:ring-blue-500"><div
+              class="table-wrapper overflow-x-auto h-64"><table
+              id="activeOrdersTable" class="w-full text-sm text-left"><thead
+              class="text-xs text-gray-300 uppercase bg-gray-700 sticky
+              top-0"><tr><th class="px-4 py-3">Order ID</th><th class="px-4
+              py-3">Item</th><th class="px-4 py-3">Status</th><th class="px-4
+              py-3">Country</th></tr></thead><tbody></tbody></table></div></div><div
+              class="bg-gray-800 p-4 rounded-xl shadow-lg"><h2 class="text-lg
+              font-semibold text-red-400 mb-3">Urgent Orders (>30
+              Days)</h2><input type="text" id="urgentOrdersSearch"
+              placeholder="Search..." class="w-full bg-gray-700 text-gray-200
+              placeholder-gray-400 border border-gray-600 rounded-md py-2 px-3
+              mb-3 focus:outline-none focus:ring-2 focus:ring-red-500"><div
+              class="table-wrapper overflow-x-auto h-64"><table
+              id="urgentOrdersTable" class="w-full text-sm text-left"><thead
+              class="text-xs text-gray-300 uppercase bg-gray-700 sticky
+              top-0"><tr><th class="px-4 py-3">Order ID</th><th class="px-4
+              py-3">Item</th><th class="px-4 py-3">Days Pending</th><th
+              class="px-4 py-3">Total
+              Price</th></tr></thead><tbody></tbody></table></div></div><div
+              class="bg-gray-800 p-4 rounded-xl shadow-lg"><h2 class="text-lg
+              font-semibold text-green-400 mb-3">Completed Orders</h2><input
+              type="text" id="completedOrdersSearch" placeholder="Search..."
+              class="w-full bg-gray-700 text-gray-200 placeholder-gray-400
+              border border-gray-600 rounded-md py-2 px-3 mb-3
+              focus:outline-none focus:ring-2 focus:ring-green-500"><div
+              class="table-wrapper overflow-x-auto h-64"><table
+              id="completedOrdersTable" class="w-full text-sm text-left"><thead
+              class="text-xs text-gray-300 uppercase bg-gray-700 sticky
+              top-0"><tr><th class="px-4 py-3">Order ID</th><th class="px-4
+              py-3">Item</th><th class="px-4 py-3">Country</th><th class="px-4
+              py-3">Total
+              Price</th></tr></thead><tbody></tbody></table></div></div></div><div
+              class="lg:col-span-3 grid grid-cols-1 lg:grid-cols-2 gap-6"><div
+              class="bg-gray-800 p-4 rounded-xl shadow-lg chart"><h2
+              class="text-lg font-semibold text-white mb-2">Total Order Value by
+              Country</h2><div id="choroplethMap"></div></div><div
+              class="bg-gray-800 p-4 rounded-xl shadow-lg chart"><h2
+              class="text-lg font-semibold text-white mb-2">Flow of Goods to
+              Countries</h2><div
+              id="sankeyDiagram"></div></div></div></main></div><div
+              class="tooltip"></div><script>(async function(){const data=await
+              d3.csv("https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/tracker_data.csv");const
+              world=await
+              d3.json("https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/world-atlas-data.json");const
+              today=new
+              Date;data.forEach(d=>{d.TotalPrice=+d.TotalPrice;d.OrderDateObj=new
+              Date(d.OrderDate);d.DaysSinceOrder=Math.floor((today-d.OrderDateObj)/(1e3*60*60*24))});const
+              activeOrdersData=data.filter(d=>d.OrderStatus==="Pending"||d.OrderStatus==="Forecasted");const
+              urgentOrdersData=data.filter(d=>d.OrderStatus==="Pending"&&d.DaysSinceOrder>30);const
+              completedOrdersData=data.filter(d=>d.OrderStatus==="Completed");const
+              tooltip=d3.select(".tooltip");function
+              updateTable(tableId,data,columns){const
+              tableBody=d3.select(tableId).select("tbody");tableBody.selectAll("tr").remove();const
+              rows=tableBody.selectAll("tr").data(data).enter().append("tr").attr("class","bg-gray-800
+              border-b border-gray-700
+              hover:bg-gray-700/50");rows.selectAll("td").data(d=>columns.map(col=>({value:d[col],column:col}))).enter().append("td").attr("class",d=>{let
+              baseClass="px-4 py-3
+              text-gray-300";if(tableId==="#urgentOrdersTable"&&d.column==='DaysSinceOrder'){if(d.value>90)return
+              baseClass+" bg-red-600/50 font-medium";if(d.value>60)return
+              baseClass+" bg-orange-500/50 font-medium";if(d.value>30)return
+              baseClass+" bg-yellow-500/50 text-gray-800 font-medium"}return
+              baseClass}).text(d=>d.value)}const
+              activeCols=['OrderID','ItemName','OrderStatus','ReceivingCountry'];const
+              urgentCols=['OrderID','ItemName','DaysSinceOrder','TotalPrice'];const
+              completedCols=['OrderID','ItemName','ReceivingCountry','TotalPrice'];updateTable("#activeOrdersTable",activeOrdersData,activeCols);updateTable("#urgentOrdersTable",urgentOrdersData,urgentCols);updateTable("#completedOrdersTable",completedOrdersData,completedCols);function
+              addSearchFunctionality(inputId,tableId,originalData,columns){d3.select(inputId).on("input",function(){const
+              searchTerm=this.value.toLowerCase().trim();const
+              filteredData=searchTerm?originalData.filter(d=>Object.values(d).some(v=>v.toString().toLowerCase().includes(searchTerm))):originalData;updateTable(tableId,filteredData,columns)})}addSearchFunctionality("#activeOrdersSearch","#activeOrdersTable",activeOrdersData,activeCols);addSearchFunctionality("#urgentOrdersSearch","#urgentOrdersTable",urgentOrdersData,urgentCols);addSearchFunctionality("#completedOrdersSearch","#completedOrdersTable",completedOrdersData,completedCols);function
+              drawChoropleth(){const
+              container=d3.select("#choroplethMap");if(container.select("svg").node())container.select("svg").remove();const
+              bounds=container.node().getBoundingClientRect();const
+              width=bounds.width;const height=width*.6;const
+              svg=container.append("svg").attr("viewBox",`0 0 ${width}
+              ${height}`);const
+              countryValueMap=d3.rollup(data,v=>d3.sum(v,d=>d.TotalPrice),d=>d.ReceivingCountry);const
+              maxTotalValue=d3.max(Array.from(countryValueMap.values()));const
+              colorScale=d3.scaleSequential(d3.interpolateGreens).domain([0,maxTotalValue]);const
+              projection=d3.geoMercator();const
+              path=d3.geoPath().projection(projection);const
+              allCountries=topojson.feature(world,world.objects.countries);const
+              activeCountries=allCountries.features.filter(d=>countryValueMap.has(d.properties.name));projection.fitExtent([[20,20],[width-20,height-20]],activeCountries.length>0?{type:"FeatureCollection",features:activeCountries}:allCountries);svg.append("g").selectAll("path").data(allCountries.features).join("path").attr("d",path).attr("fill",d=>countryValueMap.has(d.properties.name)?colorScale(countryValueMap.get(d.properties.name)):"#374151").attr("stroke","#1f2937").attr("stroke-width",.5).on("mouseover",function(event,d){d3.select(this).raise().attr("stroke","#1f2937").attr("stroke-width",2);const
+              countryName=d.properties.name;const
+              value=countryValueMap.get(countryName);tooltip.style("opacity",1).html(value?`<div
+              class="font-bold">${countryName}</div><div>Value:
+              $${value.toLocaleString()}</div>`:`<div
+              class="font-bold">${countryName}</div><div
+              class="text-gray-400">No
+              data</div>`).style("left",event.pageX+15+"px").style("top",event.pageY-28+"px")}).on("mouseout",function(){d3.select(this).attr("stroke","#1f2937").attr("stroke-width",.5);tooltip.style("opacity",0)})}function
+              drawSankey(){const
+              container=d3.select("#sankeyDiagram");if(container.select("svg").node())container.select("svg").remove();const
+              bounds=container.node().getBoundingClientRect();const
+              width=bounds.width;const height=width*.65;const
+              margin={top:20,right:150,bottom:20,left:150};let
+              selectedNode=null;const
+              svg=container.append("svg").attr("viewBox",`0 0 ${width}
+              ${height}`).on("click",()=>{selectedNode=null;highlightLinks(null);tooltip.style("opacity",0)});const
+              sankeyData={nodes:[],links:[]};const nodeMap=new
+              Map;data.forEach(d=>{if(!nodeMap.has(d.ItemName))nodeMap.set(d.ItemName,{name:d.ItemName});if(!nodeMap.has(d.ReceivingCountry))nodeMap.set(d.ReceivingCountry,{name:d.ReceivingCountry})});sankeyData.nodes=Array.from(nodeMap.values());const
+              linkRollup=d3.rollup(data,v=>d3.sum(v,d=>d.TotalPrice),d=>d.ItemName,d=>d.ReceivingCountry);linkRollup.forEach((targets,sourceName)=>{targets.forEach((value,targetName)=>{sankeyData.links.push({source:sourceName,target:targetName,value:value})})});const
+              sankeyGenerator=d3.sankey().nodeId(d=>d.name).nodeWidth(15).nodePadding(10).nodeAlign(d3.sankeyJustify).extent([[margin.left,margin.top],[width-margin.right,height-margin.bottom]]);const{nodes,links}=sankeyGenerator(sankeyData);const
+              color=d3.scaleOrdinal(d3.schemeTableau10);const
+              linkPaths=svg.append("g").attr("fill","none").selectAll("g").data(links).join("path").attr("class","sankey-link").attr("d",d3.sankeyLinkHorizontal()).attr("stroke",d=>color(d.source.name)).attr("stroke-width",d=>Math.max(1,d.width)).attr("stroke-opacity",.5).sort((a,b)=>b.width-a.width).on("mouseover",function(){d3.select(this).style("stroke-opacity",.8)}).on("mouseout",function(){highlightLinks(selectedNode)}).on("click",function(event,d){event.stopPropagation();tooltip.style("opacity",1).html(`<div
+              class="font-bold">${d.source.name} →
+              ${d.target.name}</div><div>Value:
+              $${d.value.toLocaleString()}</div>`).style("left",event.pageX+15+"px").style("top",event.pageY-28+"px")});const
+              nodeGroups=svg.append("g").selectAll("g").data(nodes).join("g").attr("class","sankey-node");nodeGroups.append("rect").attr("x",d=>d.x0).attr("y",d=>d.y0).attr("height",d=>d.y1-d.y0).attr("width",d=>d.x1-d.x0).attr("fill",d=>color(d.name)).on("mouseover",(event,d)=>highlightLinks(d)).on("mouseout",()=>highlightLinks(selectedNode)).on("click",(event,d)=>{event.stopPropagation();selectedNode=selectedNode===d?null:d;highlightLinks(selectedNode);if(selectedNode){tooltip.style("opacity",1).html(`<div
+              class="font-bold">${selectedNode.name}</div><div>Total Value:
+              $${selectedNode.value.toLocaleString()}</div>`).style("left",event.pageX+15+"px").style("top",event.pageY-28+"px")}else{tooltip.style("opacity",0)}});const
+              labels=nodeGroups.append("text").attr("x",d=>d.x0<width/2?d.x1+8:d.x0-8).attr("y",d=>(d.y1+d.y0)/2).attr("dy",".35em").attr("text-anchor",d=>d.x0<width/2?"start":"end").attr("fill","#e5e7eb").style("font-size","11px").style("font-weight","500").text(d=>d.name);labels.each(function(){const
+              bbox=this.getBBox();d3.select(this.parentNode).insert("rect","text").attr("x",bbox.x-4).attr("y",bbox.y-2).attr("width",bbox.width+8).attr("height",bbox.height+4).attr("fill","#1f2937").attr("fill-opacity",.75).attr("rx",3)});function
+              highlightLinks(node){const dimOpacity=.1;const
+              defaultOpacity=.5;const
+              highlightOpacity=.8;linkPaths.style("stroke-opacity",l=>{if(!node)return
+              defaultOpacity;return
+              l.source===node||l.target===node?highlightOpacity:dimOpacity})}}function
+              drawAllCharts(){drawChoropleth();drawSankey()}drawAllCharts();let
+              resizeTimer;window.addEventListener("resize",()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(drawAllCharts,250)})})();</script></body></html>
