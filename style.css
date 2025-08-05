@@ -1,0 +1,158 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e5e7eb; /* gray-200 */
+}
+body.is-resizing-columns {
+    cursor: col-resize;
+    user-select: none;
+}
+.slide {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    padding: 4rem;
+    background-color: #0d1117;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+    border: 1px solid #30363d;
+}
+[contenteditable="true"] {
+    outline: 2px solid transparent;
+    transition: outline 0.2s ease-in-out;
+    border-radius: 4px;
+    padding: 2px 4px;
+    margin: -2px -4px;
+    min-height: 1.5rem;
+    overflow-wrap: break-word; 
+}
+[contenteditable="true"]:focus {
+    outline: 2px solid #00ff41; /* Cyber Green */
+    background-color: rgba(255, 255, 255, 0.1);
+}
+[contenteditable="true"] ul, [contenteditable="true"] ol {
+    list-style-position: inside;
+    padding-left: 1.5rem;
+}
+[contenteditable="true"] ul { list-style-type: disc; }
+[contenteditable="true"] ol { list-style-type: decimal; }
+
+.slide h2, .slide div, .slide p, .slide li, .slide h3 {
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+.slide h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #00ff41; /* Cyber Green */
+    margin-bottom: 0.5rem;
+}
+
+/* --- Slide Banner Styles --- */
+.slide-title-banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid #30363d;
+    padding: 1rem 4rem;
+    box-sizing: border-box;
+}
+.slide-title-banner h2 {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+.slide.has-banner {
+    padding-top: 7rem;
+}
+
+/* Style for the color input */
+#text-color-input {
+    -webkit-appearance: none; -moz-appearance: none; appearance: none;
+    width: 28px; height: 28px;
+    background-color: transparent; border: none; cursor: pointer;
+}
+#text-color-input::-webkit-color-swatch { border-radius: 50%; border: 1px solid #9ca3af; }
+#text-color-input::-moz-color-swatch { border-radius: 50%; border: 1px solid #9ca3af; }
+
+.nav-active {
+    background-color: #00ff41; /* Cyber Green */
+    color: #0d1117;
+}
+
+/* D3 Chart Styles */
+.chart-container {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 3 / 4;
+    max-height: 100%;
+}
+.bar { fill: #00ff41; }
+.axis-label { fill: #f9fafb; font-size: 12px; }
+.axis path, .axis line { stroke: #4b5563; }
+.bar-label { fill: white; text-anchor: middle; font-size: 14px; font-weight: bold; }
+
+/* --- Image Resize Styles --- */
+.resize-wrapper {
+    position: absolute;
+    outline: 2px solid #00ff41;
+    pointer-events: none;
+    z-index: 10;
+}
+.resize-handle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background-color: #00ff41;
+    border: 1px solid #ffffff;
+    border-radius: 2px;
+    pointer-events: all;
+    z-index: 11;
+}
+.resize-handle.se { cursor: se-resize; bottom: -6px; right: -6px; }
+
+/* --- Column Splitter Styles --- */
+.column-splitter {
+    width: 8px; 
+    flex-shrink: 0;
+    cursor: col-resize;
+    align-self: stretch;
+    position: relative;
+    background-color: transparent;
+    transition: background-color 0.2s ease-in-out;
+}
+.column-splitter::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    background-color: #4b5563;
+    transition: background-color 0.2s ease-in-out;
+}
+.column-splitter:hover {
+    background-color: rgba(0, 255, 65, 0.1);
+}
+.column-splitter:hover::before {
+    background-color: #00ff41;
+}
+
+@media print {
+    body { background-color: white; }
+    .slide { height: 100vh; width: 100vw; page-break-after: always; color: black; background-image: none; background-color: white; border: none; }
+    #toolbar, #side-drawer, #save-btn, .column-splitter, .resize-wrapper { display: none; }
+    .slide h2, .slide div, .slide p, .slide li, .slide h3 { color: black !important; text-shadow: none; }
+}
