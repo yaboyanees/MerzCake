@@ -28,20 +28,13 @@ const toolbarHTML = `
 </div>
 `;
 
-/**
- * Main application logic.
- * This script runs after the main HTML document and the inline data script have loaded.
- */
 document.addEventListener('DOMContentLoaded', function () {
-    // Inject the toolbar HTML directly from the constant defined above.
     document.getElementById('toolbar-placeholder').innerHTML = toolbarHTML;
     
-    // Now we can safely find our elements and run the presentation logic.
     const presentationContainer = document.getElementById('presentation-container');
     const slideNavList = document.getElementById('slide-nav-list');
     const toolbar = document.getElementById('toolbar'); 
 
-    // A safety check to ensure the toolbar was injected correctly.
     if (!toolbar) {
         console.error("Toolbar element could not be created from toolbarHTML. Aborting script initialization.");
         return;
@@ -204,13 +197,20 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     
-    let chartResizeTimer;
+    // --- UPDATED RESIZE OBSERVER ---
+    // This observer watches all visible chart containers for size changes.
     const chartResizeObserver = new ResizeObserver(entries => {
-        if (!entries || !entries.length) return;
-        clearTimeout(chartResizeTimer);
-        chartResizeTimer = setTimeout(() => {
-            drawBarChart('#chart-container');
-        }, 50);
+        for (const entry of entries) {
+            const container = entry.target;
+            const containerId = container.id;
+
+            // Based on the container's ID, call the correct global drawing function from index.html
+            if (containerId === 'chart-container') {
+                drawBarChart('#' + containerId);
+            } else if (containerId === 'delay-chart-container') {
+                drawDelayChart('#' + containerId);
+            }
+        }
     });
 
     function updateActiveNavOnScroll() {
@@ -238,6 +238,43 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
     }
+
+    // --- UPDATED INTERSECTION OBSERVER ---
+    // This observer detects when slides scroll into view.
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                visibleSlides.add(entry.target.id);
+            } else {
+                visibleSlides.delete(entry.target.id);
+            }
+            
+            // Find ALL chart containers within the current slide
+            const chartContainers = entry.target.querySelectorAll('.chart-container');
+
+            chartContainers.forEach(container => {
+                // If the slide is visible on screen...
+                if (entry.isIntersecting) {
+                    const containerId = container.id;
+                    // Draw the correct chart for the container that is now visible
+                    if (containerId === 'chart-container') {
+                        drawBarChart('#' + containerId);
+                    } else if (containerId === 'delay-chart-container') {
+                        drawDelayChart('#' + containerId);
+                    }
+                    // Start observing this container for resizes
+                    chartResizeObserver.observe(container);
+                } else {
+                    // Stop observing for resizes when it's off-screen to save resources
+                    chartResizeObserver.unobserve(container);
+                }
+            });
+        });
+        updateActiveNavOnScroll();
+    }, { 
+        rootMargin: `-${toolbar.offsetHeight + 16}px 0px 0px 0px`, 
+        threshold: 0.01
+    });
 
     // --- Event Listeners ---
     toolbar.addEventListener('click', (e) => {
@@ -345,27 +382,6 @@ document.addEventListener('DOMContentLoaded', function () {
                  updateActiveNavOnScroll();
             }, 1000);
         }
-    });
-
-    const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                visibleSlides.add(entry.target.id);
-            } else {
-                visibleSlides.delete(entry.target.id);
-            }
-            
-            const chartContainer = entry.target.querySelector('#chart-container');
-            if (entry.isIntersecting && chartContainer) {
-                chartResizeObserver.observe(chartContainer);
-            } else if (chartContainer) {
-                chartResizeObserver.unobserve(chartContainer);
-            }
-        });
-        updateActiveNavOnScroll();
-    }, { 
-        rootMargin: `-${toolbar.offsetHeight + 16}px 0px 0px 0px`, 
-        threshold: 0.01
     });
 
     window.addEventListener('scroll', debouncedScrollHandler);
