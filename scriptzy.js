@@ -97,6 +97,8 @@ document.addEventListener('DOMContentLoaded', function () {
             banner.appendChild(titleElement);
             slideElement.appendChild(banner);
         }
+        
+        // This switch statement now includes the new 'full_chart' layout
         switch (slide.layout) {
             case 'title_slide':
                 const titleBox = document.createElement('div');
@@ -123,6 +125,18 @@ document.addEventListener('DOMContentLoaded', function () {
                 slideElement.classList.add('justify-center', 'items-center');
                 slideElement.appendChild(titleOnlyElement);
                 break;
+            
+            // --- ADDED NEW LAYOUT CASE ---
+            case 'full_chart':
+                // This layout is for a single, non-editable element that should fill the slide.
+                const fullChartContainer = document.createElement('div');
+                // Use flex properties to make it fill the available vertical space.
+                fullChartContainer.className = "flex-1 min-h-0"; 
+                fullChartContainer.innerHTML = slide.content;
+                // Notice we DO NOT call addEditableListeners here.
+                slideElement.appendChild(fullChartContainer);
+                break;
+
             case 'two_column_chart':
             case 'two_column':
                 const container = document.createElement('div');
@@ -197,14 +211,10 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     
-    // --- UPDATED RESIZE OBSERVER ---
-    // This observer watches all visible chart containers for size changes.
     const chartResizeObserver = new ResizeObserver(entries => {
         for (const entry of entries) {
             const container = entry.target;
             const containerId = container.id;
-
-            // Based on the container's ID, call the correct global drawing function from index.html
             if (containerId === 'chart-container') {
                 drawBarChart('#' + containerId);
             } else if (containerId === 'delay-chart-container') {
@@ -221,11 +231,9 @@ document.addEventListener('DOMContentLoaded', function () {
         visibleSlides.forEach(slideId => {
             const slideElement = document.getElementById(slideId);
             if (!slideElement) return;
-
             const rect = slideElement.getBoundingClientRect();
             const slideCenter = rect.top + rect.height / 2;
             const distance = Math.abs(viewportCenter - slideCenter);
-
             if (distance < minDistance) {
                 minDistance = distance;
                 closestSlideId = slideId;
@@ -239,8 +247,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // --- UPDATED INTERSECTION OBSERVER ---
-    // This observer detects when slides scroll into view.
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -248,24 +254,17 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 visibleSlides.delete(entry.target.id);
             }
-            
-            // Find ALL chart containers within the current slide
             const chartContainers = entry.target.querySelectorAll('.chart-container');
-
             chartContainers.forEach(container => {
-                // If the slide is visible on screen...
                 if (entry.isIntersecting) {
                     const containerId = container.id;
-                    // Draw the correct chart for the container that is now visible
                     if (containerId === 'chart-container') {
                         drawBarChart('#' + containerId);
                     } else if (containerId === 'delay-chart-container') {
                         drawDelayChart('#' + containerId);
                     }
-                    // Start observing this container for resizes
                     chartResizeObserver.observe(container);
                 } else {
-                    // Stop observing for resizes when it's off-screen to save resources
                     chartResizeObserver.unobserve(container);
                 }
             });
@@ -282,7 +281,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (button) {
             const command = button.dataset.command;
             const alignCommands = ['justifyLeft', 'justifyCenter', 'justifyRight'];
-
             if (activeImage && alignCommands.includes(command)) {
                 activeImage.style.display = 'block';
                 switch (command) {
@@ -314,14 +312,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert("Please click on a text area to set the insertion point."); 
                 return; 
             }
-            
             const selection = window.getSelection();
             if (selection.getRangeAt && selection.rangeCount) {
                 savedRange = selection.getRangeAt(0);
             } else {
                 savedRange = null;
             }
-
             document.getElementById('modal-backdrop').classList.remove('hidden');
             document.getElementById('image-modal').classList.remove('hidden');
             document.getElementById('image-url-input').focus();
@@ -338,17 +334,14 @@ document.addEventListener('DOMContentLoaded', function () {
         if (action === 'cancel' || action === 'confirm') {
             document.getElementById('modal-backdrop').classList.add('hidden');
             document.getElementById('image-modal').classList.add('hidden');
-
             if (action === 'confirm') {
                 const url = document.getElementById('image-url-input').value.trim();
                 if (url && savedRange) {
                     const selection = window.getSelection();
                     selection.removeAllRanges();
                     selection.addRange(savedRange);
-
                     const tempId = `temp-img-${Date.now()}`;
                     document.execCommand('insertHTML', false, `<img src="${url}" id="${tempId}" style="width: 50%;" alt="User Image">`);
-                    
                     setTimeout(() => {
                         const newImg = document.getElementById(tempId);
                         if (newImg) {
@@ -428,7 +421,6 @@ document.addEventListener('DOMContentLoaded', function () {
         document.addEventListener('click', function(e) {
             const target = e.target;
             const isImage = target.tagName === 'IMG' && target.closest('.slide');
-            
             if (isImage) {
                 if (target !== activeImage) {
                      createResizeWrapper(target);
@@ -443,21 +435,16 @@ document.addEventListener('DOMContentLoaded', function () {
             activeImage = image; 
             const slide = image.closest('.slide');
             if (!slide) return;
-            
             resizeWrapper = document.createElement('div');
             resizeWrapper.className = 'resize-wrapper';
-            
             resizeWrapper.style.top = `${image.offsetTop}px`;
             resizeWrapper.style.left = `${image.offsetLeft}px`;
             resizeWrapper.style.width = `${image.offsetWidth}px`;
             resizeWrapper.style.height = `${image.offsetHeight}px`;
-
             const seHandle = document.createElement('div');
             seHandle.className = 'resize-handle se';
-            
             resizeWrapper.appendChild(seHandle); 
             slide.appendChild(resizeWrapper);
-
             seHandle.addEventListener('mousedown', startResize);
         }
 
@@ -466,20 +453,17 @@ document.addEventListener('DOMContentLoaded', function () {
             const startX = e.clientX;
             const startWidth = activeImage.offsetWidth;
             const startHeight = activeImage.offsetHeight;
-            
             const doResize = (e) => {
                 let newWidth = startWidth + (e.clientX - startX);
                 if (newWidth < 50) newWidth = 50;
                 const newHeight = (startHeight / startWidth) * newWidth;
                 activeImage.style.width = `${newWidth}px`;
                 activeImage.style.height = `${newHeight}px`;
-                
                 resizeWrapper.style.width = `${newWidth}px`;
                 resizeWrapper.style.height = `${newHeight}px`;
                 resizeWrapper.style.top = `${activeImage.offsetTop}px`;
                 resizeWrapper.style.left = `${activeImage.offsetLeft}px`;
             };
-
             const stopResize = () => {
                 window.removeEventListener('mousemove', doResize);
                 window.removeEventListener('mouseup', stopResize);
