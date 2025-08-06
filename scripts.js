@@ -1,39 +1,21 @@
 /**
- * This function fetches the toolbar HTML from a separate file 
- * and injects it into the placeholder div on the main page.
- */
-async function loadToolbar() {
-    try {
-        const response = await fetch('toolbar.html');
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const toolbarHTML = await response.text();
-        document.getElementById('toolbar-placeholder').innerHTML = toolbarHTML;
-    } catch (error) {
-        console.error('Could not load the toolbar:', error);
-        document.getElementById('toolbar-placeholder').innerHTML = '<p class="text-red-500">Error: Toolbar could not be loaded.</p>';
-    }
-}
-
-/**
  * Main application logic.
- * This event listener waits for the initial HTML document to be loaded.
- * It then loads the toolbar and, once complete, initializes the presentation.
+ * This script runs after the main HTML document and the inline data script have loaded.
+ * It uses the global 'toolbarHTML' and 'slidesData' variables defined in index.html.
  */
-document.addEventListener('DOMContentLoaded', async function () {
-    // First, load the toolbar component and wait for it to be ready.
-    await loadToolbar();
+document.addEventListener('DOMContentLoaded', function () {
+    // Inject the toolbar HTML directly from the variable defined in index.html.
+    // No more async fetch is needed.
+    document.getElementById('toolbar-placeholder').innerHTML = toolbarHTML;
     
-    // Now that the toolbar is loaded, we can safely find our elements 
-    // and run the rest of the presentation logic.
+    // Now we can safely find our elements and run the presentation logic.
     const presentationContainer = document.getElementById('presentation-container');
     const slideNavList = document.getElementById('slide-nav-list');
     const toolbar = document.getElementById('toolbar'); 
 
-    // A safety check to ensure the toolbar was loaded before we proceed.
+    // A safety check to ensure the toolbar was injected correctly.
     if (!toolbar) {
-        console.error("Toolbar element not found after loading. Aborting script initialization.");
+        console.error("Toolbar element could not be created from toolbarHTML. Aborting script initialization.");
         return;
     }
     
@@ -49,7 +31,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         element.addEventListener('focus', () => { lastActiveEditable = element; });
         element.addEventListener('blur', () => {
             setTimeout(() => {
-                // The 'slidesData' variable is accessed here, but defined in index.html
                 if (slidesData && slidesData[slideIndex]) {
                     slidesData[slideIndex][contentKey] = element.innerHTML;
                     updateSlideNavTitle(slideIndex);
@@ -188,9 +169,6 @@ document.addEventListener('DOMContentLoaded', async function () {
         document.querySelectorAll('.slide').forEach(slide => observer.observe(slide));
     }
     
-    // The drawBarChart function was removed from this file and moved to index.html.
-    // The chartResizeObserver below can still call it because it's available globally.
-
     function applyStyle(command, value = null) {
         if (lastActiveEditable) {
             lastActiveEditable.focus();
@@ -203,7 +181,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         if (!entries || !entries.length) return;
         clearTimeout(chartResizeTimer);
         chartResizeTimer = setTimeout(() => {
-            // This call still works because drawBarChart is a global function now.
+            // This call works because drawBarChart is a global function defined in index.html
             drawBarChart('#chart-container');
         }, 50);
     });
