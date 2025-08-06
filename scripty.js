@@ -29,7 +29,7 @@ const toolbarHTML = `
 `;
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('toolbar-placeholder').innerHTML = toolbarHTML;
+    document.getElementById('toolbar-placeholder').outerHTML = toolbarHTML;
     
     const presentationContainer = document.getElementById('presentation-container');
     const slideNavList = document.getElementById('slide-nav-list');
