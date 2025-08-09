@@ -1,4 +1,4 @@
-// border_components.js
+// border_component.js
 
 const MapComponents = {
     /**
@@ -39,7 +39,7 @@ const MapComponents = {
     },
 
     /**
-     * Sets up pointer and box-select tools.
+     * Sets up pointer and a robust, zoom-proof box-select tool.
      * @param {object} map - The Leaflet map instance.
      * @param {Array<object>} layersToSelect - An array of Leaflet layers to perform selection against.
      * @param {function} onSelectionChange - A callback function that is called with the new Set of selected IDs.
@@ -50,8 +50,8 @@ const MapComponents = {
         const clearButton = d3.select("#clear-selection-btn");
         
         let isBoxSelectActive = false;
-        let selectionBox = null;
-        let startPos = null;
+        let selectionRectangle = null;
+        let startLatLng = null;
         let selectedItems = new Set();
 
         const updateSelection = () => {
@@ -63,14 +63,9 @@ const MapComponents = {
             layerGroup.on('click', (e) => {
                 if (isBoxSelectActive) return;
                 const unique_id = e.layer.options.unique_id;
-                if (!e.originalEvent.shiftKey) {
-                    selectedItems.clear();
-                }
-                if (selectedItems.has(unique_id)) {
-                    selectedItems.delete(unique_id);
-                } else {
-                    selectedItems.add(unique_id);
-                }
+                if (!e.originalEvent.shiftKey) { selectedItems.clear(); }
+                if (selectedItems.has(unique_id)) { selectedItems.delete(unique_id); } 
+                else { selectedItems.add(unique_id); }
                 updateSelection();
             });
         });
@@ -80,32 +75,54 @@ const MapComponents = {
             updateSelection();
         });
 
-        const onMouseDown = (e) => { startPos = e.containerPoint; selectionBox = L.DomUtil.create('div', 'leaflet-selection-box', map.getPane('overlayPane')); L.DomUtil.setPosition(selectionBox, startPos); map.on('mousemove', onMouseMove).on('mouseup', onMouseUp); };
-        const onMouseMove = (e) => { const currentPos = e.containerPoint; const bounds = L.bounds(startPos, currentPos); L.DomUtil.setPosition(selectionBox, bounds.min); selectionBox.style.width = bounds.getSize().x + 'px'; selectionBox.style.height = bounds.getSize().y + 'px'; };
+        const onMouseDown = (e) => {
+            startLatLng = map.mouseEventToLatLng(e.originalEvent);
+            selectionRectangle = L.rectangle(L.latLngBounds(startLatLng, startLatLng), {
+                color: "#60A5FA",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.2,
+                dashArray: '5, 5'
+            }).addTo(map);
+            map.on('mousemove', onMouseMove).on('mouseup', onMouseUp);
+        };
+
+        const onMouseMove = (e) => {
+            if (!selectionRectangle) return;
+            const currentLatLng = map.mouseEventToLatLng(e.originalEvent);
+            selectionRectangle.setBounds(L.latLngBounds(startLatLng, currentLatLng));
+        };
+
         const onMouseUp = (e) => {
-            const bounds = L.latLngBounds(map.containerPointToLatLng(startPos), map.containerPointToLatLng(e.containerPoint));
+            const bounds = selectionRectangle.getBounds();
             selectedItems.clear();
             layersToSelect.forEach(layerGroup => {
-                layerGroup.eachLayer(layer => { if (bounds.contains(layer.getLatLng())) selectedItems.add(layer.options.unique_id); });
+                layerGroup.eachLayer(layer => {
+                    if (bounds.contains(layer.getLatLng())) {
+                        selectedItems.add(layer.options.unique_id);
+                    }
+                });
             });
             updateSelection();
-            L.DomUtil.remove(selectionBox);
+            map.removeLayer(selectionRectangle);
+            selectionRectangle = null;
+            map.off('mousemove', onMouseMove).off('mouseup', onMouseUp);
             activatePointerTool();
         };
 
         function activatePointerTool() {
             isBoxSelectActive = false;
             d3.select("#map").style("cursor", "grab");
-            map.dragging.enable();
+            if (map.dragging) map.dragging.enable();
             boxSelectButton.classed('active', false);
             pointerButton.classed('active', true);
-            map.off('mousedown', onMouseDown).off('mousemove', onMouseMove).off('mouseup', onMouseUp);
+            map.off('mousedown', onMouseDown);
         }
 
         function activateBoxSelectTool() {
             isBoxSelectActive = true;
             d3.select("#map").style("cursor", "crosshair");
-            map.dragging.disable();
+            if (map.dragging) map.dragging.disable();
             pointerButton.classed('active', false);
             boxSelectButton.classed('active', true);
             map.on('mousedown', onMouseDown);
@@ -113,7 +130,7 @@ const MapComponents = {
 
         pointerButton.on("click", activatePointerTool);
         boxSelectButton.on("click", activateBoxSelectTool);
-        activatePointerTool(); // Activate by default
+        activatePointerTool();
     },
 
     /**
@@ -142,55 +159,28 @@ const MapComponents = {
         const playButton = d3.select("#play-pause-btn");
         const resetButton = d3.select("#reset-btn");
         let animationTimer = null;
-
         const { minTime, maxTime } = timeRange;
 
-        if (minTime && maxTime) {
-            slider.attr("min", minTime.getTime())
-                  .attr("max", maxTime.getTime())
-                  .attr("value", maxTime.getTime());
-        }
+        if (minTime && maxTime) { slider.attr("min", minTime.getTime()).attr("max", maxTime.getTime()).attr("value", maxTime.getTime()); }
 
-        const stopAnimation = () => {
-            if (animationTimer) {
-                animationTimer.stop();
-                animationTimer = null;
-                playButton.text("PLAY");
-            }
-        };
+        const stopAnimation = () => { if (animationTimer) { animationTimer.stop(); animationTimer = null; playButton.text("PLAY"); } };
         
-        slider.on("input", (event) => {
-            stopAnimation();
-            updateMapForTime(event.target.value);
-        });
-
+        slider.on("input", (event) => { stopAnimation(); updateMapForTime(event.target.value); });
         playButton.on("click", () => {
-            if (animationTimer) {
-                stopAnimation();
-            } else {
+            if (animationTimer) { stopAnimation(); } 
+            else {
                 playButton.text("PAUSE");
                 let currentTime = parseInt(slider.property("value"));
-                if (currentTime >= maxTime.getTime()) {
-                    currentTime = minTime.getTime();
-                }
-
+                if (currentTime >= maxTime.getTime()) { currentTime = minTime.getTime(); }
                 animationTimer = d3.interval(() => {
                     const totalTime = maxTime.getTime() - minTime.getTime();
                     if (totalTime <= 0) { stopAnimation(); return; }
-                    currentTime += totalTime / 200; // ~20 second playback
-                    
-                    if (currentTime >= maxTime.getTime()) {
-                        currentTime = maxTime.getTime();
-                        stopAnimation();
-                    }
+                    currentTime += totalTime / 200;
+                    if (currentTime >= maxTime.getTime()) { currentTime = maxTime.getTime(); stopAnimation(); }
                     updateMapForTime(currentTime);
                 }, 100);
             }
         });
-
-        resetButton.on("click", () => {
-            stopAnimation();
-            if(minTime) updateMapForTime(minTime.getTime());
-        });
+        resetButton.on("click", () => { stopAnimation(); if(minTime) updateMapForTime(minTime.getTime()); });
     }
 };
