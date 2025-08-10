@@ -71,3 +71,26 @@
             pointer-events: none;
             opacity: 0;
         }
+        .marker-cluster-small {
+            background-color: rgba(254, 249, 195, 0.6);
+        }
+        .marker-cluster-small div {
+            background-color: rgba(252, 211, 77, 0.8);
+            color: #111827;
+        }
+
+        .marker-cluster-medium {
+            background-color: rgba(253, 186, 116, 0.6);
+        }
+        .marker-cluster-medium div {
+            background-color: rgba(249, 115, 22, 0.8);
+            color: #fff;
+        }
+
+        .marker-cluster-large {
+            background-color: rgba(248, 113, 113, 0.6); 
+        }
+        .marker-cluster-large div {
+            background-color: rgba(220, 38, 38, 0.8);
+            color: #fff;
+        }
