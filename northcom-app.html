@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NORTHCOM | Border Activity</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+    <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://d3js.org/d3-hexbin.v0.2.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/borders.css">
+    <script src="https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/border_map_logic.js"></script>
+    
+</head>
+<body class="bg-gray-900 text-gray-200 antialiased overflow-hidden">
+
+    <div id="app-container" class="flex flex-col h-screen">
+        
+        <header class="p-4 flex-shrink-0">
+            <h1 class="text-2xl font-bold tracking-wider text-white">BORDER ACTIVITY MAP</h1>
+            <p class="text-sm text-gray-400">United States Northern Command // J3 Operations</p>
+        </header>
+
+        <div class="flex-shrink-0 grid grid-cols-3 gap-4 px-4 pb-4">
+            <div class="bg-gray-800 p-4 rounded-lg"><h4 class="text-sm text-gray-400">Total Incidents</h4><p id="kpi-total-incidents" class="text-3xl font-bold">0</p></div>
+            <div class="bg-gray-800 p-4 rounded-lg"><h4 class="text-sm text-gray-400">High Severity Incidents</h4><p id="kpi-high-severity" class="text-3xl font-bold text-red-400">0</p></div>
+            <div class="bg-gray-800 p-4 rounded-lg"><h4 class="text-sm text-gray-400">Active Assets</h4><p id="kpi-active-assets" class="text-3xl font-bold text-lime-500">0</p></div>
+        </div>
+
+        <div class="flex-grow flex flex-col min-h-0">
+            <div class="flex flex-row h-2/3">
+                <main class="w-2/3 h-full relative">
+                    <div id="map"></div>
+                    <div class="absolute top-4 right-4 z-[1000] flex flex-col space-y-2">
+                        <div id="legend" class="bg-gray-800 bg-opacity-80 p-3 rounded-lg border border-gray-700"><h3 class="text-sm font-bold mb-2">Layers</h3><div id="legend-items" class="space-y-2"></div></div>
+                        <div class="bg-gray-800 bg-opacity-80 p-1 rounded-lg border border-gray-700 flex flex-col space-y-1">
+                            <button id="select-pointer-btn" class="tool-btn p-2 bg-gray-600 hover:bg-gray-700 rounded-md text-white" title="Pointer Select"><span class="material-symbols-outlined" style="font-size: 20px;">arrow_selector_tool</span></button>
+                            <button id="select-box-btn" class="tool-btn p-2 bg-gray-600 hover:bg-gray-700 rounded-md text-white" title="Box Select"><span class="material-symbols-outlined" style="font-size: 20px;">select</span></button>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gray-900 bg-opacity-70 border-t border-gray-700 z-[1000]">
+                        <div class="flex items-center space-x-4">
+                            <div id="playback-controls" class="flex space-x-2"><button id="play-pause-btn" class="px-3 py-1 bg-blue-500 hover:bg-blue-600 rounded-md text-xs font-bold">PLAY</button><button id="reset-btn" class="px-3 py-1 bg-gray-600 hover:bg-gray-700 rounded-md text-xs font-bold">RESET</button></div>
+                            <input type="range" id="time-slider" class="w-full">
+                            <div class="flex flex-col items-center w-32"><span id="current-time" class="text-sm font-mono"></span><span class="text-xs text-gray-500">CURRENT TIME</span></div>
+                        </div>
+                    </div>
+                </main>
+                <section class="w-1/3 h-full flex flex-col p-4 border-l border-gray-700">
+                    <div class="mb-2 flex space-x-2"><input type="text" id="search-filter" class="flex-grow bg-gray-800 border border-gray-600 rounded-md px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Filter events..."><button id="clear-selection-btn" class="px-3 py-1 bg-gray-600 hover:bg-gray-700 rounded-md text-xs font-bold">CLEAR</button></div>
+                    <div class="table-container"><table class="w-full text-left text-xs"><thead class="sticky top-0 bg-gray-800"><tr><th class="p-2">ID</th><th class="p-2">Category</th><th class="p-2">Description</th><th class="p-2">Timestamp (UTC)</th><th class="p-2">Details</th></tr></thead><tbody id="table-body"></tbody></table></div>
+                </section>
+            </div>
+            <div class="chart-panel flex flex-row border-t border-gray-700 p-4">
+                <div id="donut-chart-container" class="chart-container w-1/2 h-full"></div>
+                <div id="treemap-chart-container" class="chart-container w-1/2 h-full"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
