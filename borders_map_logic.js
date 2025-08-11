@@ -1,5 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
         
+    /**
+     * Fetches data from a URL with a specified number of retries.
+     * @param {string} url - The URL to fetch data from.
+     * @param {number} retries - The number of times to retry on failure.
+     * @param {number} delay - The delay in milliseconds between retries.
+     * @returns {Promise<any>} A promise that resolves with the fetched data.
+     */
+    async function fetchDataWithRetries(url, retries = 3, delay = 1000) {
+        for (let i = 0; i < retries; i++) {
+            try {
+                const data = await d3.json(url);
+                return data; // Success
+            } catch (error) {
+                console.warn(`Attempt ${i + 1} failed for ${url}. Retrying in ${delay}ms...`);
+                if (i < retries - 1) {
+                    await new Promise(res => setTimeout(res, delay));
+                } else {
+                    console.error(`Failed to fetch ${url} after ${retries} attempts.`);
+                    throw error; // Rethrow the error after the last attempt
+                }
+            }
+        }
+    }
+
     const MapComponents = {
         setupLayerToggle(map, legendLayers, updateMapForTime, slider) {
             const legendContainer = d3.select("#legend-items");
@@ -42,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             legendItems.append("span").text(d => d).attr("class", "text-xs");
             
-            // Set initial state for inactive layers
             legendItems.filter(d => !map.hasLayer(legendLayers[d])).classed('inactive', true);
         },
         setupSelectionTools(map, layersToSelect, onSelectionChange) {
@@ -263,11 +286,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     async function initializeApp() {
         try {
-            // 1. DATA LOADING
+            // 1. DATA LOADING with retries
             const [aorData, incidentData, outpostData] = await Promise.all([
-                d3.json("https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/aor.geojson"),
-                d3.json("https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/incident_data.geojson"),
-                d3.json("https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/outpost.geojson")
+                fetchDataWithRetries("https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/aor.geojson"),
+                fetchDataWithRetries("https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/incident_data.geojson"),
+                fetchDataWithRetries("https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/outpost.geojson")
             ]);
             
             // 2. DATA PROCESSING
