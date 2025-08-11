@@ -289,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 1. DATA LOADING with retries
             const [aorData, incidentData, outpostData] = await Promise.all([
                 fetchDataWithRetries("https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/aor.geojson"),
-                fetchDataWithRetries("https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/incident_data.geojson"),
+                fetchDataWithRetries("https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/incidents_data.geojson"),
                 fetchDataWithRetries("https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/outpost.geojson")
             ]);
             
