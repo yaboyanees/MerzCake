@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-        
+    
     /**
      * Fetches data from a URL with a specified number of retries.
      * @param {string} url - The URL to fetch data from.
@@ -332,6 +332,8 @@ document.addEventListener('DOMContentLoaded', () => {
             map.addLayer(clusterLayer);
             
             let currentSelectedItems = new Set();
+            // NEW: A variable to hold the last data used for rendering the charts.
+            let lastChartData = [];
             
             // 4. CONFIGURABLE / CHANGEABLE FUNCTIONS
             function updateKPIs(data) { const incidents = data.filter(d => d.category === 'Incident'); const assets = data.filter(d => d.category === 'Asset'); d3.select("#kpi-total-incidents").text(incidents.length); d3.select("#kpi-high-severity").text(incidents.filter(d => d.originalData.properties.severity === 'HIGH').length); d3.select("#kpi-active-assets").text(assets.filter(d => d.originalData.properties.status === 'ACTIVE').length); }
@@ -370,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const svg = d3.select("#treemap-chart-container").html("").append("svg").attr("width", "100%").attr("height", "100%");
                 if (incidentData.length === 0) return;
                 const {width, height} = svg.node().getBoundingClientRect();
-                const data = { name: "root", children: Array.from(d3.rollup(incidentData, v => v.length, d => d.description), ([key, value]) => ({name: key, value: value})) };
+                const data = { name: "root", children: Array.from(d3.rollup(incidentData, v => v.length, d => d.originalData.properties.type), ([key, value]) => ({name: key, value: value})) };
                 const root = d3.hierarchy(data).sum(d => d.value);
                 d3.treemap().size([width, height]).padding(2)(root);
                 const nodes = svg.selectAll("g").data(root.leaves()).enter().append("g")
@@ -386,6 +388,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     .attr("x", 4)
                     .attr("y", (d, i) => 15 + i * 14)
                     .text(d => d);
+            }
+
+            // NEW: A single function to redraw both charts. It uses the `lastChartData` variable.
+            function redrawAllCharts() {
+                drawDonutChart(lastChartData);
+                drawTreemapChart(lastChartData);
             }
 
             function updateMapForTime(currentTimeMs) {
@@ -407,8 +415,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 const selectedData = currentSelectedItems.size === 0 ? combinedData : combinedData.filter(d => currentSelectedItems.has(d.unique_id));
                 renderTable(selectedData);
                 updateKPIs(selectedData);
-                drawDonutChart(selectedData.filter(d => d.category === 'Incident'));
-                drawTreemapChart(selectedData.filter(d => d.category === 'Incident'));
+                
+                // MODIFIED: Update the stored chart data and call the redraw function.
+                lastChartData = selectedData.filter(d => d.category === 'Incident');
+                redrawAllCharts();
             }
 
             // 5. INITIALIZATION - WIRING EVERYTHING TOGETHER
@@ -426,6 +436,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Initial render
             onSelectionChange(new Set());
             if(maxTime) updateMapForTime(maxTime.getTime());
+
+            // NEW: Add a resize event listener to the window.
+            // This will call `redrawAllCharts` whenever the window size changes.
+            window.addEventListener('resize', redrawAllCharts);
 
         } catch (error) {
             console.error("Failed to initialize the application:", error);
