@@ -1,0 +1,238 @@
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+        /* Set base font for the body */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Focus ring for editable content */
+        [contenteditable]:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #3b82f6; /* blue-500 ring */
+        }
+
+        /* Main slide container */
+        .slide {
+            aspect-ratio: 16 / 9;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+            background-color: #ffffff; /* White background */
+            color: #000000; /* Black text */
+            border: 1px solid #e2e8f0; /* Light border */
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .unclassified-text {
+            color: #008000; /* Green color for classification */
+            font-weight: bold;
+        }
+        
+        .red-text {
+            color: #ff0000; /* Red color for sub-bullets */
+        }
+
+        /* Slide Header */
+        .slide-header {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Vertically align items */
+            padding: 0.5rem 1.5rem;
+            min-height: 80px; /* Increased height for larger logos */
+        }
+        .header-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            font-weight: bold;
+            width: 70%; 
+        }
+        .slide-header .header-left {
+            padding-top: 0.25rem; /* Add padding to top of logos */
+        }
+        .slide-header .header-left .logos {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .slide-header .header-left .logos img {
+            height: 55px; /* Final logo size adjustment */
+            width: auto;
+        }
+
+        /* Main content area of the slide */
+        .slide-content-area {
+            flex-grow: 1;
+            padding: 1rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            position: relative; /* Needed for absolute positioning of footer info */
+        }
+        
+        /* Default styles for editable content within slides */
+        .slide-content h1, .slide-content h2 { font-weight: bold; }
+        .slide-content h3, .quadrant-title { font-weight: bold; text-decoration: underline; }
+        .slide-content ul { padding-left: 1.5rem; }
+        .slide-content ul li { list-style-type: disc; }
+        .slide-content ul ul { padding-left: 1.5rem; }
+        .slide-content ul ul li { list-style-type: none; } /* Nested li have no default bullet */
+        
+        /* Four Quadrant Layout Styles */
+        .quadrant-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+        .quadrant {
+            padding: 1rem;
+            position: relative;
+        }
+        .grayed-out {
+            color: #808080;
+        }
+        .vertical-divider {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: #000;
+            transform: translateX(-50%);
+        }
+        .horizontal-divider {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #000;
+            transform: translateY(-50%);
+        }
+
+        /* Timeline Styles */
+        .timeline-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+
+        /* Slide Footer */
+        .slide-footer {
+            border-top: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0 0 0.5rem 0; /* Remove horizontal padding */
+        }
+        .footer-line-wrapper {
+            position: relative;
+            width: 100%;
+            margin-top: 0;
+            height: 25px; /* Provide space for page number */
+        }
+        .footer-line {
+            /* Make line twice as thick */
+            border-top: 8px solid #000;
+            position: absolute;
+            /* Line stops before page number */
+            width: calc(100% - 3rem); 
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .footer-line-text {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            padding: 0 0.5em;
+            font-weight: bold;
+            /* Add italic and shadow */
+            font-style: italic;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        .footer-page-number {
+            position: absolute;
+            right: 1.5rem; /* Align with slide content padding */
+            bottom: -8px; /* Moved page up */
+            font-weight: bold;
+        }
+
+        /* Toolbar styles */
+        .toolbar {
+            background-color: #ffffff; 
+            border: 1px solid #e2e8f0; 
+            border-radius: 0.5rem;
+            padding: 0.5rem; 
+            margin-bottom: 1rem; 
+            display: flex;
+            flex-wrap: wrap; 
+            align-items: center; 
+            gap: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .toolbar-button, .toolbar-select {
+            background-color: transparent; 
+            border: 1px solid transparent; 
+            height: 32px;
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center;
+            border-radius: 0.375rem; 
+            cursor: pointer; 
+            color: #475569; 
+            padding: 0 0.5rem;
+        }
+        .toolbar-button:hover, .toolbar-select:hover { 
+            background-color: #f1f5f9; 
+            color: #1e293b; 
+        }
+        .toolbar-button { 
+            width: 32px; 
+            padding: 0; 
+        }
+        .toolbar-color-picker { 
+            width: 32px; 
+            height: 32px; 
+            border: none; 
+            padding: 4px; 
+            background-color: transparent; 
+            cursor: pointer; 
+        }
+        .toolbar-color-picker::-webkit-color-swatch-wrapper { 
+            padding: 0; 
+        }
+        .toolbar-color-picker::-webkit-color-swatch { 
+            border: 1px solid #e2e8f0; 
+            border-radius: 0.25rem; 
+        }
+        
+        .toolbar-separator { 
+            width: 1px; 
+            height: 24px; 
+            background-color: #e2e8f0; 
+            margin: 0 0.25rem; 
+        }
+        
+        /* Print-specific styles */
+        @media print {
+            body { background-color: #fff; }
+            body * { visibility: hidden; }
+            #presentation-container, #presentation-container * { visibility: visible; }
+            #presentation-container { position: absolute; left: 0; top: 0; width: 100%; }
+            .slide {
+                box-shadow: none; margin: 0; border: 1px solid #ccc;
+                page-break-after: always;
+                -webkit-print-color-adjust: exact; print-color-adjust: exact;
+            }
+        }
