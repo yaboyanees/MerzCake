@@ -178,18 +178,28 @@ document.addEventListener('DOMContentLoaded', function() {
      * @returns {string} The SVG elements as an HTML string.
      */
     function generateTimelineEvents(events) {
-        const lastEventIndex = events.length - 1;
-        const lastX = 50 + (lastEventIndex * 50);
-        const lastY = 420 - (lastEventIndex * 30);
-        const lineEndX = lastX + 50;
-        const lineEndY = lastY - 30;
+        // Define fixed start and end points for the timeline ray
+        const startX = 50;
+        const startY = 420;
+        const endX = 650;
+        const endY = 60;
 
-        let eventElements = `<line x1="50" y1="420" x2="${lineEndX}" y2="${lineEndY}" stroke="black" stroke-width="4" marker-end="url(#arrowhead)"/>
+        // Calculate the total span of the timeline ray
+        const totalXSpan = endX - startX;
+        const totalYSpan = startY - endY; // Y decreases as we move along the timeline
+
+        // Draw the fixed-length timeline ray with an arrowhead
+        let eventElements = `<line x1="${startX}" y1="${startY}" x2="${endX}" y2="${endY}" stroke="black" stroke-width="4" marker-end="url(#arrowhead)"/>
                              <defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="black"/></marker></defs>`;
         
         events.forEach((event, i) => {
-            const x = 50 + (i * 50);
-            const y = 420 - (i * 30);
+            // Calculate the proportion along the line for the current event
+            // If there's only one event, place it at the start (proportion = 0)
+            const proportion = events.length > 1 ? i / (events.length - 1) : 0;
+
+            // Calculate the x and y coordinates for the event's shape
+            const x = startX + proportion * totalXSpan;
+            const y = startY - proportion * totalYSpan;
             
             let shape = '';
             switch(event.type) {
