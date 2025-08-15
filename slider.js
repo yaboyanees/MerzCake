@@ -188,6 +188,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const totalXSpan = endX - startX;
         const totalYSpan = startY - endY; // Y decreases as we move along the timeline
 
+        // Define a buffer to leave space at the end of the timeline
+        const buffer = 20;
+        const totalLength = Math.sqrt(totalXSpan ** 2 + totalYSpan ** 2);
+        const maxProportion = (totalLength - buffer) / totalLength;
+
         // Draw the fixed-length timeline ray with an arrowhead
         let eventElements = `<line x1="${startX}" y1="${startY}" x2="${endX}" y2="${endY}" stroke="black" stroke-width="4" marker-end="url(#arrowhead)"/>
                              <defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="black"/></marker></defs>`;
@@ -196,10 +201,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Calculate the proportion along the line for the current event
             // If there's only one event, place it at the start (proportion = 0)
             const proportion = events.length > 1 ? i / (events.length - 1) : 0;
+            
+            // Scale the proportion to account for the buffer at the end
+            const scaledProportion = proportion * maxProportion;
 
             // Calculate the x and y coordinates for the event's shape
-            const x = startX + proportion * totalXSpan;
-            const y = startY - proportion * totalYSpan;
+            const x = startX + scaledProportion * totalXSpan;
+            const y = startY - scaledProportion * totalYSpan;
             
             let shape = '';
             switch(event.type) {
