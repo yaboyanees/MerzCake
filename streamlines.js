@@ -257,79 +257,70 @@ document.addEventListener('DOMContentLoaded', () => {
                 d3.json(countriesUrl),
                 d3.json(statesUrl)
             ]);
-
-            const mapIds = ['incident-map-1', 'incident-map-2', 'incident-map-3'];
             
             const countryBorderStyle = { color: "#4b5563", weight: 0.5, fillColor: '#1f2937', fillOpacity: 1 };
             const stateBorderStyle = { color: "#6b7280", weight: 0.5, fillOpacity: 0, interactive: false };
 
-            mapIds.forEach((id, index) => {
-                const mapContainer = document.getElementById(id);
-                if (!mapContainer) return;
-                if (mapContainer._leaflet_id) { mapContainer._leaflet_id = null; }
-
-                const map = L.map(id, { zoomControl: false }).setView([34.0522, -118.2437], 4);
-
-                const countriesLayer = L.geoJSON(countriesData, { style: countryBorderStyle, interactive: false }).addTo(map);
-                const statesLayer = L.geoJSON(statesData, { style: stateBorderStyle });
-                
-                const incidentsLayer = L.geoJSON(incidentsData, {
-                    pointToLayer: (feature, latlng) => L.circleMarker(latlng, { radius: 5, fillColor: "#ef4444", color: "#f87171", weight: 1, opacity: 1, fillOpacity: 0.8 }),
-                    onEachFeature: (feature, layer) => {
-                        if (feature.properties) {
-                            const props = feature.properties;
-                            layer.bindTooltip(`<b>ID:</b> ${props.id}<br><b>Type:</b> ${props.type}<br><b>Severity:</b> ${props.severity}<br><b>Time:</b> ${new Date(props.timestamp).toLocaleString()}`);
-                        }
-                    }
-                }).addTo(map);
-                
-                if (map.getZoom() >= 4) {
-                    statesLayer.addTo(map);
-                }
-                
-                incidentsLayer.bringToFront();
-
-                map.on('zoomend', () => {
-                    const statesVisible = document.getElementById(`toggle-incident-states-${index}`).checked;
-                    if (map.getZoom() >= 4 && statesVisible && !map.hasLayer(statesLayer)) {
-                        map.addLayer(statesLayer);
-                    } else if (map.getZoom() < 4 && map.hasLayer(statesLayer)) {
-                        map.removeLayer(statesLayer);
-                    }
-                });
-
-                const legend = L.control({ position: 'topright' });
-                legend.onAdd = function () {
-                    const div = L.DomUtil.create('div', 'legend-control');
-                    div.innerHTML = `<h4 class="legend-title">Layers</h4><div class="legend-toggles !border-none !pt-0">
-                        <label><input type="checkbox" id="toggle-incidents-${index}" checked> Incidents</label>
-                        <label><input type="checkbox" id="toggle-incident-countries-${index}" checked> Countries</label>
-                        <label><input type="checkbox" id="toggle-incident-states-${index}" checked> US States</label>
-                    </div>`;
-                    L.DomEvent.disableClickPropagation(div);
-                    return div;
-                };
-                legend.addTo(map);
-
-                document.getElementById(`toggle-incidents-${index}`).addEventListener('change', e => {
-                    if (e.target.checked) {
-                        map.addLayer(incidentsLayer);
-                        incidentsLayer.bringToFront();
-                    } else {
-                        map.removeLayer(incidentsLayer);
-                    }
-                });
-                document.getElementById(`toggle-incident-countries-${index}`).addEventListener('change', e => e.target.checked ? map.addLayer(countriesLayer) : map.removeLayer(countriesLayer));
-                document.getElementById(`toggle-incident-states-${index}`).addEventListener('change', e => {
-                    if (e.target.checked && map.getZoom() >= 4) {
-                        map.addLayer(statesLayer);
-                    } else {
-                        map.removeLayer(statesLayer);
-                    }
-                });
-                
-                new ResizeObserver(() => map.invalidateSize()).observe(mapContainer);
+            // --- Map 1: Custom Icons ---
+            const map1 = L.map('incident-map-1', { zoomControl: false, attributionControl: false }).setView([34.0522, -118.2437], 4);
+            const countries1 = L.geoJSON(countriesData, { style: countryBorderStyle, interactive: false }).addTo(map1);
+            const states1 = L.geoJSON(statesData, { style: stateBorderStyle }).addTo(map1);
+            const incidentIcon = L.divIcon({
+                html: `<span class="material-symbols-outlined" style="font-size: 24px; color: #ef4444;">warning</span>`,
+                className: '',
+                iconSize: [24, 24],
+                iconAnchor: [12, 12]
             });
+            const incidents1 = L.geoJSON(incidentsData, {
+                pointToLayer: (feature, latlng) => L.marker(latlng, { icon: incidentIcon }),
+                onEachFeature: (feature, layer) => {
+                    const props = feature.properties;
+                    layer.bindTooltip(`<b>Type:</b> ${props.type}<br><b>Severity:</b> ${props.severity}`);
+                }
+            }).addTo(map1);
+            new ResizeObserver(() => map1.invalidateSize()).observe(document.getElementById('incident-map-1'));
+
+            // --- Map 2: Clustered Points ---
+            const map2 = L.map('incident-map-2', { zoomControl: false, attributionControl: false }).setView([34.0522, -118.2437], 4);
+            const countries2 = L.geoJSON(countriesData, { style: countryBorderStyle, interactive: false }).addTo(map2);
+            const states2 = L.geoJSON(statesData, { style: stateBorderStyle }).addTo(map2);
+            const markers = L.markerClusterGroup({
+                iconCreateFunction: function(cluster) {
+                    return L.divIcon({
+                        html: `<div class="flex items-center justify-center w-full h-full bg-red-800/80 text-white font-bold rounded-full border-2 border-red-400">${cluster.getChildCount()}</div>`,
+                        className: 'w-8 h-8',
+                        iconSize: [32, 32]
+                    });
+                }
+            });
+            const incidentLayer2 = L.geoJSON(incidentsData, {
+                pointToLayer: (feature, latlng) => L.circleMarker(latlng, { radius: 6, fillColor: "#f87171", color: "#ef4444", weight: 1, opacity: 1, fillOpacity: 0.8 }),
+                 onEachFeature: (feature, layer) => {
+                    const props = feature.properties;
+                    layer.bindTooltip(`<b>Type:</b> ${props.type}<br><b>Severity:</b> ${props.severity}`);
+                }
+            });
+            markers.addLayer(incidentLayer2);
+            map2.addLayer(markers);
+            new ResizeObserver(() => map2.invalidateSize()).observe(document.getElementById('incident-map-2'));
+
+
+            // --- Map 3: Heatmap ---
+            const map3 = L.map('incident-map-3', { zoomControl: false, attributionControl: false }).setView([34.0522, -118.2437], 4);
+            const countries3 = L.geoJSON(countriesData, { style: countryBorderStyle, interactive: false }).addTo(map3);
+            const states3 = L.geoJSON(statesData, { style: stateBorderStyle }).addTo(map3);
+            const heatPoints = incidentsData.features.map(feature => {
+                const [lng, lat] = feature.geometry.coordinates;
+                return [lat, lng, 1]; // lat, lng, intensity
+            });
+            L.heatLayer(heatPoints, { 
+                radius: 25,
+                blur: 15,
+                maxZoom: 10,
+                gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}
+            }).addTo(map3);
+            new ResizeObserver(() => map3.invalidateSize()).observe(document.getElementById('incident-map-3'));
+
 
         } catch (error) {
             console.error("Failed to load map GeoJSON data:", error);
