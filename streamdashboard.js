@@ -272,7 +272,7 @@ async function initIncidentMaps() {
             'Smuggling Attempt': { icon: 'luggage', color: '#3498db' }, // Was 'Smuggling'
             'Illegal Activity': { icon: 'gavel', color: '#e67e22' },
             'Mass Migration Event': { icon: 'groups', color: '#9b59b6' }, // New
-            'WMD/CBRN Threat Incident': { icon: 'biohazard', color: '#e74c3c' }, // New
+            'WMD/CBRN Threat Incident': { icon: 'warning', color: '#e74c3c' }, // New
             'Unknown Activity': { icon: 'help_outline', color: '#95a5a6' } // Was 'Other'
         };
         
