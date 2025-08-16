@@ -342,16 +342,29 @@ async function initIncidentMaps() {
         
         // --- Map 3: Heatmap ---
         const map3 = L.map('incident-map-3', { zoomControl: false, maxZoom: 18 }).setView([34.0522, -118.2437], 4);
+        
+        // Step 1: Create a custom pane for the heatmap.
+        map3.createPane('heatmap');
+
+        // Step 2: Set its z-index to be high, so it's above other layers.
+        map3.getPane('heatmap').style.zIndex = 650;
+        
+        // Add the border layers (they will render in their default, lower pane)
         L.geoJSON(countriesData, { style: countryBorderStyle }).addTo(map3);
         L.geoJSON(statesData, { style: stateBorderStyle }).addTo(map3);
+        
         const heatPoints = incidentsData.features.map(feature => [feature.geometry.coordinates[1], feature.geometry.coordinates[0], 0.5]); // lat, lng, intensity
+        
         L.heatLayer(heatPoints, {
             radius: 20,
             blur: 30,
             maxZoom: 12,
-            gradient: {0.4: '#fdbe85', 0.7: '#fd8d3c', 1: '#e6550d'} // Custom orange gradient
+            gradient: {0.4: '#fdbe85', 0.7: '#fd8d3c', 1: '#e6550d'},
+            // Step 3: Assign the heat layer to our new custom pane.
+            pane: 'heatmap'
         }).addTo(map3);
-        new ResizeObserver(() => map3.invalidateSize()).observe(document.getElementById('incident-map-3'));
+        
+        new ResizeObserver(() => map3.invalidateSize()).observe(document.getElementById('incident-map-3'));        
 
     } catch (error) {
         console.error("Failed to load map GeoJSON data:", error);
