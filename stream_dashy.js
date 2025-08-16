@@ -247,9 +247,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 async function initIncidentMaps() {
-    const incidentsUrl = 'https://raw.githubusercontent.com/yaboyanees/MerzCake/main/incidents_data.geojson';
-    const countriesUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake/main/country_borders.geojson';
-    const statesUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake/main/us_state_borders.geojson';
+    const incidentsUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/incidents_data.geojson';
+    const countriesUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/country_borders.geojson';
+    const statesUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/us_state_borders.geojson';
 
     try {
         const [incidentsData, countriesData, statesData] = await Promise.all([
