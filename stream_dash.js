@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-            
+        
     // --- DATA ---
     const tableData = [
         { name: 'Tiger Nixon', position: 'System Architect', office: 'Edinburgh', age: 61, startDate: '2011/04/25', salary: '$320,800', country: 'United Kingdom', lat: 55.9533, lng: -3.1883 },
@@ -257,70 +257,101 @@ document.addEventListener('DOMContentLoaded', () => {
                 d3.json(countriesUrl),
                 d3.json(statesUrl)
             ]);
-            
-            const countryBorderStyle = { color: "#4b5563", weight: 0.5, fillColor: '#1f2937', fillOpacity: 1 };
+
+            // --- Base Styles ---
+            const countryBorderStyle = { color: "#4b5563", weight: 0.5, fillColor: '#1f2937', fillOpacity: 1, interactive: false };
             const stateBorderStyle = { color: "#6b7280", weight: 0.5, fillOpacity: 0, interactive: false };
 
-            // --- Map 1: Custom Icons ---
-            const map1 = L.map('incident-map-1', { zoomControl: false, attributionControl: false }).setView([34.0522, -118.2437], 4);
-            const countries1 = L.geoJSON(countriesData, { style: countryBorderStyle, interactive: false }).addTo(map1);
-            const states1 = L.geoJSON(statesData, { style: stateBorderStyle }).addTo(map1);
-            const incidentIcon = L.divIcon({
-                html: `<span class="material-symbols-outlined" style="font-size: 24px; color: #ef4444;">warning</span>`,
-                className: '',
-                iconSize: [24, 24],
-                iconAnchor: [12, 12]
-            });
-            const incidents1 = L.geoJSON(incidentsData, {
-                pointToLayer: (feature, latlng) => L.marker(latlng, { icon: incidentIcon }),
-                onEachFeature: (feature, layer) => {
-                    const props = feature.properties;
-                    layer.bindTooltip(`<b>Type:</b> ${props.type}<br><b>Severity:</b> ${props.severity}`);
+            // --- Map 1: Custom Symbols ---
+            const map1 = L.map('incident-map-1', { zoomControl: false }).setView([34.0522, -118.2437], 4);
+            L.geoJSON(countriesData, { style: countryBorderStyle }).addTo(map1);
+            L.geoJSON(statesData, { style: stateBorderStyle }).addTo(map1);
+
+            const typeDetails = {
+                'Illegal Activity': { icon: 'gavel', color: '#e67e22' },
+                'Smuggling': { icon: 'luggage', color: '#3498db' },
+                'Security Threat': { icon: 'security', color: '#e74c3c' },
+                'Other': { icon: 'help_outline', color: '#95a5a6' }
+            };
+            const typeLayers = {};
+            L.geoJSON(incidentsData, {
+                onEachFeature: (feature, layer) => layer.bindTooltip(`<b>Type:</b> ${feature.properties.type}<br><b>Severity:</b> ${feature.properties.severity}`),
+                pointToLayer: (feature, latlng) => {
+                    const type = feature.properties.type;
+                    if (!typeLayers[type]) {
+                        typeLayers[type] = L.layerGroup().addTo(map1);
+                    }
+                    const details = typeDetails[type] || typeDetails['Other'];
+                    const marker = L.marker(latlng, {
+                        icon: L.divIcon({
+                            html: `<span class="material-symbols-outlined" style="color: ${details.color}; font-size: 24px; text-shadow: 0 0 3px rgba(0,0,0,0.5);">${details.icon}</span>`,
+                            className: 'google-font-marker',
+                            iconSize: [24, 24],
+                            iconAnchor: [12, 12]
+                        })
+                    });
+                    marker.addTo(typeLayers[type]);
+                    return marker;
                 }
-            }).addTo(map1);
+            });
+            
+            const legend1 = L.control({ position: 'topright' });
+            legend1.onAdd = function () {
+                const div = L.DomUtil.create('div', 'legend-control');
+                div.innerHTML = '<h4 class="legend-title">Incident Type</h4>';
+                for (const type in typeDetails) {
+                    const details = typeDetails[type];
+                    const typeId = type.replace(/\s+/g, '');
+                    div.innerHTML += `<div class="legend-item"><input type="checkbox" id="toggle-${typeId}" checked><label for="toggle-${typeId}"><span class="material-symbols-outlined" style="color: ${details.color}; vertical-align: middle;">${details.icon}</span> ${type}</label></div>`;
+                }
+                L.DomEvent.disableClickPropagation(div);
+                return div;
+            };
+            legend1.addTo(map1);
+            legend1.getContainer().addEventListener('input', (e) => {
+                if (e.target.tagName === 'INPUT') {
+                    const typeName = e.target.id.replace('toggle-', '');
+                    const typeKey = Object.keys(typeDetails).find(k => k.replace(/\s+/g, '') === typeName);
+                    if (typeKey && typeLayers[typeKey]) {
+                        e.target.checked ? map1.addLayer(typeLayers[typeKey]) : map1.removeLayer(typeLayers[typeKey]);
+                    }
+                }
+            });
             new ResizeObserver(() => map1.invalidateSize()).observe(document.getElementById('incident-map-1'));
 
-            // --- Map 2: Clustered Points ---
-            const map2 = L.map('incident-map-2', { zoomControl: false, attributionControl: false }).setView([34.0522, -118.2437], 4);
-            const countries2 = L.geoJSON(countriesData, { style: countryBorderStyle, interactive: false }).addTo(map2);
-            const states2 = L.geoJSON(statesData, { style: stateBorderStyle }).addTo(map2);
+            // --- Map 2: Marker Clusters ---
+            const map2 = L.map('incident-map-2', { zoomControl: false }).setView([34.0522, -118.2437], 4);
+            L.geoJSON(countriesData, { style: countryBorderStyle }).addTo(map2);
+            L.geoJSON(statesData, { style: stateBorderStyle }).addTo(map2);
             const markers = L.markerClusterGroup({
-                iconCreateFunction: function(cluster) {
-                    return L.divIcon({
-                        html: `<div class="flex items-center justify-center w-full h-full bg-red-800/80 text-white font-bold rounded-full border-2 border-red-400">${cluster.getChildCount()}</div>`,
-                        className: 'w-8 h-8',
-                        iconSize: [32, 32]
-                    });
+                 iconCreateFunction: function(cluster) {
+                    const count = cluster.getChildCount();
+                    let c = ' marker-cluster-';
+                    if (count < 10) { c += 'small'; } 
+                    else if (count < 100) { c += 'medium'; } 
+                    else { c += 'large'; }
+                    return new L.DivIcon({ html: '<div><span>' + count + '</span></div>', className: 'marker-cluster' + c, iconSize: new L.Point(40, 40) });
                 }
             });
-            const incidentLayer2 = L.geoJSON(incidentsData, {
-                pointToLayer: (feature, latlng) => L.circleMarker(latlng, { radius: 6, fillColor: "#f87171", color: "#ef4444", weight: 1, opacity: 1, fillOpacity: 0.8 }),
-                 onEachFeature: (feature, layer) => {
-                    const props = feature.properties;
-                    layer.bindTooltip(`<b>Type:</b> ${props.type}<br><b>Severity:</b> ${props.severity}`);
-                }
+            const geoJsonLayer = L.geoJSON(incidentsData, {
+                onEachFeature: (feature, layer) => layer.bindTooltip(`<b>Type:</b> ${feature.properties.type}<br><b>Severity:</b> ${feature.properties.severity}`)
             });
-            markers.addLayer(incidentLayer2);
+            markers.addLayer(geoJsonLayer);
             map2.addLayer(markers);
             new ResizeObserver(() => map2.invalidateSize()).observe(document.getElementById('incident-map-2'));
-
-
+            
             // --- Map 3: Heatmap ---
-            const map3 = L.map('incident-map-3', { zoomControl: false, attributionControl: false }).setView([34.0522, -118.2437], 4);
-            const countries3 = L.geoJSON(countriesData, { style: countryBorderStyle, interactive: false }).addTo(map3);
-            const states3 = L.geoJSON(statesData, { style: stateBorderStyle }).addTo(map3);
-            const heatPoints = incidentsData.features.map(feature => {
-                const [lng, lat] = feature.geometry.coordinates;
-                return [lat, lng, 1]; // lat, lng, intensity
-            });
-            L.heatLayer(heatPoints, { 
-                radius: 25,
-                blur: 15,
-                maxZoom: 10,
-                gradient: {0.4: 'blue', 0.65: 'lime', 1: 'red'}
+            const map3 = L.map('incident-map-3', { zoomControl: false }).setView([34.0522, -118.2437], 4);
+            L.geoJSON(countriesData, { style: countryBorderStyle }).addTo(map3);
+            L.geoJSON(statesData, { style: stateBorderStyle }).addTo(map3);
+            const heatPoints = incidentsData.features.map(feature => [feature.geometry.coordinates[1], feature.geometry.coordinates[0], 0.5]); // lat, lng, intensity
+            L.heatLayer(heatPoints, {
+                radius: 20,
+                blur: 30,
+                maxZoom: 12,
+                gradient: {0.4: '#fdbe85', 0.7: '#fd8d3c', 1: '#e6550d'} // Custom orange gradient
             }).addTo(map3);
             new ResizeObserver(() => map3.invalidateSize()).observe(document.getElementById('incident-map-3'));
-
 
         } catch (error) {
             console.error("Failed to load map GeoJSON data:", error);
