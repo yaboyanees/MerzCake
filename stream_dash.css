@@ -41,9 +41,9 @@ body {
     pointer-events: none; /* Prevents tooltip from blocking mouse events */
 }
 .chart-tooltip {
-     position: absolute;
-     opacity: 0;
-     transition: opacity 0.2s;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.2s;
 }
 .leaflet-tooltip-top:before, .leaflet-tooltip-bottom:before, .leaflet-tooltip-left:before, .leaflet-tooltip-right:before {
     border: none !important;
@@ -83,17 +83,25 @@ body {
     margin-top: 0.75rem;
     padding-top: 0.75rem;
 }
-.legend-toggles label {
+.legend-toggles label, .legend-item {
     display: flex;
     align-items: center;
     cursor: pointer;
     color: #d1d5db; /* gray-300 */
 }
- .legend-toggles input {
+.legend-toggles input, .legend-item input {
     margin-right: 0.5rem;
- }
+}
+/* New style for incident map 1 legend items */
+.legend-item {
+    margin-bottom: 0.25rem;
+}
+.legend-item .material-symbols-outlined {
+    margin-right: 0.5rem;
+}
 
- /* Editable Title Style */
+
+/* Editable Title Style */
 [contenteditable]:focus {
     outline: 2px solid #3b82f6;
     border-radius: 4px;
@@ -103,4 +111,40 @@ body {
 /* Dark theme for Employee Map */
 #leaflet-map .leaflet-tile-pane {
     filter: grayscale(1) brightness(0.6);
+}
+
+/* --- Incident Map Specific Styles --- */
+
+/* Style for custom icon markers on incident map 1 */
+.google-font-marker {
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Custom cluster colors for incident map 2 */
+.marker-cluster-small {
+    background-color: rgba(253, 190, 17, 0.6); /* Yellow */
+}
+.marker-cluster-small div {
+    background-color: rgba(253, 190, 17, 0.9);
+}
+.marker-cluster-medium {
+    background-color: rgba(253, 141, 60, 0.6); /* Orange */
+}
+.marker-cluster-medium div {
+    background-color: rgba(253, 141, 60, 0.9);
+}
+.marker-cluster-large {
+    background-color: rgba(230, 85, 13, 0.6); /* Dark Orange */
+}
+.marker-cluster-large div {
+    background-color: rgba(230, 85, 13, 0.9);
+}
+.marker-cluster div {
+    color: #111827; /* Dark text for contrast */
+    font-weight: bold;
+    text-shadow: 1px 1px 1px rgba(255,255,255,0.4);
 }
