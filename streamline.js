@@ -60,12 +60,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const chartMargin = {top: 20, right: 20, bottom: 40, left: 60};
 
     function getChartDimensions() {
-        const { width, height } = chartSvg.node().getBoundingClientRect();
+        const chartNode = chartSvg.node();
+        if (!chartNode) return { width: 0, height: 0, innerWidth: 0, innerHeight: 0 };
+        const { width, height } = chartNode.getBoundingClientRect();
         return { width, height, innerWidth: width - chartMargin.left - chartMargin.right, innerHeight: height - chartMargin.top - chartMargin.bottom };
     }
 
     function renderBarChart() {
         const { innerWidth, innerHeight } = getChartDimensions();
+        if (innerWidth <= 0) return;
         chartSvg.selectAll("*").remove();
         const g = chartSvg.append("g").attr("transform", `translate(${chartMargin.left},${chartMargin.top})`);
         const x = d3.scaleLinear().domain([0, d3.max(officeCounts, d => d.value)]).nice().range([0, innerWidth]);
@@ -82,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderColumnChart() {
         const { innerWidth, innerHeight } = getChartDimensions();
+        if (innerWidth <= 0) return;
         chartSvg.selectAll("*").remove();
         const g = chartSvg.append("g").attr("transform", `translate(${chartMargin.left},${chartMargin.top})`);
         const x = d3.scaleBand().domain(officeCounts.map(d => d.key)).range([0, innerWidth]).padding(0.1);
@@ -98,6 +102,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderStackedBarChart() {
         const { innerWidth, innerHeight } = getChartDimensions();
+        if (innerWidth <= 0) return;
         chartSvg.selectAll("*").remove();
         const g = chartSvg.append("g").attr("transform", `translate(${chartMargin.left},${chartMargin.top})`);
         const x = d3.scaleBand().domain(officePositionCounts.map(d => d.office)).range([0, innerWidth]).padding(0.1);
@@ -118,6 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderPieChart(isDonut = false) {
         const { width, height } = getChartDimensions();
+        if (width <= 0) return;
         chartSvg.selectAll("*").remove();
         const radius = Math.min(width, height) / 2 - 10;
         const g = chartSvg.append("g").attr("transform", `translate(${width / 2}, ${height / 2})`);
@@ -139,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderLineChart() {
         const { innerWidth, innerHeight } = getChartDimensions();
+        if (innerWidth <= 0) return;
         chartSvg.selectAll("*").remove();
         const g = chartSvg.append("g").attr("transform", `translate(${chartMargin.left},${chartMargin.top})`);
         const sortedData = [...ageSalaryData].sort((a, b) => a.age - b.age);
@@ -155,6 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderScatterPlot() {
         const { innerWidth, innerHeight } = getChartDimensions();
+        if (innerWidth <= 0) return;
         chartSvg.selectAll("*").remove();
         const g = chartSvg.append("g").attr("transform", `translate(${chartMargin.left},${chartMargin.top})`);
         const x = d3.scaleLinear().domain(d3.extent(ageSalaryData, d => d.age)).nice().range([0, innerWidth]);
@@ -213,4 +221,181 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) { console.error("Error loading state border data:", error); }
         const uniqueOffices = Array.from(new Set(tableData.map(d => d.office))).map(office => tableData.find(d => d.office === office));
         const officeIcon = L.divIcon({ html: `<span class="material-symbols-outlined" style="font-size: 24px; color: #f59e0b;">place</span>`, className: '', iconSize: [24, 24], iconAnchor: [12, 24] });
-        officeMarkersGroup = L.layerGroup(uniqueOffices.map(office => L.marker([office.lat, office.lng], { icon: officeIcon }).bindTooltip(`${office.off
+        officeMarkersGroup = L.layerGroup(uniqueOffices.map(office => L.marker([office.lat, office.lng], { icon: officeIcon }).bindTooltip(`${office.office}<br>${employeeCountsByOffice.get(office.office) || 0} employees`))).addTo(map);
+        map.on('zoomend', () => {
+            const statesVisible = document.getElementById('toggle-states').checked;
+            if (map.getZoom() >= 4 && statesVisible && statesLayer && !map.hasLayer(statesLayer)) map.addLayer(statesLayer);
+            else if (statesLayer && map.hasLayer(statesLayer)) map.removeLayer(statesLayer);
+        });
+        const legend = L.control({position: 'topright'});
+        legend.onAdd = function () {
+            const div = L.DomUtil.create('div', 'legend-control');
+            div.innerHTML = `<h4 class="legend-title">Employees</h4><div class="legend-scale"><ul></ul></div><div class="legend-toggles">
+                <label><input type="checkbox" id="toggle-countries" checked> Countries</label>
+                <label><input type="checkbox" id="toggle-states" checked> US States</label>
+                <label><input type="checkbox" id="toggle-offices" checked> Offices</label></div>`;
+            const grades = [0, ...colorScale.thresholds()];
+            grades.forEach((from, i) => { const to = grades[i + 1]; div.querySelector('ul').innerHTML += `<li><i style="background:${colorScale(from + 1)}"></i> ${from + (to ? '&ndash;' + to : '+')}</li>`; });
+            L.DomEvent.disableClickPropagation(div);
+            return div;
+        };
+        legend.addTo(map);
+        document.getElementById('toggle-countries').addEventListener('change', (e) => e.target.checked ? map.addLayer(countriesLayer) : map.removeLayer(countriesLayer));
+        document.getElementById('toggle-states').addEventListener('change', (e) => { if (e.target.checked && map.getZoom() >= 4) map.addLayer(statesLayer); else map.removeLayer(statesLayer); });
+        document.getElementById('toggle-offices').addEventListener('change', (e) => e.target.checked ? map.addLayer(officeMarkersGroup) : map.removeLayer(officeMarkersGroup));
+        new ResizeObserver(() => map.invalidateSize()).observe(leafletMapEl);
+    }
+
+    async function initIncidentMaps() {
+        const incidentsUrl = 'https://raw.githubusercontent.com/yaboyanees/MerzCake/main/incidents_data.geojson';
+        const countriesUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/country_borders.geojson';
+        const statesUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/us_state_borders.geojson';
+
+        try {
+            const [incidentsData, countriesData, statesData] = await Promise.all([
+                d3.json(incidentsUrl),
+                d3.json(countriesUrl),
+                d3.json(statesUrl)
+            ]);
+
+            const mapIds = ['incident-map-1', 'incident-map-2', 'incident-map-3'];
+            
+            const countryBorderStyle = { color: "#4b5563", weight: 0.5, fillColor: '#1f2937', fillOpacity: 1 };
+            const stateBorderStyle = { color: "#6b7280", weight: 0.5, fillOpacity: 0, interactive: false };
+
+            mapIds.forEach((id, index) => {
+                const mapContainer = document.getElementById(id);
+                if (!mapContainer) return;
+                if (mapContainer._leaflet_id) { mapContainer._leaflet_id = null; }
+
+                const map = L.map(id, { zoomControl: false }).setView([34.0522, -118.2437], 4);
+
+                const countriesLayer = L.geoJSON(countriesData, { style: countryBorderStyle, interactive: false }).addTo(map);
+                const statesLayer = L.geoJSON(statesData, { style: stateBorderStyle });
+                
+                const incidentsLayer = L.geoJSON(incidentsData, {
+                    pointToLayer: (feature, latlng) => L.circleMarker(latlng, { radius: 5, fillColor: "#ef4444", color: "#f87171", weight: 1, opacity: 1, fillOpacity: 0.8 }),
+                    onEachFeature: (feature, layer) => {
+                        if (feature.properties) {
+                            const props = feature.properties;
+                            layer.bindTooltip(`<b>ID:</b> ${props.id}<br><b>Type:</b> ${props.type}<br><b>Severity:</b> ${props.severity}<br><b>Time:</b> ${new Date(props.timestamp).toLocaleString()}`);
+                        }
+                    }
+                }).addTo(map);
+                
+                if (map.getZoom() >= 4) {
+                    statesLayer.addTo(map);
+                }
+                
+                incidentsLayer.bringToFront();
+
+                map.on('zoomend', () => {
+                    const statesVisible = document.getElementById(`toggle-incident-states-${index}`).checked;
+                    if (map.getZoom() >= 4 && statesVisible && !map.hasLayer(statesLayer)) {
+                        map.addLayer(statesLayer);
+                    } else if (map.getZoom() < 4 && map.hasLayer(statesLayer)) {
+                        map.removeLayer(statesLayer);
+                    }
+                });
+
+                const legend = L.control({ position: 'topright' });
+                legend.onAdd = function () {
+                    const div = L.DomUtil.create('div', 'legend-control');
+                    div.innerHTML = `<h4 class="legend-title">Layers</h4><div class="legend-toggles !border-none !pt-0">
+                        <label><input type="checkbox" id="toggle-incidents-${index}" checked> Incidents</label>
+                        <label><input type="checkbox" id="toggle-incident-countries-${index}" checked> Countries</label>
+                        <label><input type="checkbox" id="toggle-incident-states-${index}" checked> US States</label>
+                    </div>`;
+                    L.DomEvent.disableClickPropagation(div);
+                    return div;
+                };
+                legend.addTo(map);
+
+                document.getElementById(`toggle-incidents-${index}`).addEventListener('change', e => {
+                    if (e.target.checked) {
+                        map.addLayer(incidentsLayer);
+                        incidentsLayer.bringToFront();
+                    } else {
+                        map.removeLayer(incidentsLayer);
+                    }
+                });
+                document.getElementById(`toggle-incident-countries-${index}`).addEventListener('change', e => e.target.checked ? map.addLayer(countriesLayer) : map.removeLayer(countriesLayer));
+                document.getElementById(`toggle-incident-states-${index}`).addEventListener('change', e => {
+                    if (e.target.checked && map.getZoom() >= 4) {
+                        map.addLayer(statesLayer);
+                    } else {
+                        map.removeLayer(statesLayer);
+                    }
+                });
+                
+                new ResizeObserver(() => map.invalidateSize()).observe(mapContainer);
+            });
+
+        } catch (error) {
+            console.error("Failed to load map GeoJSON data:", error);
+            document.getElementById('incidents-container').innerHTML = `<p class="text-center text-red-500 col-span-3">Could not load incident map data.</p>`;
+        }
+    }
+    
+    // --- REORDERING (Drag and Drop Sections) ---
+    new Sortable(document.getElementById('dashboard-container'), { animation: 150, handle: '.drag-handle', ghostClass: 'is-dragging' });
+
+    function renderTable() {
+        let data = state.data;
+        if (state.searchQuery) {
+            const query = state.searchQuery.toLowerCase();
+            data = data.filter(row => Object.values(row).some(val => String(val).toLowerCase().includes(query)));
+        }
+        state.filteredData = data;
+        data.sort((a, b) => {
+            const valA = a[state.sortColumn]; const valB = b[state.sortColumn];
+            if (valA < valB) return state.sortDirection === 'asc' ? -1 : 1;
+            if (valA > valB) return state.sortDirection === 'asc' ? 1 : -1;
+            return 0;
+        });
+        const start = (state.currentPage - 1) * state.rowsPerPage;
+        const paginatedData = data.slice(start, start + state.rowsPerPage);
+        document.getElementById('table-body').innerHTML = paginatedData.map(row => `
+            <tr class="hover:bg-gray-700/50">${Object.keys(headers).map(key => `<td class="px-6 py-4">${row[key]}</td>`).join('')}</tr>`).join('');
+        updatePagination();
+    }
+    
+    function updatePagination() {
+        const totalRows = state.filteredData.length;
+        const totalPages = Math.ceil(totalRows / state.rowsPerPage);
+        state.currentPage = Math.min(state.currentPage, totalPages) || 1;
+        document.getElementById('page-info').textContent = `Page ${state.currentPage} of ${totalPages}`;
+        const startRow = Math.min((state.currentPage - 1) * state.rowsPerPage + 1, totalRows);
+        const endRow = Math.min(state.currentPage * state.rowsPerPage, totalRows);
+        document.getElementById('table-info').textContent = `Showing ${startRow} to ${endRow} of ${totalRows} entries`;
+        document.getElementById('prev-page').disabled = state.currentPage === 1;
+        document.getElementById('next-page').disabled = state.currentPage === totalPages;
+    }
+    
+    function setupControls() {
+        const tableHeaders = document.getElementById('table-headers');
+        tableHeaders.innerHTML = Object.entries(headers).map(([key, title]) => {
+            const icon = state.sortColumn === key ? (state.sortDirection === 'asc' ? '▲' : '▼') : '';
+            return `<th scope="col" class="px-6 py-3 cursor-pointer" data-sort-key="${key}">${title} <span class="text-xs">${icon}</span></th>`;
+        }).join('');
+        tableHeaders.querySelectorAll('th').forEach(th => {
+            th.addEventListener('click', () => {
+                const key = th.dataset.sortKey;
+                if (state.sortColumn === key) { state.sortDirection = state.sortDirection === 'asc' ? 'desc' : 'asc'; } 
+                else { state.sortColumn = key; state.sortDirection = 'asc'; }
+                setupControls(); renderTable();
+            });
+        });
+        document.getElementById('table-search').addEventListener('input', (e) => { state.searchQuery = e.target.value; state.currentPage = 1; renderTable(); });
+        document.getElementById('prev-page').addEventListener('click', () => { if (state.currentPage > 1) { state.currentPage--; renderTable(); } });
+        document.getElementById('next-page').addEventListener('click', () => { if (state.currentPage < Math.ceil(state.filteredData.length / state.rowsPerPage)) { state.currentPage++; renderTable(); } });
+    }
+
+    // --- INITIALIZE EVERYTHING ---
+    calculateAndUpdateKPIs();
+    setupControls();
+    renderTable();
+    renderBarChart();
+    initEmployeeMap();
+    initIncidentMaps();
+});
