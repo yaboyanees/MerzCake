@@ -339,32 +339,37 @@ async function initIncidentMaps() {
         markers.addLayer(geoJsonLayer);
         map2.addLayer(markers);
         new ResizeObserver(() => map2.invalidateSize()).observe(document.getElementById('incident-map-2'));
-        
-        // --- Map 3: Heatmap ---
-        const map3 = L.map('incident-map-3', { zoomControl: false, maxZoom: 18 }).setView([34.0522, -118.2437], 4);
-        
-        // Step 1: Create a custom pane for the heatmap.
-        map3.createPane('heatmap');
 
-        // Step 2: Set its z-index to be high, so it's above other layers.
-        map3.getPane('heatmap').style.zIndex = 650;
-        
-        // Add the border layers (they will render in their default, lower pane)
-        L.geoJSON(countriesData, { style: countryBorderStyle }).addTo(map3);
-        L.geoJSON(statesData, { style: stateBorderStyle }).addTo(map3);
+// --- Map 3: Heatmap ---
+        const map3 = L.map('incident-map-3', { zoomControl: false, maxZoom: 18 }).setView([34.0522, -118.2437], 4);
+
+        // Step 1: Create a pane specifically for the borders.
+        map3.createPane('borderPane');
+
+        // Step 2: Set its z-index to be low, so it's beneath other data layers.
+        map3.getPane('borderPane').style.zIndex = 250;
+
+        // Step 3: Assign the border layers to this new, lower pane.
+        L.geoJSON(countriesData, { 
+            style: countryBorderStyle,
+            pane: 'borderPane' 
+        }).addTo(map3);
+        L.geoJSON(statesData, { 
+            style: stateBorderStyle,
+            pane: 'borderPane'
+        }).addTo(map3);
         
         const heatPoints = incidentsData.features.map(feature => [feature.geometry.coordinates[1], feature.geometry.coordinates[0], 0.5]); // lat, lng, intensity
         
+        // Let the heatLayer render in its default, higher pane (z-index 400).
         L.heatLayer(heatPoints, {
             radius: 20,
             blur: 30,
             maxZoom: 12,
-            gradient: {0.4: '#fdbe85', 0.7: '#fd8d3c', 1: '#e6550d'},
-            // Step 3: Assign the heat layer to our new custom pane.
-            pane: 'heatmap'
+            gradient: {0.4: '#fdbe85', 0.7: '#fd8d3c', 1: '#e6550d'}
         }).addTo(map3);
         
-        new ResizeObserver(() => map3.invalidateSize()).observe(document.getElementById('incident-map-3'));        
+        new ResizeObserver(() => map3.invalidateSize()).observe(document.getElementById('incident-map-3')); 
 
     } catch (error) {
         console.error("Failed to load map GeoJSON data:", error);
