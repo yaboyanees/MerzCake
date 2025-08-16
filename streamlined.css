@@ -1,0 +1,106 @@
+/* Use Inter font */
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Minimal style for SortableJS dragging ghost element */
+.is-dragging {
+    opacity: 0.7;
+    transform: scale(1.02);
+    background-color: #1f2937; /* A dark blue-gray for dragging */
+}
+
+/* Hide the default Leaflet attribution control */
+.leaflet-control-attribution {
+    display: none !important;
+}
+
+/* D3 Chart Styles */
+.chart-axis path,
+.chart-axis line {
+    stroke: #4b5563; /* gray-600 */
+}
+.chart-axis text {
+    fill: #9ca3af; /* gray-400 */
+    font-size: 0.75rem;
+}
+.grid-line {
+    stroke: #374151; /* gray-700 */
+    stroke-opacity: 0.7;
+    shape-rendering: crispEdges;
+}
+
+/* Tooltip Style */
+.chart-tooltip, .leaflet-tooltip {
+    background-color: rgba(17, 24, 39, 0.9) !important; /* gray-900 with opacity */
+    color: #e5e7eb !important; /* gray-200 */
+    border: 1px solid #4b5563 !important; /* gray-600 */
+    border-radius: 0.5rem !important; /* rounded-lg */
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.75rem !important;
+    pointer-events: none; /* Prevents tooltip from blocking mouse events */
+}
+.chart-tooltip {
+     position: absolute;
+     opacity: 0;
+     transition: opacity 0.2s;
+}
+.leaflet-tooltip-top:before, .leaflet-tooltip-bottom:before, .leaflet-tooltip-left:before, .leaflet-tooltip-right:before {
+    border: none !important;
+}
+
+/* Map Legend Style */
+.legend-control {
+    background-color: rgba(31, 41, 55, 0.8); /* gray-800 with opacity */
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid #4b5563; /* gray-600 */
+}
+.legend-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #f9fafb; /* gray-50 */
+}
+.legend-scale ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.legend-scale ul li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.25rem;
+    color: #d1d5db; /* gray-300 */
+}
+.legend-scale i {
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    border-radius: 0.125rem;
+}
+.legend-toggles {
+    border-top: 1px solid #4b5563; /* gray-600 */
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+}
+.legend-toggles label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: #d1d5db; /* gray-300 */
+}
+ .legend-toggles input {
+    margin-right: 0.5rem;
+ }
+
+ /* Editable Title Style */
+[contenteditable]:focus {
+    outline: 2px solid #3b82f6;
+    border-radius: 4px;
+    background-color: #374151;
+}
+
+/* Dark theme for Employee Map */
+#leaflet-map .leaflet-tile-pane {
+    filter: grayscale(1) brightness(0.6);
+}
