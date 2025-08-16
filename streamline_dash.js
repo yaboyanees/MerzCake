@@ -262,17 +262,20 @@ async function initIncidentMaps() {
         const countryBorderStyle = { color: "#4b5563", weight: 0.5, fillColor: '#1f2937', fillOpacity: 1, interactive: false };
         const stateBorderStyle = { color: "#6b7280", weight: 0.5, fillOpacity: 0, interactive: false };
 
-        // --- Map 1: Custom Symbols ---
+// --- Map 1: Custom Symbols ---
         const map1 = L.map('incident-map-1', { zoomControl: false, maxZoom: 18 }).setView([34.0522, -118.2437], 4);
         L.geoJSON(countriesData, { style: countryBorderStyle }).addTo(map1);
         L.geoJSON(statesData, { style: stateBorderStyle }).addTo(map1);
 
+        // CORRECTED: Updated to match all types in the GeoJSON data
         const typeDetails = {
+            'Smuggling Attempt': { icon: 'luggage', color: '#3498db' }, // Was 'Smuggling'
             'Illegal Activity': { icon: 'gavel', color: '#e67e22' },
-            'Smuggling': { icon: 'luggage', color: '#3498db' },
-            'Security Threat': { icon: 'security', color: '#e74c3c' },
-            'Other': { icon: 'help_outline', color: '#95a5a6' }
+            'Mass Migration Event': { icon: 'groups', color: '#9b59b6' }, // New
+            'WMD/CBRN Threat Incident': { icon: 'biohazard', color: '#e74c3c' }, // New
+            'Unknown Activity': { icon: 'help_outline', color: '#95a5a6' } // Was 'Other'
         };
+        
         const typeLayers = {};
         L.geoJSON(incidentsData, {
             onEachFeature: (feature, layer) => layer.bindTooltip(`<b>Type:</b> ${feature.properties.type}<br><b>Severity:</b> ${feature.properties.severity}`),
@@ -281,7 +284,10 @@ async function initIncidentMaps() {
                 if (!typeLayers[type]) {
                     typeLayers[type] = L.layerGroup().addTo(map1);
                 }
-                const details = typeDetails[type] || typeDetails['Other'];
+                
+                // CORRECTED: Use 'Unknown Activity' as the fallback
+                const details = typeDetails[type] || typeDetails['Unknown Activity'];
+
                 const marker = L.marker(latlng, {
                     icon: L.divIcon({
                         html: `<span class="material-symbols-outlined" style="color: ${details.color}; font-size: 24px; text-shadow: 0 0 3px rgba(0,0,0,0.5);">${details.icon}</span>`,
@@ -299,15 +305,18 @@ async function initIncidentMaps() {
         legend1.onAdd = function () {
             const div = L.DomUtil.create('div', 'legend-control');
             div.innerHTML = '<h4 class="legend-title">Incident Type</h4>';
+            // CORRECTED: Loop through the updated typeDetails to build the legend
             for (const type in typeDetails) {
                 const details = typeDetails[type];
-                const typeId = type.replace(/\s+/g, '');
+                const typeId = type.replace(/\s+/g, ''); // Create a DOM-safe ID
                 div.innerHTML += `<div class="legend-item"><input type="checkbox" id="toggle-${typeId}" checked><label for="toggle-${typeId}"><span class="material-symbols-outlined" style="color: ${details.color}; vertical-align: middle;">${details.icon}</span> ${type}</label></div>`;
             }
             L.DomEvent.disableClickPropagation(div);
             return div;
         };
         legend1.addTo(map1);
+        
+        // This toggle logic now works correctly because the keys match
         legend1.getContainer().addEventListener('input', (e) => {
             if (e.target.tagName === 'INPUT') {
                 const typeName = e.target.id.replace('toggle-', '');
