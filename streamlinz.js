@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
         
-    // --- DATA (UPDATED) ---
     const tableData = [
         { name: 'Tiger Nixon', position: 'System Architect', job_family: 'Technical', office: 'Edinburgh', age: 61, startDate: '2011/04/25', salary: '$320,800', country: 'United Kingdom', lat: 55.9533, lng: -3.1883 },
         { name: 'Garrett Winters', position: 'Accountant', job_family: 'Finance', office: 'Tokyo', age: 63, startDate: '2011/07/25', salary: '$170,750', country: 'Japan', lat: 35.6895, lng: 139.6917 },
@@ -52,8 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Noura El-Sayed', position: 'Policy Analyst', job_family: 'Research', office: 'Cairo', age: 44, startDate: '2007/12/09', salary: '$135,600', country: 'Egypt', lat: 30.0444, lng: 31.2357 },
         { name: 'William Scott', position: 'Chief Technology Officer (CTO)', job_family: 'Technical', office: 'Austin', age: 52, startDate: '2005/07/22', salary: '$480,000', country: 'United States of America', lat: 30.2672, lng: -97.7431 },
     ];
-    
-    // --- KPI LOGIC ---
+
     function calculateAndUpdateKPIs() {
         const totalSalary = tableData.reduce((acc, curr) => acc + Number(curr.salary.replace(/[^0-9.-]+/g, "")), 0);
         document.getElementById('kpi-total-salary').textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(totalSalary);
@@ -88,8 +86,6 @@ document.addEventListener('DOMContentLoaded', () => {
         positions.forEach(pos => { counts[pos] = values.filter(d => d.position === pos).length; });
         return counts;
     });
-    const stack = d3.stack().keys(positions);
-    const stackedData = stack(officePositionCounts);
     const chartSvg = d3.select("#dynamic-chart");
     const chartMargin = {top: 20, right: 20, bottom: 40, left: 60};
 
@@ -100,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return { width, height, innerWidth: width - chartMargin.left - chartMargin.right, innerHeight: height - chartMargin.top - chartMargin.bottom };
     }
 
-function renderBarChart() {
+    function renderBarChart() {
         const { innerWidth, innerHeight } = getChartDimensions();
         if (innerWidth <= 0) return;
         chartSvg.selectAll("*").remove();
@@ -161,7 +157,7 @@ function renderBarChart() {
         chartSvg.selectAll("*").remove();
         const radius = Math.min(width, height) / 2 - 10;
         const g = chartSvg.append("g").attr("transform", `translate(${width / 2}, ${height / 2})`);
-        const color = d3.scaleOrdinal(d3.schemePaired); // Using a different color scheme
+        const color = d3.scaleOrdinal(d3.schemePaired);
         const pie = d3.pie().value(d => d.value);
         const path = d3.arc().outerRadius(radius).innerRadius(isDonut ? radius / 2 : 0);
         const total = d3.sum(countryCounts, d => d.value);
@@ -171,7 +167,6 @@ function renderBarChart() {
             .on("mousemove", (event) => tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px"))
             .on("mouseout", () => tooltip.style("opacity", 0));
         
-        // Add labels only if the slice is big enough
         arcs.filter(d => (d.endAngle - d.startAngle) > 0.25).append("text")
             .attr("transform", d => `translate(${path.centroid(d)})`)
             .attr("dy", "0.35em").attr("class", "text-xs fill-white pointer-events-none")
@@ -231,7 +226,6 @@ function renderBarChart() {
     });
     
     // Initial chart render and resize observer
-    renderBarChart();
     new ResizeObserver(() => {
         const activeChartType = document.querySelector('#chart-toggles .bg-blue-500').dataset.chart;
         chartRenderers[activeChartType]();
@@ -501,12 +495,12 @@ function renderBarChart() {
             
         cell.append("text")
              .attr("x", 4)
-             .attr("y", d => (d.y1 - d.y0) - 5) // Position value at the bottom
+             .attr("y", d => (d.y1 - d.y0) - 5)
              .text(d => d.data.value)
              .attr("class", "text-lg font-bold fill-white pointer-events-none");
     }
 
-function renderSankey() {
+    function renderSankey() {
         if (typeof d3.sankey !== 'function') {
             console.error("d3-sankey library is not loaded. Please add it to your HTML file.");
             d3.select("#sankey-chart").append("text")
@@ -563,15 +557,14 @@ function renderSankey() {
 
         const color = d3.scaleOrdinal(d3.schemeTableau10);
 
-        // Render Links first (so nodes are drawn on top)
         const link = sankeySvg.append("g")
             .attr("fill", "none")
             .selectAll("g")
             .data(layoutLinks)
             .join("g")
-            .attr("stroke-opacity", 0.5) // Set default opacity
-            .on("mouseover", function() { d3.select(this).attr("stroke-opacity", 0.7); }) // Highlight link
-            .on("mouseout", function() { d3.select(this).attr("stroke-opacity", 0.5); }) // Un-highlight
+            .attr("stroke-opacity", 0.5)
+            .on("mouseover", function() { d3.select(this).attr("stroke-opacity", 0.7); })
+            .on("mouseout", function() { d3.select(this).attr("stroke-opacity", 0.5); })
             .on("mousemove", (event, d) => {
                 tooltip.style("opacity", 1)
                        .html(`<b>Flow:</b> ${d.source.name} → ${d.target.name}<br><b>Employees:</b> ${d.value}`)
@@ -580,7 +573,6 @@ function renderSankey() {
             })
             .on("mouseleave", () => tooltip.style("opacity", 0));
         
-        // Add color gradients to links
         const gradient = link.append("linearGradient")
             .attr("id", (d,i) => `gradient-${i}`)
             .attr("gradientUnits", "userSpaceOnUse")
@@ -600,7 +592,6 @@ function renderSankey() {
             .attr("stroke", (d,i) => `url(#gradient-${i})`)
             .attr("stroke-width", d => Math.max(1, d.width));
         
-        // Render Nodes
         const node = sankeySvg.append("g")
             .selectAll("g")
             .data(layoutNodes)
@@ -614,16 +605,14 @@ function renderSankey() {
             .attr("fill", d => color(d.name.split(" ")[0]))
             .on("mouseover", (event, d) => {
                 tooltip.style("opacity", 1).html(`<b>${d.name}</b><br>${d.value} employees`);
-                // Highlight connected links
                 link.attr('stroke-opacity', l => l.source === d || l.target === d ? 0.7 : 0.2);
             })
             .on("mousemove", (event) => tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px"))
             .on("mouseout", () => {
                 tooltip.style("opacity", 0);
-                link.attr('stroke-opacity', 0.5); // Restore default opacity
+                link.attr('stroke-opacity', 0.5);
             });
         
-        // Render Labels
         node.append("text")
             .attr("x", d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
             .attr("y", d => (d.y1 + d.y0) / 2)
@@ -652,5 +641,5 @@ function renderSankey() {
     renderTable();
     initEmployeeMap();
     initIncidentMaps();
-    initNewCharts(); // Call the function for the new charts
+    initNewCharts();
 });
