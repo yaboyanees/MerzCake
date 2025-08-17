@@ -231,61 +231,63 @@ document.addEventListener('DOMContentLoaded', () => {
         chartRenderers[activeChartType]();
     }).observe(document.getElementById('viz-container'));
 
-    async function initEmployeeMap() {
-        const leafletMapEl = document.getElementById('leaflet-map');
-        if (!leafletMapEl) return;
-        const map = L.map('leaflet-map', { attributionControl: false }).setView([20, 0], 2);
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; CARTO', subdomains: 'abcd', maxZoom: 20 }).addTo(map);
-        let statesLayer, countriesLayer, officeMarkersGroup;
-        const employeeCountsByCountry = d3.rollup(tableData, v => v.length, d => d.country);
-        const employeeCountsByOffice = d3.rollup(tableData, v => v.length, d => d.office);
-        const maxCount = d3.max(employeeCountsByCountry.values());
-        const colorScale = d3.scaleQuantize([0, maxCount], ['#eff3ff', '#bdd7e7', '#6baed6', '#2171b5']);
-        const defaultStyle = { color: "#4b5563", weight: 0.5, fillOpacity: 1 };
-        const highlightStyle = { color: "#9ca3af", weight: 1.5 };
-        const defaultStateStyle = { color: "#6b7280", weight: 0.5, fillOpacity: 0 };
-        const highlightStateStyle = { color: "#e5e7eb", weight: 1 };
-        try {
-            const countriesData = await d3.json('https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/country_borders.geojson');
-            countriesLayer = L.geoJSON(countriesData, {
-                style: (f) => ({ ...defaultStyle, fillColor: employeeCountsByCountry.get(f.properties.admin) ? colorScale(employeeCountsByCountry.get(f.properties.admin)) : '#374151' }),
-                onEachFeature: (feature, layer) => {
-                    const count = employeeCountsByCountry.get(feature.properties.admin) || 0;
-                    layer.bindTooltip(`<b>${feature.properties.admin}</b><br>${count} employees`, { sticky: true });
-                    layer.on({ mouseover: (e) => e.target.setStyle(highlightStyle), mouseout: (e) => countriesLayer.resetStyle(e.target) });
-                }
-            }).addTo(map);
-        } catch (error) { console.error("Error loading country border data:", error); }
-        try {
-            const statesData = await d3.json('https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/us_state_borders.geojson');
-            statesLayer = L.geoJSON(statesData, { style: defaultStateStyle, onEachFeature: (f, l) => { if (f.properties && f.properties.NAME) { l.bindTooltip(f.properties.NAME, { sticky: true }); } l.on({ mouseover: (e) => e.target.setStyle(highlightStateStyle), mouseout: (e) => statesLayer.resetStyle(e.target) }); } });
-        } catch (error) { console.error("Error loading state border data:", error); }
-        const uniqueOffices = Array.from(new Set(tableData.map(d => d.office))).map(office => tableData.find(d => d.office === office));
-        const officeIcon = L.divIcon({ html: `<span class="material-symbols-outlined" style="font-size: 24px; color: #f59e0b;">place</span>`, className: '', iconSize: [24, 24], iconAnchor: [12, 24] });
-        officeMarkersGroup = L.layerGroup(uniqueOffices.map(office => L.marker([office.lat, office.lng], { icon: officeIcon }).bindTooltip(`${office.office}<br>${employeeCountsByOffice.get(office.office) || 0} employees`))).addTo(map);
-        map.on('zoomend', () => {
-            const statesVisible = document.getElementById('toggle-states').checked;
-            if (map.getZoom() >= 4 && statesVisible && statesLayer && !map.hasLayer(statesLayer)) map.addLayer(statesLayer);
-            else if (statesLayer && map.hasLayer(statesLayer)) map.removeLayer(statesLayer);
-        });
-        const legend = L.control({position: 'topright'});
-        legend.onAdd = function () {
-            const div = L.DomUtil.create('div', 'legend-control');
-            div.innerHTML = `<h4 class="legend-title">Employees</h4><div class="legend-scale"><ul></ul></div><div class="legend-toggles">
-                <label><input type="checkbox" id="toggle-countries" checked> Countries</label>
-                <label><input type="checkbox" id="toggle-states" checked> US States</label>
-                <label><input type="checkbox" id="toggle-offices" checked> Offices</label></div>`;
-            const grades = [0, ...colorScale.thresholds()];
-            grades.forEach((from, i) => { const to = grades[i + 1]; div.querySelector('ul').innerHTML += `<li><i style="background:${colorScale(from + 1)}"></i> ${from + (to ? '&ndash;' + to : '+')}</li>`; });
-            L.DomEvent.disableClickPropagation(div);
-            return div;
-        };
-        legend.addTo(map);
-        document.getElementById('toggle-countries').addEventListener('change', (e) => e.target.checked ? map.addLayer(countriesLayer) : map.removeLayer(countriesLayer));
-        document.getElementById('toggle-states').addEventListener('change', (e) => { if (e.target.checked && map.getZoom() >= 4) map.addLayer(statesLayer); else map.removeLayer(statesLayer); });
-        document.getElementById('toggle-offices').addEventListener('change', (e) => e.target.checked ? map.addLayer(officeMarkersGroup) : map.removeLayer(officeMarkersGroup));
-        new ResizeObserver(() => map.invalidateSize()).observe(leafletMapEl);
-    }
+async function initEmployeeMap() {
+    const leafletMapEl = document.getElementById('leaflet-map');
+    if (!leafletMapEl) return;
+    const map = L.map('leaflet-map', { attributionControl: false }).setView([20, 0], 2);
+    
+    // REMOVED: The L.tileLayer line that added the CartoDB base map is now gone.
+    
+    let statesLayer, countriesLayer, officeMarkersGroup;
+    const employeeCountsByCountry = d3.rollup(tableData, v => v.length, d => d.country);
+    const employeeCountsByOffice = d3.rollup(tableData, v => v.length, d => d.office);
+    const maxCount = d3.max(employeeCountsByCountry.values());
+    const colorScale = d3.scaleQuantize([0, maxCount], ['#eff3ff', '#bdd7e7', '#6baed6', '#2171b5']);
+    const defaultStyle = { color: "#4b5563", weight: 0.5, fillOpacity: 1 };
+    const highlightStyle = { color: "#9ca3af", weight: 1.5 };
+    const defaultStateStyle = { color: "#6b7280", weight: 0.5, fillOpacity: 0 };
+    const highlightStateStyle = { color: "#e5e7eb", weight: 1 };
+    try {
+        const countriesData = await d3.json('https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/country_borders.geojson');
+        countriesLayer = L.geoJSON(countriesData, {
+            style: (f) => ({ ...defaultStyle, fillColor: employeeCountsByCountry.get(f.properties.admin) ? colorScale(employeeCountsByCountry.get(f.properties.admin)) : '#374151' }),
+            onEachFeature: (feature, layer) => {
+                const count = employeeCountsByCountry.get(feature.properties.admin) || 0;
+                layer.bindTooltip(`<b>${feature.properties.admin}</b><br>${count} employees`, { sticky: true });
+                layer.on({ mouseover: (e) => e.target.setStyle(highlightStyle), mouseout: (e) => countriesLayer.resetStyle(e.target) });
+            }
+        }).addTo(map);
+    } catch (error) { console.error("Error loading country border data:", error); }
+    try {
+        const statesData = await d3.json('https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/us_state_borders.geojson');
+        statesLayer = L.geoJSON(statesData, { style: defaultStateStyle, onEachFeature: (f, l) => { if (f.properties && f.properties.NAME) { l.bindTooltip(f.properties.NAME, { sticky: true }); } l.on({ mouseover: (e) => e.target.setStyle(highlightStateStyle), mouseout: (e) => statesLayer.resetStyle(e.target) }); } });
+    } catch (error) { console.error("Error loading state border data:", error); }
+    const uniqueOffices = Array.from(new Set(tableData.map(d => d.office))).map(office => tableData.find(d => d.office === office));
+    const officeIcon = L.divIcon({ html: `<span class="material-symbols-outlined" style="font-size: 24px; color: #f59e0b;">place</span>`, className: '', iconSize: [24, 24], iconAnchor: [12, 24] });
+    officeMarkersGroup = L.layerGroup(uniqueOffices.map(office => L.marker([office.lat, office.lng], { icon: officeIcon }).bindTooltip(`${office.office}<br>${employeeCountsByOffice.get(office.office) || 0} employees`))).addTo(map);
+    map.on('zoomend', () => {
+        const statesVisible = document.getElementById('toggle-states').checked;
+        if (map.getZoom() >= 4 && statesVisible && statesLayer && !map.hasLayer(statesLayer)) map.addLayer(statesLayer);
+        else if (statesLayer && map.hasLayer(statesLayer)) map.removeLayer(statesLayer);
+    });
+    const legend = L.control({position: 'topright'});
+    legend.onAdd = function () {
+        const div = L.DomUtil.create('div', 'legend-control');
+        div.innerHTML = `<h4 class="legend-title">Employees</h4><div class="legend-scale"><ul></ul></div><div class="legend-toggles">
+            <label><input type="checkbox" id="toggle-countries" checked> Countries</label>
+            <label><input type="checkbox" id="toggle-states" checked> US States</label>
+            <label><input type="checkbox" id="toggle-offices" checked> Offices</label></div>`;
+        const grades = [0, ...colorScale.thresholds()];
+        grades.forEach((from, i) => { const to = grades[i + 1]; div.querySelector('ul').innerHTML += `<li><i style="background:${colorScale(from + 1)}"></i> ${from + (to ? '&ndash;' + to : '+')}</li>`; });
+        L.DomEvent.disableClickPropagation(div);
+        return div;
+    };
+    legend.addTo(map);
+    document.getElementById('toggle-countries').addEventListener('change', (e) => e.target.checked ? map.addLayer(countriesLayer) : map.removeLayer(countriesLayer));
+    document.getElementById('toggle-states').addEventListener('change', (e) => { if (e.target.checked && map.getZoom() >= 4) map.addLayer(statesLayer); else map.removeLayer(statesLayer); });
+    document.getElementById('toggle-offices').addEventListener('change', (e) => e.target.checked ? map.addLayer(officeMarkersGroup) : map.removeLayer(officeMarkersGroup));
+    new ResizeObserver(() => map.invalidateSize()).observe(leafletMapEl);
+}
 
     async function initIncidentMaps() {
         const incidentsUrl = 'https://raw.githubusercontent.com/yaboyanees/MerzCake/main/incidents_data.geojson';
