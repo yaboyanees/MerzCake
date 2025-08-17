@@ -80,11 +80,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- D3 & LEAFLET VISUALIZATIONS ---
     const tooltip = d3.select("#chart-tooltip");
-    const officeCounts = Array.from(d3.rollup(tableData, v => v.length, d => d.office), ([key, value]) => ({key, value}));
+    const countryCounts = Array.from(d3.rollup(tableData, v => v.length, d => d.country), ([key, value]) => ({key, value}));
     const ageSalaryData = tableData.map(d => ({ age: d.age, salary: Number(d.salary.replace(/[^0-9.-]+/g,"")) }));
     const positions = [...new Set(tableData.map(d => d.position))];
-    const officePositionCounts = Array.from(d3.group(tableData, d => d.office), ([office, values]) => {
-        const counts = { office };
+    const countryPositionCounts = Array.from(d3.group(tableData, d => d.country), ([country, values]) => {
+        const counts = { country };
         positions.forEach(pos => { counts[pos] = values.filter(d => d.position === pos).length; });
         return counts;
     });
@@ -100,16 +100,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return { width, height, innerWidth: width - chartMargin.left - chartMargin.right, innerHeight: height - chartMargin.top - chartMargin.bottom };
     }
 
-    function renderBarChart() {
+function renderBarChart() {
         const { innerWidth, innerHeight } = getChartDimensions();
         if (innerWidth <= 0) return;
         chartSvg.selectAll("*").remove();
         const g = chartSvg.append("g").attr("transform", `translate(${chartMargin.left},${chartMargin.top})`);
-        const x = d3.scaleLinear().domain([0, d3.max(officeCounts, d => d.value)]).nice().range([0, innerWidth]);
-        const y = d3.scaleBand().domain(officeCounts.map(d => d.key)).range([innerHeight, 0]).padding(0.1);
+        const x = d3.scaleLinear().domain([0, d3.max(countryCounts, d => d.value)]).nice().range([0, innerWidth]);
+        const y = d3.scaleBand().domain(countryCounts.map(d => d.key)).range([innerHeight, 0]).padding(0.1);
         g.append("g").attr("class", "chart-axis").call(d3.axisLeft(y));
         g.append("g").attr("class", "chart-axis").attr("transform", `translate(0,${innerHeight})`).call(d3.axisBottom(x));
-        const bars = g.selectAll(".bar").data(officeCounts).enter();
+        const bars = g.selectAll(".bar").data(countryCounts).enter();
         bars.append("rect").attr("class", "fill-blue-500 hover:fill-blue-400 transition-colors").attr("x", 0).attr("y", d => y(d.key)).attr("width", d => x(d.value)).attr("height", y.bandwidth())
             .on("mouseover", (event, d) => tooltip.style("opacity", 1).html(`<b>${d.key}</b><br>${d.value} employees`))
             .on("mousemove", (event) => tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px"))
@@ -122,16 +122,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (innerWidth <= 0) return;
         chartSvg.selectAll("*").remove();
         const g = chartSvg.append("g").attr("transform", `translate(${chartMargin.left},${chartMargin.top})`);
-        const x = d3.scaleBand().domain(officeCounts.map(d => d.key)).range([0, innerWidth]).padding(0.1);
-        const y = d3.scaleLinear().domain([0, d3.max(officeCounts, d => d.value)]).nice().range([innerHeight, 0]);
+        const x = d3.scaleBand().domain(countryCounts.map(d => d.key)).range([0, innerWidth]).padding(0.1);
+        const y = d3.scaleLinear().domain([0, d3.max(countryCounts, d => d.value)]).nice().range([innerHeight, 0]);
         g.append("g").attr("class", "chart-axis").call(d3.axisLeft(y));
         g.append("g").attr("class", "chart-axis").attr("transform", `translate(0,${innerHeight})`).call(d3.axisBottom(x));
-        const bars = g.selectAll(".bar").data(officeCounts).enter();
+        const bars = g.selectAll(".bar").data(countryCounts).enter();
         bars.append("rect").attr("class", "fill-blue-500 hover:fill-blue-400 transition-colors").attr("x", d => x(d.key)).attr("y", d => y(d.value)).attr("width", x.bandwidth()).attr("height", d => innerHeight - y(d.value))
             .on("mouseover", (event, d) => tooltip.style("opacity", 1).html(`<b>${d.key}</b><br>${d.value} employees`))
             .on("mousemove", (event) => tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px"))
             .on("mouseout", () => tooltip.style("opacity", 0));
-        bars.append("text").attr("class", "fill-white font-bold text-xs pointer-events-none").attr("x", d => x(d.key) + x.bandwidth() / 2).attr("y", innerHeight - 5).attr("text-anchor", "middle").text(d => d.value);
+        bars.append("text").attr("class", "fill-white font-bold text-xs pointer-events-none").attr("x", d => x(d.key) + x.bandwidth() / 2).attr("y", d => y(d.value) - 5).attr("text-anchor", "middle").text(d => d.value);
     }
 
     function renderStackedBarChart() {
@@ -139,20 +139,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (innerWidth <= 0) return;
         chartSvg.selectAll("*").remove();
         const g = chartSvg.append("g").attr("transform", `translate(${chartMargin.left},${chartMargin.top})`);
-        const x = d3.scaleBand().domain(officePositionCounts.map(d => d.office)).range([0, innerWidth]).padding(0.1);
+        const stack = d3.stack().keys(positions);
+        const stackedData = stack(countryPositionCounts);
+        const x = d3.scaleBand().domain(countryPositionCounts.map(d => d.country)).range([0, innerWidth]).padding(0.1);
         const y = d3.scaleLinear().domain([0, d3.max(stackedData[stackedData.length - 1], d => d[1])]).nice().range([innerHeight, 0]);
-        const color = d3.scaleOrdinal(d3.schemeCategory10);
+        const color = d3.scaleOrdinal(d3.schemeTableau10);
         g.append("g").attr("class", "chart-axis").call(d3.axisLeft(y));
         g.append("g").attr("class", "chart-axis").attr("transform", `translate(0,${innerHeight})`).call(d3.axisBottom(x));
-        g.append("g").selectAll("g").data(stackedData).join("g").attr("fill", d => color(d.key)).selectAll("rect").data(d => d).join("rect").attr("x", d => x(d.data.office)).attr("y", d => y(d[1])).attr("height", d => y(d[0]) - y(d[1])).attr("width", x.bandwidth())
+        g.append("g").selectAll("g").data(stackedData).join("g").attr("fill", d => color(d.key)).selectAll("rect").data(d => d).join("rect").attr("x", d => x(d.data.country)).attr("y", d => y(d[1])).attr("height", d => y(d[0]) - y(d[1])).attr("width", x.bandwidth())
             .on("mouseover", (event, d) => {
                 const position = d3.select(event.currentTarget.parentNode).datum().key;
-                tooltip.style("opacity", 1).html(`<b>${d.data.office}</b><br>${position}: ${d[1] - d[0]}`);
+                tooltip.style("opacity", 1).html(`<b>${d.data.country}</b><br>${position}: ${d[1] - d[0]}`);
             })
             .on("mousemove", (event) => tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px"))
             .on("mouseout", () => tooltip.style("opacity", 0));
-        const totals = officePositionCounts.map(d => d3.sum(positions, pos => d[pos]));
-        g.selectAll(".total-label").data(totals).enter().append("text").attr("class", "fill-white font-bold text-xs pointer-events-none").attr("x", (d, i) => x(officePositionCounts[i].office) + x.bandwidth() / 2).attr("y", d => y(d) - 5).attr("text-anchor", "middle").text(d => d);
     }
 
     function renderPieChart(isDonut = false) {
@@ -161,16 +161,22 @@ document.addEventListener('DOMContentLoaded', () => {
         chartSvg.selectAll("*").remove();
         const radius = Math.min(width, height) / 2 - 10;
         const g = chartSvg.append("g").attr("transform", `translate(${width / 2}, ${height / 2})`);
-        const color = d3.scaleOrdinal(d3.schemeCategory10);
+        const color = d3.scaleOrdinal(d3.schemePaired); // Using a different color scheme
         const pie = d3.pie().value(d => d.value);
         const path = d3.arc().outerRadius(radius).innerRadius(isDonut ? radius / 2 : 0);
-        const total = d3.sum(officeCounts, d => d.value);
-        const arcs = g.selectAll(".arc").data(pie(officeCounts)).enter().append("g").attr("class", "arc");
+        const total = d3.sum(countryCounts, d => d.value);
+        const arcs = g.selectAll(".arc").data(pie(countryCounts)).enter().append("g").attr("class", "arc");
         arcs.append("path").attr("d", path).attr("fill", d => color(d.data.key))
             .on("mouseover", (event, d) => tooltip.style("opacity", 1).html(`<b>${d.data.key}</b><br>${d.data.value} employees`))
             .on("mousemove", (event) => tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px"))
             .on("mouseout", () => tooltip.style("opacity", 0));
-        arcs.append("text").attr("transform", d => `translate(${path.centroid(d)})`).attr("dy", "0.35em").attr("class", "text-xs fill-white pointer-events-none").style("text-anchor", "middle").text(d => d.data.value);
+        
+        // Add labels only if the slice is big enough
+        arcs.filter(d => (d.endAngle - d.startAngle) > 0.25).append("text")
+            .attr("transform", d => `translate(${path.centroid(d)})`)
+            .attr("dy", "0.35em").attr("class", "text-xs fill-white pointer-events-none")
+            .style("text-anchor", "middle").text(d => d.data.value);
+            
         if (isDonut) {
             g.append("text").attr("text-anchor", "middle").attr("class", "fill-gray-200 text-2xl font-bold").attr('dy', '0.1em').text(total);
             g.append("text").attr("text-anchor", "middle").attr("class", "fill-gray-400 text-xs").attr('dy', '1.2em').text("Total");
@@ -500,7 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
              .attr("class", "text-lg font-bold fill-white pointer-events-none");
     }
 
-    function renderSankey() {
+function renderSankey() {
         if (typeof d3.sankey !== 'function') {
             console.error("d3-sankey library is not loaded. Please add it to your HTML file.");
             d3.select("#sankey-chart").append("text")
@@ -557,42 +563,74 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const color = d3.scaleOrdinal(d3.schemeTableau10);
 
-        sankeySvg.append("g")
-            .selectAll("rect")
-            .data(layoutNodes)
-            .join("rect")
-              .attr("x", d => d.x0)
-              .attr("y", d => d.y0)
-              .attr("height", d => d.y1 - d.y0)
-              .attr("width", d => d.x1 - d.x0)
-              .attr("fill", d => color(d.name.split(" ")[0]))
-              .on("mouseover", (event, d) => tooltip.style("opacity", 1).html(`<b>${d.name}</b><br>${d.value} employees`))
-              .on("mousemove", (event) => tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px"))
-              .on("mouseout", () => tooltip.style("opacity", 0));
-        
+        // Render Links first (so nodes are drawn on top)
         const link = sankeySvg.append("g")
             .attr("fill", "none")
-            .attr("stroke-opacity", 0.5)
             .selectAll("g")
             .data(layoutLinks)
             .join("g")
-            .style("mix-blend-mode", "multiply");
+            .attr("stroke-opacity", 0.5) // Set default opacity
+            .on("mouseover", function() { d3.select(this).attr("stroke-opacity", 0.7); }) // Highlight link
+            .on("mouseout", function() { d3.select(this).attr("stroke-opacity", 0.5); }) // Un-highlight
+            .on("mousemove", (event, d) => {
+                tooltip.style("opacity", 1)
+                       .html(`<b>Flow:</b> ${d.source.name} → ${d.target.name}<br><b>Employees:</b> ${d.value}`)
+                       .style("left", (event.pageX + 15) + "px")
+                       .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseleave", () => tooltip.style("opacity", 0));
         
+        // Add color gradients to links
+        const gradient = link.append("linearGradient")
+            .attr("id", (d,i) => `gradient-${i}`)
+            .attr("gradientUnits", "userSpaceOnUse")
+            .attr("x1", d => d.source.x1)
+            .attr("x2", d => d.target.x0);
+
+        gradient.append("stop")
+            .attr("offset", "0%")
+            .attr("stop-color", d => color(d.source.name.split(" ")[0]));
+
+        gradient.append("stop")
+            .attr("offset", "100%")
+            .attr("stop-color", d => color(d.target.name.split(" ")[0]));
+
         link.append("path")
             .attr("d", d3.sankeyLinkHorizontal())
-            .attr("stroke", d => color(d.source.name.split(" ")[0]))
+            .attr("stroke", (d,i) => `url(#gradient-${i})`)
             .attr("stroke-width", d => Math.max(1, d.width));
-
-        sankeySvg.append("g")
-            .selectAll("text")
+        
+        // Render Nodes
+        const node = sankeySvg.append("g")
+            .selectAll("g")
             .data(layoutNodes)
-            .join("text")
-              .attr("x", d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
-              .attr("y", d => (d.y1 + d.y0) / 2)
-              .attr("dy", "0.35em")
-              .attr("text-anchor", d => d.x0 < width / 2 ? "start" : "end")
-              .attr("class", "text-xs fill-gray-300 pointer-events-none")
-              .text(d => d.name);
+            .join("g");
+
+        node.append("rect")
+            .attr("x", d => d.x0)
+            .attr("y", d => d.y0)
+            .attr("height", d => d.y1 - d.y0)
+            .attr("width", d => d.x1 - d.x0)
+            .attr("fill", d => color(d.name.split(" ")[0]))
+            .on("mouseover", (event, d) => {
+                tooltip.style("opacity", 1).html(`<b>${d.name}</b><br>${d.value} employees`);
+                // Highlight connected links
+                link.attr('stroke-opacity', l => l.source === d || l.target === d ? 0.7 : 0.2);
+            })
+            .on("mousemove", (event) => tooltip.style("left", (event.pageX + 15) + "px").style("top", (event.pageY - 28) + "px"))
+            .on("mouseout", () => {
+                tooltip.style("opacity", 0);
+                link.attr('stroke-opacity', 0.5); // Restore default opacity
+            });
+        
+        // Render Labels
+        node.append("text")
+            .attr("x", d => d.x0 < width / 2 ? d.x1 + 6 : d.x0 - 6)
+            .attr("y", d => (d.y1 + d.y0) / 2)
+            .attr("dy", "0.35em")
+            .attr("text-anchor", d => d.x0 < width / 2 ? "start" : "end")
+            .attr("class", "text-xs fill-gray-300 pointer-events-none")
+            .text(d => d.name);
     }
     
     function initNewCharts() {
