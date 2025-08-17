@@ -312,7 +312,7 @@ async function initEmployeeMap() {
                 'Smuggling Attempt': { icon: 'luggage', color: '#3498db' },
                 'Illegal Activity': { icon: 'gavel', color: '#e67e22' },
                 'Mass Migration Event': { icon: 'groups', color: '#9b59b6' },
-                'WMD/CBRN Threat Incident': { icon: 'biohazard', color: '#e74c3c' },
+                'WMD/CBRN Threat Incident': { icon: 'caution', color: '#e74c3c' },
                 'Unknown Activity': { icon: 'help_outline', color: '#95a5a6' }
             };
             const typeLayers = {};
