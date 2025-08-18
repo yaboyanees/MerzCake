@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
      * Renders all slides into the presentation container.
      */
     function renderAllSlides() {
-        presentationContainer.innerHTML = ''; 
+        presentationContainer.innerHTML = '';
         slidesData.forEach((slideData, index) => {
             const slideWrapper = document.createElement('div');
             slideWrapper.id = `slide-${index}`;
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
      * @returns {string} The HTML string for the slide content.
      */
     function getLayoutHtml(slideData, slideIndex) {
-         switch (slideData.layout) {
+        switch (slideData.layout) {
             case 'title_slide':
                 const date = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase();
                 return `<div class="slide-content w-full text-center flex flex-col justify-between h-full">
@@ -119,10 +119,8 @@ document.addEventListener('DOMContentLoaded', function() {
             case 'standard_content':
                 let footerInfoHtml = '';
                 if (slideData.footer_info) {
-                    // Use different positioning for slide 5 (index 4)
-                    const style = slideIndex === 4 
-                        ? 'bottom: -0.5rem; right: 1.5rem;' 
-                        : 'bottom: -1.5rem; right: -0.5rem;';
+                    // Corrected positioning for all standard_content slides with a footer
+                    const style = 'bottom: -0.5rem; right: 1.5rem;';
                     footerInfoHtml = `<div contenteditable="true" class="text-xs absolute" style="${style}">${slideData.footer_info}</div>`;
                 }
                 return `<div class="slide-content w-full h-full flex flex-col text-left justify-start">
@@ -181,8 +179,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Define fixed start and end points for the timeline ray
         const startX = 50;
         const startY = 420;
-        const endX = 650;
-        const endY = 60;
+        const endX = 700;
+        const endY = 28;
 
         // Calculate the total span of the timeline ray
         const totalXSpan = endX - startX;
