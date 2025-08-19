@@ -1,0 +1,53 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Erez (Beit Hanoun) Crossing",
+        "country_sides": "Israel–Gaza",
+        "use": "Pedestrians / humanitarian",
+        "source": "Wikipedia; OCHA"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.54472,
+          31.5582
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kerem Shalom (Karm Abu Salem) Crossing",
+        "country_sides": "Israel–Gaza / Egypt–Gaza junction",
+        "use": "Goods / humanitarian cargo",
+        "source": "Wikipedia; OCHA"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.27056,
+          31.22083
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Rafah Border Crossing",
+        "country_sides": "Egypt–Gaza",
+        "use": "Pedestrians / goods (irregular)",
+        "source": "Wikipedia; OCHA"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          34.25923,
+          31.24858
+        ]
+      }
+    }
+  ]
+}
