@@ -1,0 +1,160 @@
+{
+  "infrastructure_damage": {
+    "title": "Various estimates of damage to housing, healthcare, and other infrastructure in Gaza as of August 2025",
+    "source": "UNOCHA",
+    "timeframe": "Palestinian territories, Oct 7th 2023 to Aug 6th 2025",
+    "damage_estimates": [
+      {
+        "category": "Housing and general infrastructure",
+        "items": [
+          {
+            "metric": "All structures destroyed or damaged",
+            "share_of_total_infrastructure": "70%"
+          },
+          {
+            "metric": "Housing units damaged",
+            "share_of_total_infrastructure": "58%"
+          },
+          {
+            "metric": "Housing units destroyed",
+            "share_of_total_infrastructure": "34%"
+          },
+          {
+            "metric": "Road network destroyed or damaged",
+            "share_of_total_infrastructure": "81%"
+          },
+          {
+            "metric": "Commercial or industrial facilities destroyed",
+            "share_of_total_infrastructure": "66%"
+          },
+          {
+            "metric": "Commercial or industrial facilities damaged",
+            "share_of_total_infrastructure": "22%"
+          }
+        ]
+      },
+      {
+        "category": "Healthcare",
+        "items": [
+          {
+            "metric": "Field hospitals partially functional",
+            "share_of_total_infrastructure": "62%"
+          },
+          {
+            "metric": "Hospitals partially functional",
+            "share_of_total_infrastructure": "47%"
+          },
+          {
+            "metric": "Primary healthcare centers partially functional",
+            "share_of_total_infrastructure": "37%"
+          }
+        ]
+      },
+      {
+        "category": "Water & Sanitation",
+        "items": [
+          {
+            "metric": "Liveable households experiencing water insecurity",
+            "share_of_total_infrastructure": "93%"
+          },
+          {
+            "metric": "Liveable Households reporting worsening water quality",
+            "share_of_total_infrastructure": "91%"
+          }
+        ]
+      },
+      {
+        "category": "Agriculture",
+        "items": [
+          {
+            "metric": "Croplands damaged",
+            "share_of_total_infrastructure": "83%"
+          },
+          {
+            "metric": "Agricultural water wells damaged",
+            "share_of_total_infrastructure": "83%"
+          },
+          {
+            "metric": "Greenhouses damaged",
+            "share_of_total_infrastructure": "71%"
+          },
+          {
+            "metric": "Fishing fleet destroyed",
+            "share_of_total_infrastructure": "72%"
+          }
+        ]
+      },
+      {
+        "category": "Education",
+        "items": [
+          {
+            "metric": "Schools destroyed or severely damaged",
+            "share_of_total_infrastructure": "89%"
+          }
+        ]
+      }
+    ]
+  },
+  "fatality_distribution": {
+    "title": "Distribution of identified Palestinian fatalities in Gaza from October 8, 2023 to July 31, 2025, by broad age group and gender",
+    "source": "UNOCHA",
+    "timeframe": "Palestinian territories, October 7, 2023 to August 6, 2025",
+    "distribution": [
+      {
+        "group": "Men",
+        "percentage": 45.86
+      },
+      {
+        "group": "Children (17 and under)",
+        "percentage": 30.62
+      },
+      {
+        "group": "Women",
+        "percentage": 16.17
+      },
+      {
+        "group": "Elderly (60+)",
+        "percentage": 7.35
+      }
+    ]
+  },
+  "food_insecurity_and_malnutrition": {
+    "title": "Number of people in Gaza experiencing food insecurity and malnutrition as of August 2025",
+    "source": "UNOCHA",
+    "timeframe": "Palestinian territories, October 7, 2023 to August 6, 2025",
+    "data": [
+      {
+        "metric": "Facing high levels of food insecurity (IPC Phase 3)",
+        "number_of_people": 2100000
+      },
+      {
+        "metric": "Facing emergency levels of food insecurity (IPC Phase 4)",
+        "number_of_people": 1000000
+      },
+      {
+        "metric": "Facing catastrophic levels of food insecurity (IPC Phase 5)",
+        "number_of_people": 470000
+      },
+      {
+        "metric": "Children under five requiring feeding and micronutrient supplements",
+        "number_of_people": 290000
+      },
+      {
+        "metric": "Breastfeeding women requiring feeding and micronutrient supplements",
+        "number_of_people": 150000
+      },
+      {
+        "metric": "Cases of acute malnutrition among children aged 6-59 months, expected Apr 2025-Mar 2026",
+        "number_of_people": 71000
+      },
+      {
+        "metric": "Cases of severe malnutrition among children aged 6-59 months, expected Apr 2025-Mar 2026",
+        "number_of_people": 14100
+      },
+      {
+        "metric": "Pregnant and breastfeeding women expected to require treatment for acute malnutrition Apr 2025-Mar 2026",
+        "number_of_people": 17000
+      }
+    ]
+  }
+}
