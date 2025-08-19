@@ -1,0 +1,95 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Erez",
+        "District": "North Gaza",
+        "Fullyaddy": "Erez, North Gaza, Israel",
+        "Status": "Permanently staffed",
+        "Description": "Last Checkpoint before Israel",
+        "Details": "Used for travel between Gaza and Israel, and from Gaza to the West Bank via Israel. Israel currently allows people through the crossing only in humanitarian cases, as well as to staff-members of international organizations, diplomats and some 1,000 merchants who have permanent entry-permits. On Christian holidays, Israel allows Christians to travel through the crossing. The checkpoint is sometimes used for bringing in medicines and medical equipment."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [34.564889, 31.55984]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Karni",
+        "District": "Gaza",
+        "Fullyaddy": "Karni, Gaza, Israel",
+        "Status": "Closed",
+        "Description": "Last Checkpoint before Israel",
+        "Details": "Used for shipping goods into the Gaza Strip. Closed since March 2011."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [34.851612, 31.046051]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Kerrem Shalom",
+        "District": "Rafah",
+        "Fullyaddy": "Kerrem Shalom, Rafah, Israel",
+        "Status": "Permanently staffed/ goods",
+        "Description": "Border Crossing",
+        "Details": "Used for importing goods and fuel into the Gaza Strip and, in rare cases, for shipping export goods out of Gaza."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [34.284559, 31.228281]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Nahal Oz",
+        "District": "Gaza",
+        "Fullyaddy": "Nahal Oz, Gaza, Israel",
+        "Status": "Closed",
+        "Description": "Last Checkpoint before Israel",
+        "Details": "Used for transporting fuel and gas into the Gaza Strip. Closed since 2010."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [34.497675, 31.47268]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Rafah",
+        "District": "Rafah",
+        "Fullyaddy": "Rafah, Rafah, Israel",
+        "Status": "Permanently staffed",
+        "Description": "Border Crossing",
+        "Details": "Used for travel between the Gaza Strip and Egypt. After the Disengagement responsibility for the crossing was handed over to the Palestinian Authority, and the checkpoint was administered by Palestinian and Egyptian security forces supervised by a European Union force. After the abduction of Israeli soldier Gilad Shalit, the crossing remained largely closed on Israeli orders. Once Hamas took over the Gaza Strip, the EU force left Gaza and the crossing was shut down completely. The crossing was reopened only in November 2011, after the Egyptian uprising. Following the Egyptian coup in 2013, travel through the crossing was cut back."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [34.243482, 31.29678]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "Name": "Sufa",
+        "District": "Rafah",
+        "Fullyaddy": "Sufa, Rafah, Israel",
+        "Status": "Closed",
+        "Description": "Last Checkpoint before Israel",
+        "Details": "At different points in time, used for transporting building materials into the Gaza Strip. Closed since March 2011."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [34.341987, 31.238309]
+      }
+    }
+  ]
+}
