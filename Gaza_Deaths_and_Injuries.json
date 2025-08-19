@@ -1,0 +1,191 @@
+[
+    {
+        "Date": "2023-10-31",
+        "PAL Deaths": 8005.0,
+        "PAL Injuries": 20242.0,
+        "ISR Deaths": 1200.0,
+        "ISR Injuries": 5431.0
+    },
+    {
+        "Date": "2023-11-30",
+        "PAL Deaths": 15207.0,
+        "PAL Injuries": 40652.0,
+        "ISR Deaths": 1237.0,
+        "ISR Injuries": 5980.0
+    },
+    {
+        "Date": "2023-12-31",
+        "PAL Deaths": 22185.0,
+        "PAL Injuries": 56165.0,
+        "ISR Deaths": 1333.0,
+        "ISR Injuries": 6383.0
+    },
+    {
+        "Date": "2024-01-31",
+        "PAL Deaths": 27131.0,
+        "PAL Injuries": 65949.0,
+        "ISR Deaths": 1384.0,
+        "ISR Injuries": 6693.0
+    },
+    {
+        "Date": "2024-02-29",
+        "PAL Deaths": 30035.0,
+        "PAL Injuries": 70457.0,
+        "ISR Deaths": 1402.0,
+        "ISR Injuries": 6829.0
+    },
+    {
+        "Date": "2024-03-31",
+        "PAL Deaths": 32782.0,
+        "PAL Injuries": 75298.0,
+        "ISR Deaths": 1417.0,
+        "ISR Injuries": 6949.0
+    },
+    {
+        "Date": "2024-04-30",
+        "PAL Deaths": 34535.0,
+        "PAL Injuries": 77704.0,
+        "ISR Deaths": 1424.0,
+        "ISR Injuries": 7002.0
+    },
+    {
+        "Date": "2024-05-31",
+        "PAL Deaths": 36284.0,
+        "PAL Injuries": 82057.0,
+        "ISR Deaths": 1455.0,
+        "ISR Injuries": 7248.0
+    },
+    {
+        "Date": "2024-06-30",
+        "PAL Deaths": 37900.0,
+        "PAL Injuries": 87060.0,
+        "ISR Deaths": 1482.0,
+        "ISR Injuries": 7457.0
+    },
+    {
+        "Date": "2024-07-31",
+        "PAL Deaths": 39445.0,
+        "PAL Injuries": 91073.0,
+        "ISR Deaths": 1491.0,
+        "ISR Injuries": 7573.0
+    },
+    {
+        "Date": "2024-08-31",
+        "PAL Deaths": 40738.0,
+        "PAL Injuries": 94154.0,
+        "ISR Deaths": 1502.0,
+        "ISR Injuries": 7667.0
+    },
+    {
+        "Date": "2024-09-30",
+        "PAL Deaths": 41615.0,
+        "PAL Injuries": 96359.0,
+        "ISR Deaths": 1508.0,
+        "ISR Injuries": 7697.0
+    },
+    {
+        "Date": "2024-10-31",
+        "PAL Deaths": 43204.0,
+        "PAL Injuries": 101641.0,
+        "ISR Deaths": 1527.0,
+        "ISR Injuries": 7773.0
+    },
+    {
+        "Date": "2024-11-30",
+        "PAL Deaths": 44382.0,
+        "PAL Injuries": 105142.0,
+        "ISR Deaths": 1542.0,
+        "ISR Injuries": 7863.0
+    },
+    {
+        "Date": "2024-12-31",
+        "PAL Deaths": 45553.0,
+        "PAL Injuries": 108379.0,
+        "ISR Deaths": 1555.0,
+        "ISR Injuries": 7921.0
+    },
+    {
+        "Date": "2025-01-31",
+        "PAL Deaths": 47460.0,
+        "PAL Injuries": 111580.0,
+        "ISR Deaths": 1567.0,
+        "ISR Injuries": 7970.0
+    },
+    {
+        "Date": "2025-02-28",
+        "PAL Deaths": 48388.0,
+        "PAL Injuries": 111803.0,
+        "ISR Deaths": 1569.0,
+        "ISR Injuries": 7982.0
+    },
+    {
+        "Date": "2025-03-31",
+        "PAL Deaths": 50399.0,
+        "PAL Injuries": 114400.0,
+        "ISR Deaths": 1569.0,
+        "ISR Injuries": 7984.0
+    },
+    {
+        "Date": "2025-04-30",
+        "PAL Deaths": 52418.0,
+        "PAL Injuries": 118091.0,
+        "ISR Deaths": 1572.0,
+        "ISR Injuries": 8036.0
+    },
+    {
+        "Date": "2025-05-31",
+        "PAL Deaths": 54381.0,
+        "PAL Injuries": 124054.0,
+        "ISR Deaths": 1582.0,
+        "ISR Injuries": 8092.0
+    },
+    {
+        "Date": "2025-06-30",
+        "PAL Deaths": 56531.0,
+        "PAL Injuries": 133642.0,
+        "ISR Deaths": 1599.0,
+        "ISR Injuries": 8145.0
+    },
+    {
+        "Date": "2025-07-31",
+        "PAL Deaths": 60332.0,
+        "PAL Injuries": 147643.0,
+        "ISR Deaths": 1616.0,
+        "ISR Injuries": 8270.0
+    },
+    {
+        "Date": "2025-08-31",
+        "PAL Deaths": null,
+        "PAL Injuries": null,
+        "ISR Deaths": null,
+        "ISR Injuries": null
+    },
+    {
+        "Date": "2025-09-30",
+        "PAL Deaths": null,
+        "PAL Injuries": null,
+        "ISR Deaths": null,
+        "ISR Injuries": null
+    },
+    {
+        "Date": "2025-10-31",
+        "PAL Deaths": null,
+        "PAL Injuries": null,
+        "ISR Deaths": null,
+        "ISR Injuries": null
+    },
+    {
+        "Date": "2025-11-30",
+        "PAL Deaths": null,
+        "PAL Injuries": null,
+        "ISR Deaths": null,
+        "ISR Injuries": null
+    },
+    {
+        "Date": "2025-12-31",
+        "PAL Deaths": null,
+        "PAL Injuries": null,
+        "ISR Deaths": null,
+        "ISR Injuries": null
+    }
+]
