@@ -1,0 +1,160 @@
+{
+  "report_metadata": {
+    "title": "UNRWA SITUATION REPORT #183 ON THE HUMANITARIAN CRISIS IN THE GAZA STRIP AND THE WEST BANK, INCLUDING EAST JERUSALEM",
+    "report_number": 183,
+    [cite_start]"publication_date": "Friday, August 8, 2025 [cite: 13]",
+    [cite_start]"update_period": "31 July - 6 August 2025 [cite: 14]",
+    [cite_start]"war_duration_days": "Days 662-668 since the start of the war in the Gaza Strip [cite: 15]"
+  },
+  "overall_key_figures": [
+    {
+      "metric": "Health Consultations",
+      "value": "Over 9.4 million",
+      [cite_start]"timeframe": "since October 2023 [cite: 16]"
+    },
+    {
+      "metric": "Water Access",
+      "value": "Around 600,000 people reached with 20,000 cubic metres of domestic and potable water",
+      [cite_start]"timeframe": "between 16-30 July [cite: 17]"
+    },
+    {
+      "metric": "Solid Waste Collection",
+      "value": "Around 1,500 tons of solid waste collected and transferred to temporary dumping sites",
+      [cite_start]"timeframe": "between 16-30 July [cite: 23]"
+    },
+    {
+      "metric": "Psychosocial Support",
+      [cite_start]"value": "Around 730,000 displaced people, including over 520,000 children, reached with psychosocial support sessions and activities [cite: 25]"
+    },
+    {
+      "metric": "Basic Learning",
+      [cite_start]"value": "Over 12,300 children participating in basic literacy and numeracy learning [cite: 26]"
+    }
+  ],
+  "unrwa_response_summary_gaza": {
+    "health": {
+      [cite_start]"consultations_provided": "Over 66,000 health consultations provided between 28 July and 03 August [cite: 21]",
+      [cite_start]"operational_facilities": "4 UNRWA health centres, 2 temporary health centres and 19 medical points still operational [cite: 28]"
+    },
+    "wash": {
+      [cite_start]"hygiene_awareness": "240 hygiene awareness sessions for around 150,000 people conducted between 16-30 July [cite: 29]"
+    },
+    "food_assistance": {
+      [cite_start]"status": "UNRWA flour and food parcels ran out several weeks ago [cite: 31]",
+      [cite_start]"supply_blockade": "No UNRWA supplies entered the Gaza Strip since 2 March 2025 [cite: 32, 73]"
+    },
+    "protection": {
+      [cite_start]"services_provided": "Protection services provided to over 2,820 GBV survivors and around nearly 5,000 children (including over 2,000 unaccompanied children) [cite: 34]"
+    }
+  },
+  "highlights": {
+    "gaza_strip": [
+      {
+        "topic": "Humanitarian Aid Delivery",
+        [cite_start]"details": "Airdrops from several member states have continued, despite warnings from international bodies that they are very expensive and ineffective[cite: 47].",
+        "quotes": [
+          {
+            "source": "UNRWA Commissioner General",
+            "statement": "Airdrops are at least 100 times more costly than trucks [that] carry twice as much aid as planes. (...) [cite_start]UNRWA, the largest UN agency on the ground, has 6,000 trucks loaded with aid stuck outside Gaza waiting for the green light to enter. [cite: 53]"
+          },
+          {
+            "source": "WFP Executive Director",
+            "statement": "We can't airdrop our way out of an unfolding famine. [cite_start]Not in Gaza. [cite: 57] where 500,000 people are starving (...). [cite_start]The only way to get food to them, at scale, is by land. [cite: 58]"
+          }
+        ]
+      },
+      {
+        "topic": "NGO Operations Risk",
+        [cite_start]"details": "The Humanitarian Country Team of the oPt issued a statement calling for urgent action to safeguard the humanitarian operations of International NGOs, which are facing the risk of de-registration[cite: 59, 60]."
+      },
+      {
+        "topic": "Humanitarian Worker Casualties",
+        [cite_start]"details": "One PRCS staff member was killed at the PRCS headquarters in Khan Younis[cite: 61]. [cite_start]Nearly 350 UNRWA team members have been confirmed killed since the war began[cite: 63, 96]."
+      },
+      {
+        "topic": "Displacement and Militarized Zones",
+        [cite_start]"details": "As of 6 August, 86.3 per cent of the Gaza Strip remains within the Israeli-militarized zone, under displacement orders, or where these overlap[cite: 64]."
+      },
+      {
+        "topic": "Attacks on Aid Seekers",
+        [cite_start]"details": "According to UN experts, nearly 1,400 people have been killed and more than 4,000 injured while seeking food[cite: 65, 94]. [cite_start]At least 859 people have been killed around GHF sites since late May 2025[cite: 65, 95]."
+      }
+    ],
+    "west_bank": [
+      {
+        "topic": "Forced Displacement",
+        [cite_start]"details": "Tens of thousands of Palestine Refugees, including some 30,000 residents of Nur Shams, Tulkarm, and Jenin refugee camps, remain forcibly displaced due to the large-scale Israeli Forces operation 'Iron Wall' ongoing since January 2025[cite: 75, 76]."
+      },
+      {
+        "topic": "Settler Violence and Restrictions",
+        [cite_start]"details": "Following the killing of a Palestinian by an Israeli settler on 28 July, the Bedouin refugee community of Umm al Kheir has remained under heightened Israeli movement restrictions, with several community members in administrative detention and the deceased's body being withheld[cite: 77]."
+      }
+    ]
+  },
+  "situation_overview": {
+    "gaza_strip": {
+      "fatalities_and_injuries": {
+        [cite_start]"summary": "Israeli Forces continue heavy bombardments and ground operations, causing tens of thousands of casualties, destruction of civilian infrastructure, and large-scale displacement[cite: 81]. [cite_start]People are living in inhumane conditions[cite: 82]. [cite_start]Strikes on people sheltering or trying to access aid continue to be reported, resulting in mass casualties[cite: 83].",
+        "statistics": {
+          [cite_start]"total_casualties": "Between 7 October 2023 and 6 August 2025, at least 61,158 Palestinians have been reportedly killed and 151,442 injured in Gaza[cite: 85, 179].",
+          [cite_start]"demographics_of_fatalities": "Of the 60,199 identified fatalities as of 21 July, 27,605 were men, 9,735 were women, and 18,430 were children[cite: 87]."
+        }
+      },
+      "food_insecurity": {
+        [cite_start]"aid_availability_vs_need": "Food security partners have enough food outside of Gaza to provide for the entire population of 2.1 million for at least three months[cite: 99, 100]. [cite_start]However, due to constraints, only 14,000 metric tons of food aid were collected in July, while 62,000 metric tons are required monthly[cite: 101]. [cite_start]Most collected aid was offloaded by hungry crowds or looted[cite: 102].",
+        [cite_start]"malnutrition": "As of 6 August, 193 malnutrition-related deaths were documented, including 96 children[cite: 103]. [cite_start]In July, 11,877 children were identified with acute malnutrition, the highest monthly figure recorded[cite: 105, 107].",
+        [cite_start]"market_conditions": "Food prices have risen sharply, increasing by 25 percent to as much as 9,900 percent compared to ceasefire levels[cite: 112]. [cite_start]The daily fluctuation of wheat flour prices is due to a lack of steady food availability[cite: 105]."
+      },
+      "health": {
+        [cite_start]"operational_challenges": "The health response faces severe obstacles including damage to facilities, restrictions on medical supplies, and under-resourced services[cite: 66, 116]. [cite_start]UNRWA has not been allowed to bring any humanitarian aid, including medicines, into Gaza for more than five months (since 2 March 2025)[cite: 73].",
+        [cite_start]"supply_shortages": "Over half (57%) of essential medical supplies are out of stock[cite: 118]. [cite_start]This includes medicines for hypertension, antibiotics for adults, and iron supplements for children[cite: 71, 72].",
+        [cite_start]"disease_outbreaks": "Since the beginning of May 2025, there has been an increase in reported meningitis cases, with 370 cases reported from July 1 to 25[cite: 122, 124]."
+      },
+      "displacement": {
+        [cite_start]"total_displaced": "At least 1.9 million people, about 90% of the population, have been displaced during the war, many multiple times[cite: 131, 132].",
+        [cite_start]"recent_displacement": "An estimated 767,800 people have been displaced since the ceasefire breakdown on 18 March 2025[cite: 130, 189, 190]."
+      }
+    }
+  },
+  "operational_implications": {
+    [cite_start]"fuel_shortage": "Fuel supplies remain critically limited and unpredictable, undermining the delivery of lifesaving services[cite: 144]. [cite_start]In July, WASH partners received only 62% of the required diesel to sustain life-saving interventions[cite: 146]. [cite_start]The UNOPS Executive Director stated that the lack of fuel is causing critical operations like hospital generators, bakeries, and water pumps to shut down[cite: 145].",
+    "staff_restrictions_and_bans": {
+      [cite_start]"international_ngos": "Under requirements introduced on 9 March 2025, international NGOs are obliged to share sensitive personal information about their Palestinian employees or face de-registration[cite: 150].",
+      [cite_start]"unrwa_international_staff": "UNRWA international staff are banned from entering the occupied Palestinian territory following two laws passed by Israel's parliament[cite: 157, 158]. [cite_start]The Israeli Authorities have not granted visas to the Agency's international staff for more than six months[cite: 159]."
+    },
+    [cite_start]"unrwa_personnel_on_ground": "Around 12,000 Palestinian UNRWA personnel in Gaza continue to provide services[cite: 160]. [cite_start]In the West Bank, over 4,000 local staff provide education, health, and other services[cite: 161]."
+  },
+  "incidents_impacting_unrwa": {
+    "summary_statistics": {
+      [cite_start]"total_incidents": "894 incidents impacting UNRWA premises have been reported since the beginning of the conflict [cite: 192, 213]",
+      [cite_start]"installations_impacted": "311 UNRWA installations have been impacted and/or damaged [cite: 194]",
+      [cite_start]"unrwa_shelter_casualties": "At least 845 people sheltering in UNRWA premises have been killed and 2,544 injured since 7 October 2023 [cite: 195, 214]"
+    },
+    "incidents_in_reporting_period": [
+      {
+        "date": "2 August",
+        "location": "Khan Younis",
+        [cite_start]"description": "An UNRWA health centre was indirectly impacted by the detonation of an explosive-laden robotic device by Israeli Forces, causing minor damage[cite: 201, 202]."
+      },
+      {
+        "date": "2 August",
+        "location": "Khan Younis",
+        [cite_start]"description": "An UNRWA school was indirectly impacted by the detonation of an explosive-laden robotic device by Israeli Forces, causing minor damage[cite: 203, 204]."
+      },
+      {
+        "date": "2 August",
+        "location": "Khan Younis",
+        [cite_start]"description": "An UNRWA school was directly struck by Israeli Forces tank shelling, resulting in minor damage[cite: 205, 206]."
+      },
+      {
+        "date": "2 August",
+        "location": "Khan Younis",
+        [cite_start]"description": "An UNRWA facility was indirectly affected by Israeli Forces artillery shelling and quadcopter bombings, causing moderate damage[cite: 207, 208]."
+      }
+    ]
+  },
+  "quote_from_the_field": {
+    [cite_start]"source": "Majdiya, an UNRWA colleague in Gaza [cite: 282]",
+    "text": "Look at us: our bodies are breaking, the bombs keep falling, we run from one place to another and there is no medicine left. Our children are sick, our mind are tired, but what choice do we have? We still go to the shelters, we still help the displaced, even when the roads are death traps, even when we haven't slept, even when we are just broken as the people were trying to save. [cite_start]But now much longer can we hold on? [cite: 283]"
+  }
+}
