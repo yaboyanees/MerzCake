@@ -1,0 +1,203 @@
+{
+  "report_metadata": {
+    "title": "REPORTED IMPACT SNAPSHOT | GAZA STRIP",
+    "date": "13 August 2025 at 15:00",
+    [cite_start]"disclaimer": "Figures that are yet-to-be verified by the UN are attributed to their source. [cite: 2]"
+  },
+  "reported_casualties": {
+    "as_of_date": "13 August 2025",
+    "palestinians": {
+      "fatalities": 61722,
+      "injuries": 154525,
+      "identified_fatalities_breakdown": {
+        "as_of_date": "31 July 2025",
+        "total_identified": 60199,
+        "men": 27605,
+        "children": 18430,
+        "women": 9735,
+        "elderly": 4429
+      },
+      [cite_start]"source": "MoH Gaza [cite: 3, 19, 24]"
+    },
+    "israelis": {
+      "fatalities_in_israel": {
+        [cite_start]"total": "Over 1,200 [cite: 30]",
+        [cite_start]"identified": "1,162, including at least 33 children [cite: 32]",
+        [cite_start]"context": "This includes fatalities on 7 October and the immediate aftermath, including foreign nationals [cite: 41]"
+      },
+      [cite_start]"injuries_in_israel": "~5,400 [cite: 33]",
+      "ground_operation_casualties_in_gaza": {
+        [cite_start]"fatalities": "454 [cite: 35]",
+        [cite_start]"injuries": "2,872 [cite: 38]",
+        [cite_start]"source": "Israeli military website [cite: 42]"
+      },
+      "hostages": {
+        [cite_start]"remaining_in_gaza": "estimated 50 [cite: 39]",
+        [cite_start]"source": "According to Israeli media citing official sources [cite: 40]"
+      }
+    }
+  },
+  "geospatial_information": {
+    [cite_start]"israeli_militarized_zone": "86.3% of the Gaza Strip are within the Israeli-militarized zone, under displacement orders or where these overlap [cite: 58]"
+  },
+  "sector_impacts": {
+    "food_security": [
+      {
+        [cite_start]"statistic": "81% of households reported poor food consumption in July, up from 33% in April [cite: 66]"
+      },
+      {
+        [cite_start]"statistic": "24% of households are experiencing very severe hunger in July, compared with 4% in April [cite: 66]"
+      },
+      {
+        [cite_start]"statistic": "Nearly 9 out of 10 households resorted to extremely severe coping mechanisms to feed themselves [cite: 66]",
+        [cite_start]"source": "IPC Alert, 29 July 2025 [cite: 66]"
+      },
+      {
+        [cite_start]"statistic": "100% of the analysed population (2.1 million) is projected to face high levels of acute food insecurity (IPC Phase 3 or above) [cite: 67]",
+        "breakdown": [
+          [cite_start]"One million people facing emergency levels of food insecurity (IPC Phase 4) [cite: 69]",
+          [cite_start]"470K people facing catastrophic levels of food insecurity (IPC Phase 5) [cite: 70]"
+        ],
+        "source": "IPC Projection 17 May to September 2025"
+      },
+      {
+        [cite_start]"statistic": "83% of agricultural water wells and 71% of greenhouses damaged [cite: 71]",
+        [cite_start]"source": "FAO, as of April 2025 [cite: 71]"
+      },
+      {
+        [cite_start]"statistic": "86% of the permanent crop fields damaged [cite: 71]",
+        [cite_start]"source": "UNOSAT and FAO analysis, as of 28 July 2025 [cite: 71]"
+      },
+      {
+        [cite_start]"statistic": "1.5% of cropland area is available for cultivation [cite: 71]",
+        [cite_start]"source": "FAO, as of July 2025 [cite: 71]"
+      },
+      {
+        [cite_start]"statistic": "72% of the fishing fleet destroyed [cite: 71]",
+        [cite_start]"source": "Food Security Sector, as of December 2024 [cite: 71]"
+      }
+    ],
+    "health": {
+      [cite_start]"source": "Health Cluster as of 9 August 2025, unless otherwise noted [cite: 76]",
+      "data": [
+        [cite_start]"50% (18 out of 36) of hospitals partially functional [cite: 73]",
+        [cite_start]"62% (10 out of 16) of field hospitals partially functional [cite: 74]",
+        [cite_start]"39% (66 out of 170) of primary health care centres functional [cite: 75]",
+        [cite_start]"32 Emergency Medical Teams (EMTs) deployed by 20 international and two national organizations as of 3 August [cite: 75]",
+        [cite_start]"Over 14,800 patients require medical evacuation abroad [cite: 76]",
+        [cite_start]"Between 1 February and 6 August 2025, 2,116 patients and 3,305 companions have been evacuated outside Gaza [cite: 76]"
+      ]
+    },
+    "shelter": {
+      [cite_start]"source": "Shelter Cluster assessment, July 2025 [cite: 79]",
+      "data": [
+        [cite_start]"436,000 housing units (92%) are destroyed (160,000) or damaged (276,000) [cite: 78]",
+        [cite_start]"~1.35 million people are in need of emergency shelter items [cite: 79]",
+        [cite_start]"around 1.4 million people are estimated to require essential household items [cite: 79]"
+      ]
+    },
+    "protection": [
+      {
+        [cite_start]"statistic": ">1 million children in need of mental health and psycho-social support [cite: 82]",
+        [cite_start]"source": "UNICEF [cite: 82]"
+      },
+      {
+        [cite_start]"statistic": "62% of people don't have access to legal documents proving property ownership [cite: 83]",
+        [cite_start]"source": "IRDNA, issued in February 2025 [cite: 83]"
+      },
+      {
+        "fatalities": {
+          "aid_workers": {
+            [cite_start]"total": "At least 520 killed (512 nationals, 8 foreigners) [cite: 84]",
+            [cite_start]"gender_breakdown": "at least 169 women and 325 men [cite: 84]",
+            "organizational_breakdown": [
+              [cite_start]"356 UN staff (UNRWA: 350, WHO: 1, UNDP: 2, UNOPS: 2, UNDSS: 1) [cite: 86]",
+              [cite_start]"53 PRCS staff and volunteers (29 while on duty) [cite: 87]",
+              [cite_start]"4 ICRC staff [cite: 87]",
+              [cite_start]"At least 107 other aid workers [cite: 88]"
+            ]
+          },
+          [cite_start]"health_workers": "1,580 killed (some also counted as aid workers) [cite: 89]",
+          [cite_start]"civil_defence_staff": "137 killed while on duty [cite: 90]",
+          [cite_start]"journalists_and_media_workers": "238 killed [cite: 90]"
+        }
+      }
+    ],
+    "nutrition": {
+      [cite_start]"source": "Nutrition Cluster unless otherwise noted [cite: 96]",
+      "data": [
+        {
+          [cite_start]"statistic": "92% of children aged 6-23 months and pregnant and breastfeeding women are not meeting their nutrient requirements due to lack of minimum dietary diversity [cite: 92]",
+          [cite_start]"as_of_date": "February 2025 [cite: 92]"
+        },
+        {
+          [cite_start]"statistic": "290,000 children under five and 150,000 pregnant and breastfeeding women require feeding and micronutrient supplements [cite: 93]"
+        },
+        {
+          [cite_start]"statistic": "~17,000 pregnant and breastfeeding women are estimated to require treatment for acute malnutrition between April 2025 and March 2026 [cite: 94]",
+          [cite_start]"source": "IPC Gaza Strip Special Snapshot, 12 May 2025 [cite: 94]"
+        },
+        {
+          [cite_start]"statistic": "~71,000 cases of acute malnutrition among children aged 6 to 59 months, including 14,100 severe cases, are expected to occur between April 2025 and March 2026 [cite: 95]",
+          [cite_start]"source": "IPC Gaza Strip Special Snapshot, 12 May 2025 [cite: 95]"
+        }
+      ]
+    },
+    "water_and_sanitation": {
+      [cite_start]"source": "WASH Cluster unless otherwise noted [cite: 101]",
+      "data": [
+        [cite_start]"81% (567 out of 696) of public WASH facilities and assets are within the Israeli-militarized zone or under displacement orders since 18 March [cite: 98]",
+        [cite_start]"96% of households have experienced water insecurity and 90% of key informants reported worsening levels of drinking water security in July 2025 [cite: 99]",
+        [cite_start]"89% of the WASH sector assets have been either destroyed or partially damaged [cite: 100]"
+      ]
+    },
+    "education": {
+      [cite_start]"source": "Education Cluster unless otherwise noted [cite: 110]",
+      "data": [
+        [cite_start]">658,000 school-aged children and 87,000 tertiary students are left without access to formal learning spaces [cite: 103]",
+        [cite_start]"16,613 school students and 731 educational staff killed [cite: 104]",
+        [cite_start]"24,730 students and 3,080 teachers injured [cite: 104]",
+        [cite_start]"Nearly 91.8% of schools (518 out of 564) will require full reconstruction or major rehabilitation to be functional again [cite: 106]",
+        [cite_start]">63 university buildings destroyed [cite: 107]",
+        [cite_start]">2,308 educational facilities, ranging from kindergartens to universities, have been destroyed [cite: 108]"
+      ]
+    }
+  },
+  "reported_infrastructure_damage": [
+    {
+      [cite_start]"statistic": "78% of all structures are destroyed or damaged [cite: 123]",
+      [cite_start]"source": "UNOSAT, as of 8 July 2025 [cite: 123]"
+    },
+    {
+      [cite_start]"statistic": "88% of the 48,987 assessed entities in the commerce and industry sector in Gaza have been damaged or destroyed (22% damaged and 66% destroyed) [cite: 123]",
+      [cite_start]"source": "IRDNA, issued in February 2025 [cite: 123]"
+    },
+    {
+      [cite_start]"statistic": "81% of the classified road network (primary, secondary, and tertiary roads) and 62% of the total road network have been damaged or destroyed [cite: 125]",
+      [cite_start]"source": "IRDNA, issued in February 2025 [cite: 126]"
+    }
+  ],
+  "humanitarian_access": {
+    "timeframe": "6 to 12 August 2025",
+    "missions_requiring_coordination": {
+      "north_of_wadi_gaza": {
+        "facilitated": 35,
+        "impeded": 30,
+        "denied": 8,
+        "withdrawn": 5
+      },
+      "south_of_wadi_gaza": {
+        "facilitated": 46,
+        "impeded": 24,
+        "denied": 0,
+        "withdrawn": 0
+      }
+    },
+    "definitions": {
+      [cite_start]"facilitated": "CLA accepts a facilitation request and the movement on the ground is not impeded. [cite: 138]",
+      [cite_start]"impeded": "CLA accepts a facilitation request but the movement is blocked or delayed on the ground, resulting in some missions being aborted or accomplished partially. [cite: 137]",
+      [cite_start]"denied": "The Israeli Coordination and Liaison Administration (CLA) rejects a facilitation request. [cite: 135]",
+      [cite_start]"withdrawn": "Humanitarian organizations cancel their facilitation request due to logistical, operational or security reasons. [cite: 134]"
+    }
+  }
+}
