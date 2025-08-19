@@ -19,21 +19,6 @@
     {
       "type": "Feature",
       "properties": {
-        "Name": "Karni",
-        "District": "Gaza",
-        "Fullyaddy": "Karni, Gaza, Israel",
-        "Status": "Closed",
-        "Description": "Last Checkpoint before Israel",
-        "Details": "Used for shipping goods into the Gaza Strip. Closed since March 2011."
-      },
-      "geometry": {
-        "type": "Point",
-        "coordinates": [34.851612, 31.046051]
-      }
-    },
-    {
-      "type": "Feature",
-      "properties": {
         "Name": "Kerrem Shalom",
         "District": "Rafah",
         "Fullyaddy": "Kerrem Shalom, Rafah, Israel",
