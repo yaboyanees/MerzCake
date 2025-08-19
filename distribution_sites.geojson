@@ -1,0 +1,9 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {"type":"Feature","properties":{"name":"Tel al-Sultan (Rafah)","source":"Airwars (neighborhood)"},"geometry":{"type":"Point","coordinates":[34.239960,31.305237]}},
+    {"type":"Feature","properties":{"name":"Saudi neighborhood (Rafah)","source":"Airwars (neighborhood)"},"geometry":{"type":"Point","coordinates":[34.238917,31.315564]}},
+    {"type":"Feature","properties":{"name":"Khan Younis (Muraj/Morag Axis)","source":"Airwars (vicinity of GHF site)"},"geometry":{"type":"Point","coordinates":[34.268825,31.315170]}},
+    {"type":"Feature","properties":{"name":"Wadi Gaza / Netzarim Axis","source":"Airwars (vicinity of GHF site)"},"geometry":{"type":"Point","coordinates":[34.418098,31.456975]}}
+  ]
+}
