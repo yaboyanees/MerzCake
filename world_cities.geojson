@@ -1,0 +1,3659 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [69.1725, 34.5289]
+      },
+      "properties": {
+        "country": "Afghanistan",
+        "city": "Kabul",
+        "population": 4011770,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [19.8189, 41.3275]
+      },
+      "properties": {
+        "country": "Albania",
+        "city": "Tiranë (Tirana)",
+        "population": 475577,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.0420, 36.7525]
+      },
+      "properties": {
+        "country": "Algeria",
+        "city": "El Djazaïr  (Algiers)",
+        "population": 2693542,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-170.7025, -14.2781]
+      },
+      "properties": {
+        "country": "American Samoa",
+        "city": "Pago Pago",
+        "population": 48526,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.5211, 42.5078]
+      },
+      "properties": {
+        "country": "Andorra",
+        "city": "Andorra la Vella",
+        "population": 22614,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.2343, -8.8368]
+      },
+      "properties": {
+        "country": "Angola",
+        "city": "Luanda",
+        "population": 7774200,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-63.0578, 18.2170]
+      },
+      "properties": {
+        "country": "Anguilla",
+        "city": "The Valley",
+        "population": 1402,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-61.8457, 17.1172]
+      },
+      "properties": {
+        "country": "Antigua and Barbuda",
+        "city": "St. John's",
+        "population": 20764,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-58.4004, -34.6051]
+      },
+      "properties": {
+        "country": "Argentina",
+        "city": "Buenos Aires",
+        "population": 14966530,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [44.5146, 40.1820]
+      },
+      "properties": {
+        "country": "Armenia",
+        "city": "Yerevan",
+        "population": 1080324,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-70.0270, 12.5240]
+      },
+      "properties": {
+        "country": "Aruba",
+        "city": "Oranjestad",
+        "population": 29877,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [149.1281, -35.2835]
+      },
+      "properties": {
+        "country": "Australia",
+        "city": "Canberra",
+        "population": 447692,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [16.3707, 48.2064]
+      },
+      "properties": {
+        "country": "Austria",
+        "city": "Wien (Vienna)",
+        "population": 1900547,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [49.8920, 40.3777]
+      },
+      "properties": {
+        "country": "Azerbaijan",
+        "city": "Baku",
+        "population": 2285729,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-77.3431, 25.0582]
+      },
+      "properties": {
+        "country": "Bahamas",
+        "city": "Nassau",
+        "population": 279668,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [50.5832, 26.2154]
+      },
+      "properties": {
+        "country": "Bahrain",
+        "city": "Al-Manamah (Manama)",
+        "population": 564631,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [90.4074, 23.7104]
+      },
+      "properties": {
+        "country": "Bangladesh",
+        "city": "Dhaka",
+        "population": 19578421,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-59.6167, 13.1000]
+      },
+      "properties": {
+        "country": "Barbados",
+        "city": "Bridgetown",
+        "population": 89201,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [27.5667, 53.9000]
+      },
+      "properties": {
+        "country": "Belarus",
+        "city": "Minsk",
+        "population": 2004672,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.3499, 50.8467]
+      },
+      "properties": {
+        "country": "Belgium",
+        "city": "Bruxelles-Brussel",
+        "population": 2049510,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-88.7667, 17.2500]
+      },
+      "properties": {
+        "country": "Belize",
+        "city": "Belmopan",
+        "population": 22964,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.4183, 6.3654]
+      },
+      "properties": {
+        "country": "Benin",
+        "city": "Cotonou",
+        "population": 685458,
+        "isCapital": true,
+        "capitalType": "Economic Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-64.7780, 32.2915]
+      },
+      "properties": {
+        "country": "Bermuda",
+        "city": "Hamilton",
+        "population": 10073,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [89.6419, 27.4661]
+      },
+      "properties": {
+        "country": "Bhutan",
+        "city": "Thimphu",
+        "population": 203297,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-68.1500, -16.5000]
+      },
+      "properties": {
+        "country": "Bolivia (Plurinational State of)",
+        "city": "La Paz",
+        "population": 1814087,
+        "isCapital": true,
+        "capitalType": "Seat of Government"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [18.3564, 43.8486]
+      },
+      "properties": {
+        "country": "Bosnia and Herzegovina",
+        "city": "Sarajevo",
+        "population": 342577,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [25.9086, -24.6545]
+      },
+      "properties": {
+        "country": "Botswana",
+        "city": "Gaborone",
+        "population": 269338,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-47.9297, -15.7797]
+      },
+      "properties": {
+        "country": "Brazil",
+        "city": "Brasília",
+        "population": 4469585,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-64.6167, 18.4167]
+      },
+      "properties": {
+        "country": "British Virgin Islands",
+        "city": "Road Town",
+        "population": 15137,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [114.9481, 4.9403]
+      },
+      "properties": {
+        "country": "Brunei Darussalam",
+        "city": "Bandar Seri Begawan",
+        "population": 40781,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [23.3242, 42.6975]
+      },
+      "properties": {
+        "country": "Bulgaria",
+        "city": "Sofia",
+        "population": 1272418,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-1.5383, 12.3642]
+      },
+      "properties": {
+        "country": "Burkina Faso",
+        "city": "Ouagadougou",
+        "population": 2531381,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [29.3644, -3.3822]
+      },
+      "properties": {
+        "country": "Burundi",
+        "city": "Bujumbura",
+        "population": 898968,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-23.5087, 14.9215]
+      },
+      "properties": {
+        "country": "Cabo Verde",
+        "city": "Praia",
+        "population": 167504,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.9160, 11.5625]
+      },
+      "properties": {
+        "country": "Cambodia",
+        "city": "Phnum Pénh (Phnom Penh)",
+        "population": 1952329,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [11.5167, 3.8667]
+      },
+      "properties": {
+        "country": "Cameroon",
+        "city": "Yaoundé",
+        "population": 3655656,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-75.6980, 45.4166]
+      },
+      "properties": {
+        "country": "Canada",
+        "city": "Ottawa-Gatineau",
+        "population": 1363159,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-68.2667, 12.1500]
+      },
+      "properties": {
+        "country": "Caribbean Netherlands",
+        "city": "Kralendijk",
+        "population": 11313,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-81.3744, 19.2866]
+      },
+      "properties": {
+        "country": "Cayman Islands",
+        "city": "George Town",
+        "population": 34875,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [18.5550, 4.3612]
+      },
+      "properties": {
+        "country": "Central African Republic",
+        "city": "Bangui",
+        "population": 850946,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [15.0444, 12.1067]
+      },
+      "properties": {
+        "country": "Chad",
+        "city": "N'Djaména",
+        "population": 1322679,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.1049, 49.1880]
+      },
+      "properties": {
+        "country": "Channel Islands",
+        "city": "St. Helier",
+        "population": 34386,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-2.5353, 49.4598]
+      },
+      "properties": {
+        "country": "Channel Islands",
+        "city": "St. Peter Port",
+        "population": 16271,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-70.6483, -33.4569]
+      },
+      "properties": {
+        "country": "Chile",
+        "city": "Santiago",
+        "population": 6680371,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [116.3972, 39.9075]
+      },
+      "properties": {
+        "country": "China",
+        "city": "Beijing",
+        "population": 19617963,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [114.1887, 22.2796]
+      },
+      "properties": {
+        "country": "China, Hong Kong SAR",
+        "city": "Hong Kong",
+        "population": 7428887,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.5461, 22.2006]
+      },
+      "properties": {
+        "country": "China, Macao SAR",
+        "city": "Macao",
+        "population": 632418,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.5457, 25.0470]
+      },
+      "properties": {
+        "country": "China, Taiwan Province of China",
+        "city": "Taibei",
+        "population": 2705791,
+        "isCapital": true,
+        "capitalType": "Others"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-74.0818, 4.6097]
+      },
+      "properties": {
+        "country": "Colombia",
+        "city": "Bogotá",
+        "population": 10574409,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [43.2551, -11.7022]
+      },
+      "properties": {
+        "country": "Comoros",
+        "city": "Moroni",
+        "population": 62351,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [15.2832, -4.2658]
+      },
+      "properties": {
+        "country": "Congo",
+        "city": "Brazzaville",
+        "population": 2229693,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-159.7600, -21.2300]
+      },
+      "properties": {
+        "country": "Cook Islands",
+        "city": "Rarotonga",
+        "population": 13067,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-84.0807, 9.9278]
+      },
+      "properties": {
+        "country": "Costa Rica",
+        "city": "San José",
+        "population": 1357745,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.0268, 5.3453]
+      },
+      "properties": {
+        "country": "Côte d'Ivoire",
+        "city": "Abidjan",
+        "population": 4920776,
+        "isCapital": true,
+        "capitalType": "Administrative Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [15.9780, 45.8144]
+      },
+      "properties": {
+        "country": "Croatia",
+        "city": "Zagreb",
+        "population": 685587,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-82.3785, 23.1195]
+      },
+      "properties": {
+        "country": "Cuba",
+        "city": "La Habana (Havana)",
+        "population": 2136468,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-68.9335, 12.1084]
+      },
+      "properties": {
+        "country": "Curaçao",
+        "city": "Willemstad",
+        "population": 144037,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.3669, 35.1595]
+      },
+      "properties": {
+        "country": "Cyprus",
+        "city": "Lefkosia (Nicosia)",
+        "population": 269469,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [14.4208, 50.0880]
+      },
+      "properties": {
+        "country": "Czechia",
+        "city": "Praha (Prague)",
+        "population": 1291552,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [125.7543, 39.0339]
+      },
+      "properties": {
+        "country": "Dem. People's Republic of Korea",
+        "city": "P'yongyang",
+        "population": 3037862,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [15.3136, -4.3276]
+      },
+      "properties": {
+        "country": "Democratic Republic of the Congo",
+        "city": "Kinshasa",
+        "population": 13171256,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.5655, 55.6759]
+      },
+      "properties": {
+        "country": "Denmark",
+        "city": "København (Copenhagen)",
+        "population": 1320826,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [43.1447, 11.5877]
+      },
+      "properties": {
+        "country": "Djibouti",
+        "city": "Djibouti",
+        "population": 561564,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-61.3881, 15.3017]
+      },
+      "properties": {
+        "country": "Dominica",
+        "city": "Roseau",
+        "population": 14942,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-69.9018, 18.4896]
+      },
+      "properties": {
+        "country": "Dominican Republic",
+        "city": "Santo Domingo",
+        "population": 3172152,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-78.5250, -0.2299]
+      },
+      "properties": {
+        "country": "Ecuador",
+        "city": "Quito",
+        "population": 1822397,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [31.2394, 30.0392]
+      },
+      "properties": {
+        "country": "Egypt",
+        "city": "Al-Qahirah (Cairo)",
+        "population": 20076002,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-89.1872, 13.6894]
+      },
+      "properties": {
+        "country": "El Salvador",
+        "city": "San Salvador",
+        "population": 1106698,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [8.7833, 3.7500]
+      },
+      "properties": {
+        "country": "Equatorial Guinea",
+        "city": "Malabo",
+        "population": 296770,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [38.9333, 15.3333]
+      },
+      "properties": {
+        "country": "Eritrea",
+        "city": "Asmara",
+        "population": 895863,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [24.7535, 59.4370]
+      },
+      "properties": {
+        "country": "Estonia",
+        "city": "Tallinn",
+        "population": 437027,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [38.7469, 9.0250]
+      },
+      "properties": {
+        "country": "Ethiopia",
+        "city": "Addis Ababa",
+        "population": 4399674,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-6.7716, 62.0097]
+      },
+      "properties": {
+        "country": "Faeroe Islands",
+        "city": "Tórshavn",
+        "population": 20817,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-57.8494, -51.7012]
+      },
+      "properties": {
+        "country": "Falkland Islands (Malvinas)",
+        "city": "Stanley",
+        "population": 2269,
+        "isCapital": true,
+        "capitalType": "Others"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [178.4415, -18.1416]
+      },
+      "properties": {
+        "country": "Fiji",
+        "city": "Suva",
+        "population": 178339,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [24.9402, 60.1692]
+      },
+      "properties": {
+        "country": "Finland",
+        "city": "Helsinki",
+        "population": 1279096,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.3488, 48.8534]
+      },
+      "properties": {
+        "country": "France",
+        "city": "Paris",
+        "population": 10900952,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-52.3333, 4.9333]
+      },
+      "properties": {
+        "country": "French Guiana",
+        "city": "Cayenne",
+        "population": 57506,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-149.5667, -17.5333]
+      },
+      "properties": {
+        "country": "French Polynesia",
+        "city": "Papeete",
+        "population": 136005,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.4537, 0.3925]
+      },
+      "properties": {
+        "country": "Gabon",
+        "city": "Libreville",
+        "population": 813489,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-16.6794, 13.4531]
+      },
+      "properties": {
+        "country": "Gambia",
+        "city": "Banjul",
+        "population": 437161,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [44.8337, 41.6941]
+      },
+      "properties": {
+        "country": "Georgia",
+        "city": "Tbilisi",
+        "population": 1077333,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.4105, 52.5244]
+      },
+      "properties": {
+        "country": "Germany",
+        "city": "Berlin",
+        "population": 3552123,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-0.1969, 5.5560]
+      },
+      "properties": {
+        "country": "Ghana",
+        "city": "Accra",
+        "population": 2439389,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-5.3526, 36.1447]
+      },
+      "properties": {
+        "country": "Gibraltar",
+        "city": "Gibraltar",
+        "population": 34733,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [23.7490, 37.9534]
+      },
+      "properties": {
+        "country": "Greece",
+        "city": "Athínai (Athens)",
+        "population": 3155600,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-51.7216, 64.1835]
+      },
+      "properties": {
+        "country": "Greenland",
+        "city": "Nuuk (Godthåb)",
+        "population": 18406,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-61.7485, 12.0564]
+      },
+      "properties": {
+        "country": "Grenada",
+        "city": "St.George's",
+        "population": 39297,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-61.7255, 15.9985]
+      },
+      "properties": {
+        "country": "Guadeloupe",
+        "city": "Basse-Terre",
+        "population": 58397,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [144.7489, 13.4757]
+      },
+      "properties": {
+        "country": "Guam",
+        "city": "Hagåtña",
+        "population": 146905,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-90.5307, 14.6127]
+      },
+      "properties": {
+        "country": "Guatemala",
+        "city": "Ciudad de Guatemala (Guatemala City)",
+        "population": 2851104,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-13.6476, 9.5716]
+      },
+      "properties": {
+        "country": "Guinea",
+        "city": "Conakry",
+        "population": 1843121,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-15.5977, 11.8636]
+      },
+      "properties": {
+        "country": "Guinea-Bissau",
+        "city": "Bissau",
+        "population": 558399,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-58.1553, 6.8045]
+      },
+      "properties": {
+        "country": "Guyana",
+        "city": "Georgetown",
+        "population": 109934,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-72.3350, 18.5392]
+      },
+      "properties": {
+        "country": "Haiti",
+        "city": "Port-au-Prince",
+        "population": 2636763,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.4533, 41.9024]
+      },
+      "properties": {
+        "country": "Holy See",
+        "city": "Vatican City",
+        "population": 801,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-87.2068, 14.0818]
+      },
+      "properties": {
+        "country": "Honduras",
+        "city": "Tegucigalpa",
+        "population": 1363041,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [19.0399, 47.4980]
+      },
+      "properties": {
+        "country": "Hungary",
+        "city": "Budapest",
+        "population": 1759497,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-21.8954, 64.1355]
+      },
+      "properties": {
+        "country": "Iceland",
+        "city": "Reykjavík",
+        "population": 216364,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.2167, 28.6667]
+      },
+      "properties": {
+        "country": "India",
+        "city": "Delhi",
+        "population": 28513682,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [106.8416, -6.2118]
+      },
+      "properties": {
+        "country": "Indonesia",
+        "city": "Jakarta",
+        "population": 10516927,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [51.4215, 35.6944]
+      },
+      "properties": {
+        "country": "Iran (Islamic Republic of)",
+        "city": "Tehran",
+        "population": 8895947,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [44.4009, 33.3406]
+      },
+      "properties": {
+        "country": "Iraq",
+        "city": "Baghdad",
+        "population": 6811955,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-6.2489, 53.3331]
+      },
+      "properties": {
+        "country": "Ireland",
+        "city": "Dublin",
+        "population": 1201426,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-4.4833, 54.1500]
+      },
+      "properties": {
+        "country": "Isle of Man",
+        "city": "Douglas",
+        "population": 27171,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [35.2163, 31.7690]
+      },
+      "properties": {
+        "country": "Israel",
+        "city": "Jerusalem",
+        "population": 907062,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.4811, 41.8947]
+      },
+      "properties": {
+        "country": "Italy",
+        "city": "Roma (Rome)",
+        "population": 4209710,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-76.7936, 17.9970]
+      },
+      "properties": {
+        "country": "Jamaica",
+        "city": "Kingston",
+        "population": 589083,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [139.6917, 35.6895]
+      },
+      "properties": {
+        "country": "Japan",
+        "city": "Tokyo",
+        "population": 37468302,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [35.9450, 31.9552]
+      },
+      "properties": {
+        "country": "Jordan",
+        "city": "Amman",
+        "population": 2064582,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [71.4460, 51.1801]
+      },
+      "properties": {
+        "country": "Kazakhstan",
+        "city": "Astana",
+        "population": 1068113,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [36.8167, -1.2833]
+      },
+      "properties": {
+        "country": "Kenya",
+        "city": "Nairobi",
+        "population": 4385853,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [172.9813, 1.3272]
+      },
+      "properties": {
+        "country": "Kiribati",
+        "city": "Tarawa",
+        "population": 64011,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [47.9783, 29.3697]
+      },
+      "properties": {
+        "country": "Kuwait",
+        "city": "Al Kuwayt (Kuwait City)",
+        "population": 2989270,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [74.5900, 42.8700]
+      },
+      "properties": {
+        "country": "Kyrgyzstan",
+        "city": "Bishkek",
+        "population": 996319,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [102.6000, 17.9667]
+      },
+      "properties": {
+        "country": "Lao People's Democratic Republic",
+        "city": "Vientiane",
+        "population": 664754,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [24.1059, 56.9460]
+      },
+      "properties": {
+        "country": "Latvia",
+        "city": "Riga",
+        "population": 637089,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [35.4833, 33.9000]
+      },
+      "properties": {
+        "country": "Lebanon",
+        "city": "Bayrut (Beirut)",
+        "population": 2385271,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [27.4833, -29.3167]
+      },
+      "properties": {
+        "country": "Lesotho",
+        "city": "Maseru",
+        "population": 201851,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-10.7969, 6.3005]
+      },
+      "properties": {
+        "country": "Liberia",
+        "city": "Monrovia",
+        "population": 1418300,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [13.1875, 32.8752]
+      },
+      "properties": {
+        "country": "Libya",
+        "city": "Tarabulus (Tripoli)",
+        "population": 1157746,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.5215, 47.1415]
+      },
+      "properties": {
+        "country": "Liechtenstein",
+        "city": "Vaduz",
+        "population": 5470,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [25.2798, 54.6892]
+      },
+      "properties": {
+        "country": "Lithuania",
+        "city": "Vilnius",
+        "population": 536055,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.1300, 49.6117]
+      },
+      "properties": {
+        "country": "Luxembourg",
+        "city": "Luxembourg",
+        "population": 119752,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [47.5361, -18.9137]
+      },
+      "properties": {
+        "country": "Madagascar",
+        "city": "Antananarivo",
+        "population": 3058387,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [33.7873, -13.9669]
+      },
+      "properties": {
+        "country": "Malawi",
+        "city": "Lilongwe",
+        "population": 1029639,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [101.6865, 3.1412]
+      },
+      "properties": {
+        "country": "Malaysia",
+        "city": "Kuala Lumpur",
+        "population": 7563912,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [73.5089, 4.1748]
+      },
+      "properties": {
+        "country": "Maldives",
+        "city": "Male",
+        "population": 176851,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-8.0000, 12.6500]
+      },
+      "properties": {
+        "country": "Mali",
+        "city": "Bamako",
+        "population": 2446749,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [14.5147, 35.8997]
+      },
+      "properties": {
+        "country": "Malta",
+        "city": "Valletta",
+        "population": 212768,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [171.3803, 7.0897]
+      },
+      "properties": {
+        "country": "Marshall Islands",
+        "city": "Majuro",
+        "population": 30661,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-61.0733, 14.6089]
+      },
+      "properties": {
+        "country": "Martinique",
+        "city": "Fort-de-France",
+        "population": 79361,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-15.9785, 18.0858]
+      },
+      "properties": {
+        "country": "Mauritania",
+        "city": "Nouakchott",
+        "population": 1205414,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [57.4989, -20.1619]
+      },
+      "properties": {
+        "country": "Mauritius",
+        "city": "Port Louis",
+        "population": 149365,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [45.2272, -12.7794]
+      },
+      "properties": {
+        "country": "Mayotte",
+        "city": "Mamoudzou",
+        "population": 6180,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-99.1419, 19.4273]
+      },
+      "properties": {
+        "country": "Mexico",
+        "city": "Ciudad de México (Mexico City)",
+        "population": 21580827,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [158.1588, 6.9174]
+      },
+      "properties": {
+        "country": "Micronesia (Fed. States of)",
+        "city": "Palikir",
+        "population": 6996,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [7.4167, 43.7333]
+      },
+      "properties": {
+        "country": "Monaco",
+        "city": "Monaco",
+        "population": 38897,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [106.8832, 47.9077]
+      },
+      "properties": {
+        "country": "Mongolia",
+        "city": "Ulaanbaatar",
+        "population": 1520381,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [19.2636, 42.4411]
+      },
+      "properties": {
+        "country": "Montenegro",
+        "city": "Podgorica",
+        "population": 177177,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-62.2106, 16.7918]
+      },
+      "properties": {
+        "country": "Montserrat",
+        "city": "Brades Estate",
+        "population": 472,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-6.8326, 34.0133]
+      },
+      "properties": {
+        "country": "Morocco",
+        "city": "Rabat",
+        "population": 1846661,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.5892, -25.9653]
+      },
+      "properties": {
+        "country": "Mozambique",
+        "city": "Maputo",
+        "population": 1101771,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [96.1297, 19.7450]
+      },
+      "properties": {
+        "country": "Myanmar",
+        "city": "Nay Pyi Taw",
+        "population": 500218,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [17.0832, -22.5594]
+      },
+      "properties": {
+        "country": "Namibia",
+        "city": "Windhoek",
+        "population": 404280,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [166.9112, -0.5308]
+      },
+      "properties": {
+        "country": "Nauru",
+        "city": "Nauru",
+        "population": 11312,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [85.3206, 27.7017]
+      },
+      "properties": {
+        "country": "Nepal",
+        "city": "Kathmandu",
+        "population": 1329732,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [4.8897, 52.3740]
+      },
+      "properties": {
+        "country": "Netherlands",
+        "city": "Amsterdam",
+        "population": 1131690,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [166.4572, -22.2763]
+      },
+      "properties": {
+        "country": "New Caledonia",
+        "city": "Nouméa",
+        "population": 197787,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [174.7756, -41.2866]
+      },
+      "properties": {
+        "country": "New Zealand",
+        "city": "Wellington",
+        "population": 411346,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-86.2504, 12.1328]
+      },
+      "properties": {
+        "country": "Nicaragua",
+        "city": "Managua",
+        "population": 1047923,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.1098, 13.5137]
+      },
+      "properties": {
+        "country": "Niger",
+        "city": "Niamey",
+        "population": 1213781,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [7.4898, 9.0574]
+      },
+      "properties": {
+        "country": "Nigeria",
+        "city": "Abuja",
+        "population": 2918518,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-169.9213, -19.0585]
+      },
+      "properties": {
+        "country": "Niue",
+        "city": "Alofi",
+        "population": 727,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [145.7545, 15.2123]
+      },
+      "properties": {
+        "country": "Northern Mariana Islands",
+        "city": "Saipan",
+        "population": 50568,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.7461, 59.9127]
+      },
+      "properties": {
+        "country": "Norway",
+        "city": "Oslo",
+        "population": 1012225,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [58.5922, 23.6139]
+      },
+      "properties": {
+        "country": "Oman",
+        "city": "Masqat (Muscat)",
+        "population": 1446563,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [73.0594, 33.7035]
+      },
+      "properties": {
+        "country": "Pakistan",
+        "city": "Islamabad",
+        "population": 1061412,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [134.4789, 7.3426]
+      },
+      "properties": {
+        "country": "Palau",
+        "city": "Koror",
+        "population": 11410,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.5196, 8.9958]
+      },
+      "properties": {
+        "country": "Panama",
+        "city": "Ciudad de Panamá (Panama City)",
+        "population": 1783490,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [147.1797, -9.4431]
+      },
+      "properties": {
+        "country": "Papua New Guinea",
+        "city": "Port Moresby",
+        "population": 366862,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-57.6359, -25.3007]
+      },
+      "properties": {
+        "country": "Paraguay",
+        "city": "Asunción",
+        "population": 3222199,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-77.0282, -12.0432]
+      },
+      "properties": {
+        "country": "Peru",
+        "city": "Lima",
+        "population": 10390607,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [120.9822, 14.6042]
+      },
+      "properties": {
+        "country": "Philippines",
+        "city": "Manila",
+        "population": 13482468,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [21.0118, 52.2298]
+      },
+      "properties": {
+        "country": "Poland",
+        "city": "Warszawa (Warsaw)",
+        "population": 1767798,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-9.1399, 38.7169]
+      },
+      "properties": {
+        "country": "Portugal",
+        "city": "Lisboa (Lisbon)",
+        "population": 2927316,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-66.1057, 18.4663]
+      },
+      "properties": {
+        "country": "Puerto Rico",
+        "city": "San Juan",
+        "population": 2454337,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [51.5245, 25.2747]
+      },
+      "properties": {
+        "country": "Qatar",
+        "city": "Ad-Dawhah (Doha)",
+        "population": 633401,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [126.9778, 37.5683]
+      },
+      "properties": {
+        "country": "Republic of Korea",
+        "city": "Seoul",
+        "population": 9963497,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [28.8575, 47.0056]
+      },
+      "properties": {
+        "country": "Republic of Moldova",
+        "city": "Chişinău",
+        "population": 509707,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [55.4504, -20.8823]
+      },
+      "properties": {
+        "country": "Réunion",
+        "city": "Saint-Denis",
+        "population": 147209,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [26.1043, 44.4328]
+      },
+      "properties": {
+        "country": "Romania",
+        "city": "Bucuresti (Bucharest)",
+        "population": 1821380,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [37.6218, 55.7550]
+      },
+      "properties": {
+        "country": "Russian Federation",
+        "city": "Moskva (Moscow)",
+        "population": 12409738,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.0579, -1.9474]
+      },
+      "properties": {
+        "country": "Rwanda",
+        "city": "Kigali",
+        "population": 1057836,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-5.7168, -15.9387]
+      },
+      "properties": {
+        "country": "Saint Helena",
+        "city": "Jamestown",
+        "population": 603,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-62.7261, 17.2948]
+      },
+      "properties": {
+        "country": "Saint Kitts and Nevis",
+        "city": "Basseterre",
+        "population": 14434,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-60.9910, 14.0060]
+      },
+      "properties": {
+        "country": "Saint Lucia",
+        "city": "Castries",
+        "population": 22258,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-56.1815, 46.7738]
+      },
+      "properties": {
+        "country": "Saint Pierre and Miquelon",
+        "city": "Saint-Pierre",
+        "population": 5723,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-61.2248, 13.1587]
+      },
+      "properties": {
+        "country": "Saint Vincent and the Grenadines",
+        "city": "Kingstown",
+        "population": 26636,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-171.7667, -13.8333]
+      },
+      "properties": {
+        "country": "Samoa",
+        "city": "Apia",
+        "population": 36066,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [12.4500, 43.9333]
+      },
+      "properties": {
+        "country": "San Marino",
+        "city": "San Marino",
+        "population": 4465,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [6.7273, 0.3365]
+      },
+      "properties": {
+        "country": "Sao Tome and Principe",
+        "city": "São Tomé",
+        "population": 80099,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [46.7096, 24.6905]
+      },
+      "properties": {
+        "country": "Saudi Arabia",
+        "city": "Ar-Riyadh (Riyadh)",
+        "population": 6906595,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-17.4441, 14.6937]
+      },
+      "properties": {
+        "country": "Senegal",
+        "city": "Dakar",
+        "population": 2978419,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [20.4633, 44.8176]
+      },
+      "properties": {
+        "country": "Serbia",
+        "city": "Beograd (Belgrade)",
+        "population": 1389351,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [55.4500, -4.6167]
+      },
+      "properties": {
+        "country": "Seychelles",
+        "city": "Victoria",
+        "population": 28091,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-13.2299, 8.4840]
+      },
+      "properties": {
+        "country": "Sierra Leone",
+        "city": "Freetown",
+        "population": 1135949,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [103.8501, 1.2897]
+      },
+      "properties": {
+        "country": "Singapore",
+        "city": "Singapore",
+        "population": 5791901,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-63.0458, 18.0260]
+      },
+      "properties": {
+        "country": "Sint Maarten (Dutch part)",
+        "city": "Philipsburg",
+        "population": 40552,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [17.1067, 48.1482]
+      },
+      "properties": {
+        "country": "Slovakia",
+        "city": "Bratislava",
+        "population": 429920,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [14.5051, 46.0511]
+      },
+      "properties": {
+        "country": "Slovenia",
+        "city": "Ljubljana",
+        "population": 286491,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [159.9500, -9.4333]
+      },
+      "properties": {
+        "country": "Solomon Islands",
+        "city": "Honiara",
+        "population": 81801,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [45.3435, 2.0416]
+      },
+      "properties": {
+        "country": "Somalia",
+        "city": "Muqdisho (Mogadishu)",
+        "population": 2081624,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [18.4232, -33.9258]
+      },
+      "properties": {
+        "country": "South Africa",
+        "city": "Cape Town",
+        "population": 4430367,
+        "isCapital": true,
+        "capitalType": "Legislative Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [31.5825, 4.8517]
+      },
+      "properties": {
+        "country": "South Sudan",
+        "city": "Juba",
+        "population": 368914,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-3.7026, 40.4165]
+      },
+      "properties": {
+        "country": "Spain",
+        "city": "Madrid",
+        "population": 6497124,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [79.8478, 6.9319]
+      },
+      "properties": {
+        "country": "Sri Lanka",
+        "city": "Colombo",
+        "population": 599821,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [35.2339, 31.7834]
+      },
+      "properties": {
+        "country": "State of Palestine",
+        "city": "Al-Quds[East Jerusalem]",
+        "population": 275086,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.5324, 15.5518]
+      },
+      "properties": {
+        "country": "Sudan",
+        "city": "Al-Khartum (Khartoum)",
+        "population": 5534079,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-55.1668, 5.8664]
+      },
+      "properties": {
+        "country": "Suriname",
+        "city": "Paramaribo",
+        "population": 239457,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [31.1333, -26.3167]
+      },
+      "properties": {
+        "country": "Swaziland",
+        "city": "Mbabane",
+        "population": 68010,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [18.0649, 59.3326]
+      },
+      "properties": {
+        "country": "Sweden",
+        "city": "Stockholm",
+        "population": 1582968,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [7.4474, 46.9481]
+      },
+      "properties": {
+        "country": "Switzerland",
+        "city": "Bern",
+        "population": 422153,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [36.3084, 33.5086]
+      },
+      "properties": {
+        "country": "Syrian Arab Republic",
+        "city": "Dimashq (Damascus)",
+        "population": 2319545,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [68.7791, 38.5358]
+      },
+      "properties": {
+        "country": "Tajikistan",
+        "city": "Dushanbe",
+        "population": 872653,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [21.4333, 42.0000]
+      },
+      "properties": {
+        "country": "TFYR Macedonia",
+        "city": "Skopje",
+        "population": 584208,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [100.5252, 13.7220]
+      },
+      "properties": {
+        "country": "Thailand",
+        "city": "Krung Thep (Bangkok)",
+        "population": 10156316,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [125.5668, -8.5601]
+      },
+      "properties": {
+        "country": "Timor-Leste",
+        "city": "Dili",
+        "population": 281135,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [1.2123, 6.1375]
+      },
+      "properties": {
+        "country": "Togo",
+        "city": "Lomé",
+        "population": 1745744,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-171.2500, -9.3800]
+      },
+      "properties": {
+        "country": "Tokelau",
+        "city": "Tokelau",
+        "population": 0,
+        "isCapital": true,
+        "capitalType": "Others"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-175.2032, -21.1394]
+      },
+      "properties": {
+        "country": "Tonga",
+        "city": "Nuku'alofa",
+        "population": 22904,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-61.5166, 10.6662]
+      },
+      "properties": {
+        "country": "Trinidad and Tobago",
+        "city": "Port of Spain",
+        "population": 544417,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [10.1658, 36.8190]
+      },
+      "properties": {
+        "country": "Tunisia",
+        "city": "Tunis",
+        "population": 2290777,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.8543, 39.9199]
+      },
+      "properties": {
+        "country": "Turkey",
+        "city": "Ankara",
+        "population": 4919074,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [58.3833, 37.9500]
+      },
+      "properties": {
+        "country": "Turkmenistan",
+        "city": "Ashgabat",
+        "population": 810186,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-71.1419, 21.4612]
+      },
+      "properties": {
+        "country": "Turks and Caicos Islands",
+        "city": "Cockburn Town",
+        "population": 5447,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [179.1991, -8.5189]
+      },
+      "properties": {
+        "country": "Tuvalu",
+        "city": "Funafuti",
+        "population": 7042,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [32.5822, 0.3163]
+      },
+      "properties": {
+        "country": "Uganda",
+        "city": "Kampala",
+        "population": 2986352,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.5186, 50.4454]
+      },
+      "properties": {
+        "country": "Ukraine",
+        "city": "Kyiv (Kiev)",
+        "population": 2956706,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [54.3618, 24.4648]
+      },
+      "properties": {
+        "country": "United Arab Emirates",
+        "city": "Abu Zaby (Abu Dhabi)",
+        "population": 1419699,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-0.1257, 51.5085]
+      },
+      "properties": {
+        "country": "United Kingdom",
+        "city": "London",
+        "population": 9046485,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [35.7395, -6.1722]
+      },
+      "properties": {
+        "country": "United Republic of Tanzania",
+        "city": "Dodoma",
+        "population": 261645,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-77.0364, 38.8951]
+      },
+      "properties": {
+        "country": "United States of America",
+        "city": "Washington, D.C.",
+        "population": 5206593,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-64.9307, 18.3419]
+      },
+      "properties": {
+        "country": "United States Virgin Islands",
+        "city": "Charlotte Amalie",
+        "population": 52322,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-56.1674, -34.8335]
+      },
+      "properties": {
+        "country": "Uruguay",
+        "city": "Montevideo",
+        "population": 1736989,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [69.2163, 41.2647]
+      },
+      "properties": {
+        "country": "Uzbekistan",
+        "city": "Tashkent",
+        "population": 2463969,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [168.3219, -17.7338]
+      },
+      "properties": {
+        "country": "Vanuatu",
+        "city": "Port Vila",
+        "population": 52690,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-66.8792, 10.4880]
+      },
+      "properties": {
+        "country": "Venezuela (Bolivarian Republic of)",
+        "city": "Caracas",
+        "population": 2934560,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [105.8412, 21.0245]
+      },
+      "properties": {
+        "country": "Viet Nam",
+        "city": "Hà Noi",
+        "population": 4282738,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-176.1745, -13.2816]
+      },
+      "properties": {
+        "country": "Wallis and Futuna Islands",
+        "city": "Matu-Utu",
+        "population": 1025,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-13.2014, 27.1532]
+      },
+      "properties": {
+        "country": "Western Sahara",
+        "city": "El Aaiún",
+        "population": 232388,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [44.2078, 15.3531]
+      },
+      "properties": {
+        "country": "Yemen",
+        "city": "Sana'a'",
+        "population": 2779317,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [28.2771, -15.4134]
+      },
+      "properties": {
+        "country": "Zambia",
+        "city": "Lusaka",
+        "population": 2523844,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [31.0539, -17.8294]
+      },
+      "properties": {
+        "country": "Zimbabwe",
+        "city": "Harare",
+        "population": 1515016,
+        "isCapital": true,
+        "capitalType": "Capital"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-74.0060, 40.7128]
+      },
+      "properties": {
+        "country": "United States of America",
+        "city": "New York City",
+        "population": 8804190,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [121.4737, 31.2304]
+      },
+      "properties": {
+        "country": "China",
+        "city": "Shanghai",
+        "population": 26317104,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.8777, 19.0760]
+      },
+      "properties": {
+        "country": "India",
+        "city": "Mumbai",
+        "population": 20411274,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-46.6333, -23.5505]
+      },
+      "properties": {
+        "country": "Brazil",
+        "city": "São Paulo",
+        "population": 12325232,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [151.2093, -33.8688]
+      },
+      "properties": {
+        "country": "Australia",
+        "city": "Sydney",
+        "population": 5312163,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [3.3792, 6.5244]
+      },
+      "properties": {
+        "country": "Nigeria",
+        "city": "Lagos",
+        "population": 14862000,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [28.9784, 41.0082]
+      },
+      "properties": {
+        "country": "Turkey",
+        "city": "Istanbul",
+        "population": 15519267,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [67.0011, 24.8607]
+      },
+      "properties": {
+        "country": "Pakistan",
+        "city": "Karachi",
+        "population": 16093786,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.3832, 43.6532]
+      },
+      "properties": {
+        "country": "Canada",
+        "city": "Toronto",
+        "population": 2930000,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [28.0473, -26.2041]
+      },
+      "properties": {
+        "country": "South Africa",
+        "city": "Johannesburg",
+        "population": 5635127,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [55.2708, 25.2048]
+      },
+      "properties": {
+        "country": "United Arab Emirates",
+        "city": "Dubai",
+        "population": 3137000,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [2.1734, 41.3851]
+      },
+      "properties": {
+        "country": "Spain",
+        "city": "Barcelona",
+        "population": 1620343,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-118.2437, 34.0522]
+      },
+      "properties": {
+        "country": "United States of America",
+        "city": "Los Angeles",
+        "population": 3898747,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-87.6298, 41.8781]
+      },
+      "properties": {
+        "country": "United States of America",
+        "city": "Chicago",
+        "population": 2746388,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-43.1729, -22.9068]
+      },
+      "properties": {
+        "country": "Brazil",
+        "city": "Rio de Janeiro",
+        "population": 6747815,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.1900, 45.4642]
+      },
+      "properties": {
+        "country": "Italy",
+        "city": "Milan",
+        "population": 1352000,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [11.5820, 48.1351]
+      },
+      "properties": {
+        "country": "Germany",
+        "city": "Munich",
+        "population": 1472000,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [135.5023, 34.6937]
+      },
+      "properties": {
+        "country": "Japan",
+        "city": "Osaka",
+        "population": 2691000,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [30.3609, 59.9311]
+      },
+      "properties": {
+        "country": "Russian Federation",
+        "city": "Saint Petersburg",
+        "population": 5384342,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [113.2644, 23.1291]
+      },
+      "properties": {
+        "country": "China",
+        "city": "Guangzhou",
+        "population": 15305900,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [114.0579, 22.5431]
+      },
+      "properties": {
+        "country": "China",
+        "city": "Shenzhen",
+        "population": 12591700,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [88.3639, 22.5726]
+      },
+      "properties": {
+        "country": "India",
+        "city": "Kolkata",
+        "population": 14850000,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [106.6297, 10.8231]
+      },
+      "properties": {
+        "country": "Viet Nam",
+        "city": "Ho Chi Minh City",
+        "population": 8993082,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [29.9187, 31.2001]
+      },
+      "properties": {
+        "country": "Egypt",
+        "city": "Alexandria",
+        "population": 5200000,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.5673, 45.5017]
+      },
+      "properties": {
+        "country": "Canada",
+        "city": "Montreal",
+        "population": 1780000,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [144.9631, -37.8136]
+      },
+      "properties": {
+        "country": "Australia",
+        "city": "Melbourne",
+        "population": 5078190,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [9.9937, 53.5511]
+      },
+      "properties": {
+        "country": "Germany",
+        "city": "Hamburg",
+        "population": 1841000,
+        "isCapital": false,
+        "capitalType": "Major City"
+      }
+    }
+  ]
+}
