@@ -1,0 +1,184 @@
+        /* Base styles for the presentation editor */
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .font-arial {
+            font-family: 'Arial', sans-serif;
+        }
+        #slide-nav-list li {
+            font-size: 1rem; /* Adjust this value as needed. 1rem is 16px. */
+        }
+        
+        /* Remove blue outline on focused editable elements */
+        [contenteditable]:focus {
+            outline: none;
+        }
+
+        /* --- Main Layout --- */
+        #side-drawer {
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+
+        #main-content {
+            margin-left: 18rem; /* Width of the side drawer */
+            padding: 2rem;
+            width: calc(100% - 18rem);
+        }
+
+        #presentation-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* This line centers your slides horizontally */
+            gap: 2rem; /* FIXED: Was -18rem, causing overlap */
+            padding-top: 1rem;
+        }
+
+        /* --- Slide Wrapper & Scaling --- */
+        .slide-wrapper {
+            width: 100%;
+            max-width: 900px;
+            aspect-ratio: 4 / 3;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Defines the base appearance of each slide */
+        .slide {
+            background-color: white;
+            width: 1200px;
+            height: 900px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            border-radius: 0.5rem;
+            transform-origin: top left;
+            transform: scale(var(--slide-scale, 0.6));
+        }
+        
+        .slide > main {
+            flex-grow: 1;
+            overflow: hidden; /* Hide scrollbars and prevent overflow */
+        }
+
+        /* --- Toolbar --- */
+        .toolbar {
+            background-color: #fff;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: sticky;
+            top: 1rem;
+            z-index: 50;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .toolbar-button {
+            background: none;
+            border: none;
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .toolbar-button:hover { background-color: #f3f4f6; }
+        .toolbar-separator {
+            width: 1px;
+            height: 1.5rem;
+            background-color: #d1d5db;
+            margin: 0 0.25rem;
+        }
+        .toolbar-select, .toolbar-color-picker {
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            padding: 0.4rem;
+        }
+        .toolbar-color-picker { padding: 0.25rem; width: 2.5rem; }
+
+        /* --- Image Editing in contenteditable --- */
+        .editable-image-column img {
+            max-width: 100%;
+            max-height: 280px;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+        .editable-image-column img:hover {
+            border-color: #a0aec0;
+        }
+
+
+        /* --- Print Styles --- */
+        @media print {
+            body {
+                background-color: white !important;
+                -webkit-print-color-adjust: exact; /* Ensures background colors/gradients print */
+                print-color-adjust: exact;
+            }
+
+            #side-drawer, #toolbar, #main-content {
+                display: none !important;
+            }
+            
+            #presentation-container {
+                display: block !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                gap: 0 !important;
+            }
+
+            .slide-wrapper {
+                width: 100% !important;
+                height: 100% !important;
+                display: block !important;
+                page-break-after: always !important;
+            }
+            .slide-wrapper:last-child {
+                page-break-after: auto !important;
+            }
+
+            .slide {
+                transform: scale(1) !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                overflow: hidden !important;
+                width: 100% !important;
+                height: 100% !important;
+            }
+        }
+
+        @page {
+            size: landscape;
+            margin: 0;
+        }
+
+        /* --- Slide Content Specific --- */
+        .header-banner {
+            display: flex;
+            height: 12pt;
+            width: 100%;
+        }
+        .banner-segment {
+            border-right: 4px solid white;
+            background: #3A1557;
+            background: linear-gradient(90deg, rgba(58, 21, 87, 1) 0%, rgba(145, 52, 218, 1) 50%);
+        }
+        .banner-segment:last-child { border-right: none; }
+        
+        /* D3 Map Styles */
+        #map-container { border: 1px solid rgb(178, 178, 178); background-color: rgb(204, 204, 255); }
+        .country { stroke: rgb(178, 178, 178); stroke-width: 0.5px; }
+        .capital-icon { fill: red; stroke: black; stroke-width: 0.5px; }
+        .major-city-icon { fill: red; stroke: black; stroke-width: 0.25px; }
+        .label { font-size: 16pt; font-weight: bold; fill: black; text-anchor: middle; paint-order: stroke; cursor: move; user-select: none; }
+        .selection-box { fill: none; stroke: dodgerblue; stroke-width: 1px; stroke-dasharray: 4 2; }
+        .label-editor-input { font-family: Arial, sans-serif; font-size: 16pt; font-weight: bold; color: black; border: 1px solid black; background: transparent; text-align: left; padding: 0; margin: 0; box-sizing: border-box; }
