@@ -66,6 +66,120 @@ const SlidePresenter = {
         }
     },
 
+    // --- D3 Map Module ---
+    d3Map: {
+        render(highlightedCountries) { // Accepts highlightedCountries as an argument
+            function toTitleCase(str) {
+                return str.replace(/\w\S*/g, function(txt) {
+                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                });
+            }
+
+            const width = 800, height = 450;
+            let selectedLabel = null;
+            const svg = d3.select("#map-container").append("svg").attr("width", width).attr("height", height);
+            const g = svg.append("g");
+
+            const minZoom = 0.25, maxZoom = 12;
+
+            const fontSizeScale = d3.scaleLinear().domain([minZoom, 1, maxZoom]).range([24, 16, 6]).clamp(true);
+            const radiusScale = d3.scaleLinear().domain([minZoom, 1, maxZoom]).range([12, 8, 3]).clamp(true);
+            const starScale = d3.scaleLinear().domain([minZoom, 1, maxZoom]).range([1.2, 0.8, 0.3]).clamp(true);
+
+            const zoom = d3.zoom()
+                .scaleExtent([minZoom, maxZoom])
+                .on("zoom", () => {
+                    const transform = d3.event.transform;
+                    const k = transform.k;
+                    g.attr("transform", transform);
+                    g.selectAll('.label').style('font-size', fontSizeScale(k) + 'px').style('stroke-width', (0.5 / k) + 'px');
+                    g.selectAll('.major-city-icon').attr('r', radiusScale(k));
+                    g.selectAll('.capital-icon').each(function() {
+                        const icon = d3.select(this);
+                        const currentTransform = icon.attr('transform');
+                        const translatePart = currentTransform.split(')')[0] + ')';
+                        icon.attr('transform', `${translatePart} scale(${starScale(k)})`);
+                    });
+                });
+
+            svg.call(zoom).on("dblclick.zoom", null);
+
+            const selectionBox = g.append("rect").attr("class", "selection-box").style("display", "none");
+            const projection = d3.geoMercator().center([48, 12.5]).scale(1200).translate([width / 2, height / 2]);
+            const pathGenerator = d3.geoPath().projection(projection);
+            const citiesUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/world_cities.geojson';
+            const bordersUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/country_borders.geojson';
+            
+            svg.on("click", () => { if (selectedLabel) { selectedLabel = null; selectionBox.style("display", "none"); } });
+            d3.select("body").on("keydown", () => { if (selectedLabel && (d3.event.key === "Delete" || d3.event.key === "Backspace")) { selectedLabel.remove(); selectedLabel = null; selectionBox.style("display", "none"); } });
+            
+            Promise.all([d3.json(bordersUrl), d3.json(citiesUrl)]).then(([borderData, cityData]) => {
+                g.selectAll(".country").data(borderData.features).enter().append("path").attr("class", "country").attr("d", pathGenerator).attr("fill", d => highlightedCountries.includes(d.properties.name) ? 'rgb(255, 204, 102)' : 'rgb(255, 219, 183)');
+                const cityGroup = g.append("g").attr("class", "cities");
+                const starPath = "M12 2 L15.09 8.26 L22 9.27 L17 14.14 L18.18 21.02 L12 17.77 L5.82 21.02 L7 14.14 L2 9.27 L8.91 8.26 Z";
+                cityGroup.selectAll(".capital-icon").data(cityData.features.filter(d => d.properties.isCapital && highlightedCountries.includes(d.properties.country))).enter().append("path").attr("class", "capital-icon").attr("d", starPath).attr("transform", d => `translate(${projection(d.geometry.coordinates)[0] - 12}, ${projection(d.geometry.coordinates)[1] - 12}) scale(0.8)`);
+                cityGroup.selectAll(".major-city-icon").data(cityData.features.filter(d => !d.properties.isCapital && highlightedCountries.includes(d.properties.country))).enter().append("circle").attr("class", "major-city-icon").attr("cx", d => projection(d.geometry.coordinates)[0]).attr("cy", d => projection(d.geometry.coordinates)[1]).attr("r", 8);
+                const labelGroup = g.append("g").attr("class", "labels");
+                labelGroup.selectAll(".country-label").data(borderData.features.filter(d => highlightedCountries.includes(d.properties.name))).enter().append("text").attr("class", "label country-label").text(d => d.properties.name.toUpperCase()).attr("transform", d => `translate(${pathGenerator.centroid(d)[0]}, ${pathGenerator.centroid(d)[1]})`).call(createDragHandler()).on("click", selectHandler).on("dblclick", createEditHandler);
+                labelGroup.selectAll(".city-label").data(cityData.features.filter(d => highlightedCountries.includes(d.properties.country))).enter().append("text").attr("class", "label city-label").text(d => d.properties.city).attr("transform", d => `translate(${projection(d.geometry.coordinates)[0]}, ${projection(d.geometry.coordinates)[1] + (d.properties.isCapital ? -18 : -12)})`).call(createDragHandler()).on("click", selectHandler).on("dblclick", createEditHandler);
+            });
+
+            function selectHandler(d) { d3.event.stopPropagation(); selectedLabel = d3.select(this); const bbox = this.getBBox(); const transform = selectedLabel.attr("transform"); selectionBox.attr("x", bbox.x - 4).attr("y", bbox.y - 4).attr("width", bbox.width + 8).attr("height", bbox.height + 8).attr("transform", transform).style("display", "block").raise(); }
+            function createDragHandler() { let offsetX, offsetY; return d3.drag().on("start", function() { const transform = d3.select(this).attr("transform"); const parts = /translate\(([^,]+),([^)]+)\)/.exec(transform); if (parts) { const currentX = parseFloat(parts[1]); const currentY = parseFloat(parts[2]); offsetX = d3.event.x - currentX; offsetY = d3.event.y - currentY; } d3.select(this).raise().classed("active", true); }).on("drag", function() { const newX = d3.event.x - offsetX; const newY = d3.event.y - offsetY; const newTransform = `translate(${newX}, ${newY})`; d3.select(this).attr("transform", newTransform); if (selectedLabel && selectedLabel.node() === this) { selectionBox.attr("transform", newTransform); } }).on("end", function() { d3.select(this).classed("active", false); }); }
+            
+            function createEditHandler(d) {
+                d3.event.stopPropagation();
+                const textElement = d3.select(this);
+                const isCity = !!d.properties.city;
+                const bbox = textElement.node().getBBox();
+                
+                textElement.style("display", "none");
+                if (selectedLabel && selectedLabel.node() === this) selectionBox.style("display", "none");
+
+                const currentTransform = d3.zoomTransform(g.node());
+                const k = currentTransform.k;
+                
+                const transformAttr = textElement.attr('transform');
+                const parts = /translate\(([^,]+),([^)]+)\)/.exec(transformAttr);
+                const textX = parts ? parseFloat(parts[1]) : 0;
+                const textY = parts ? parseFloat(parts[2]) : 0;
+                
+                const foWidth = bbox.width + 10;
+                const foHeight = bbox.height + 5;
+
+                const foreignObject = g.append("foreignObject")
+                    .attr("x", bbox.x - 5)
+                    .attr("y", bbox.y - 2)
+                    .attr("width", foWidth)
+                    .attr("height", foHeight)
+                    .attr("transform", `translate(${textX}, ${textY}) scale(${1/k})`);
+
+                const currentText = (d.properties && d.properties.displayName) || (d.properties && d.properties.city) || (d.properties && d.properties.name);
+                
+                const input = foreignObject.append("xhtml:input")
+                    .attr("type", "text")
+                    .attr("class", "label-editor-input")
+                    .style("width", `${foWidth}px`)
+                    .style("height", `${foHeight}px`)
+                    .style("font-size", `${fontSizeScale(k)}px`)
+                    .property("value", currentText)
+                    .on("blur", finishEditing)
+                    .on("keydown", function() { if (d3.event.key === "Enter") finishEditing.call(this); });
+                
+                input.node().focus();
+                input.node().select();
+
+                function finishEditing() {
+                    const newText = input.node().value;
+                    if (d.properties) d.properties.displayName = newText;
+                    textElement.text(isCity ? toTitleCase(newText) : newText.toUpperCase()).style("display", "block");
+                    foreignObject.remove();
+                    selectHandler.call(textElement.node(), d);
+                }
+            }
+        }
+    },
+
     // --- Main Initializer ---
     init(slidesData) {
         this.config.slidesData = slidesData;
@@ -81,7 +195,9 @@ const SlidePresenter = {
         }
 
         function getStandardFooter(pageNumber) {
-            return `<footer class="w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div><span>${pageNumber} ${new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })} TITLE OF BRIEF.pptx</span></div><div class="font-arial font-bold text-lg text-black">CUI</div></footer>`;
+            const today = new Date();
+            const dateString = `${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getDate().toString().padStart(2, '0')}/${today.getFullYear()}`;
+            return `<footer class="w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div><span>${pageNumber} ${dateString} TITLE OF BRIEF.pptx</span></div><div class="font-arial font-bold text-lg text-black">CUI</div></footer>`;
         }
 
         function getLayoutHtml(slideData, slideIndex) {
@@ -118,8 +234,9 @@ const SlidePresenter = {
         });
 
         // Initialize all modules
-        if (document.getElementById('map-container')) {
-            this.d3Map.render();
+        const mapSlideData = this.config.slidesData.find(slide => slide.layout === 'map');
+        if (mapSlideData && document.getElementById('map-container')) {
+            this.d3Map.render(mapSlideData.highlightedCountries || []);
         }
         this.toolbar.init();
         this.sideNav.update();
