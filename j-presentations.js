@@ -127,24 +127,64 @@ const SlidePresenter = {
 
             function selectHandler(d) { d3.event.stopPropagation(); selectedLabel = d3.select(this); const bbox = this.getBBox(); const transform = selectedLabel.attr("transform"); selectionBox.attr("x", bbox.x - 4).attr("y", bbox.y - 4).attr("width", bbox.width + 8).attr("height", bbox.height + 8).attr("transform", transform).style("display", "block").raise(); }
             function createDragHandler() { let offsetX, offsetY; return d3.drag().on("start", function() { const transform = d3.select(this).attr("transform"); const parts = /translate\(([^,]+),([^)]+)\)/.exec(transform); if (parts) { const currentX = parseFloat(parts[1]); const currentY = parseFloat(parts[2]); offsetX = d3.event.x - currentX; offsetY = d3.event.y - currentY; } d3.select(this).raise().classed("active", true); }).on("drag", function() { const newX = d3.event.x - offsetX; const newY = d3.event.y - offsetY; const newTransform = `translate(${newX}, ${newY})`; d3.select(this).attr("transform", newTransform); if (selectedLabel && selectedLabel.node() === this) { selectionBox.attr("transform", newTransform); } }).on("end", function() { d3.select(this).classed("active", false); }); }
+
             function createEditHandler(d) {
                 d3.event.stopPropagation();
                 const textElement = d3.select(this);
                 const isCity = !!d.properties.city;
+                
+                // Get the current transform for proper positioning
+                const currentTransform = d3.zoomTransform(svg.node());
+                
+                // Get the bounding box of the text element in its current (scaled) state
                 const bbox = textElement.node().getBBox();
+                
+                // Hide the text element and selection box
                 textElement.style("display", "none");
                 if (selectedLabel && selectedLabel.node() === this) selectionBox.style("display", "none");
-                const transform = textElement.attr("transform");
+
+                // Get the text element's current transform attributes (translate, scale)
+                const textTransform = d3.getEventTransform(textElement.node());
+                
+                // Calculate position for foreignObject relative to its transformed position
+                // The bbox already gives coordinates relative to the text element's own coordinate system.
+                // To position the foreignObject correctly on the screen, we need to apply the parent group's transform.
+                const screenX = textTransform.x + currentTransform.x;
+                const screenY = textTransform.y + currentTransform.y;
+                
+                // Create foreignObject for editable input
+                const foreignObject = g.append("foreignObject")
+                    .attr("x", bbox.x)
+                    .attr("y", bbox.y)
+                    // The width and height should scale inversely to the zoom level
+                    // so the input box appears consistent in size on screen.
+                    .attr("width", bbox.width * (1 / currentTransform.k) + 20) // Add some padding
+                    .attr("height", bbox.height * (1 / currentTransform.k) + 10) // Add some padding
+                    // Apply the same transform as the text element
+                    .attr("transform", `translate(${textTransform.x}, ${textTransform.y})`)
+                    .style("overflow", "visible"); // Allow content to overflow if needed
+
                 const currentText = (d.properties && d.properties.displayName) || (d.properties && d.properties.city) || (d.properties && d.properties.name);
-                const foreignObject = g.append("foreignObject").attr("transform", transform).attr("x", bbox.x).attr("y", bbox.y).attr("width", bbox.width + 20).attr("height", bbox.height);
-                const input = foreignObject.append("xhtml:input").attr("type", "text").attr("class", "label-editor-input").style("width", (bbox.width + 20) + "px").style("height", bbox.height + "px").property("value", currentText)
-                    .on("blur", finishEditing).on("keydown", function() { if (d3.event.key === "Enter") finishEditing.call(this); });
-                input.node().focus(); input.node().select();
+                
+                const input = foreignObject.append("xhtml:input")
+                    .attr("type", "text")
+                    .attr("class", "label-editor-input")
+                    .style("width", "100%") // Input takes full width of foreignObject
+                    .style("height", "100%") // Input takes full height of foreignObject
+                    .style("font-size", `${fontSizeScale(currentTransform.k)}px`) // Match the label's font size
+                    .property("value", currentText)
+                    .on("blur", finishEditing)
+                    .on("keydown", function() { if (d3.event.key === "Enter") finishEditing.call(this); });
+                
+                input.node().focus();
+                input.node().select();
+
                 function finishEditing() {
                     const newText = input.node().value;
                     if (d.properties) d.properties.displayName = newText;
                     textElement.text(isCity ? toTitleCase(newText) : newText.toUpperCase()).style("display", "block");
                     foreignObject.remove();
+                    // Re-select to show the selection box correctly
                     selectHandler.call(textElement.node(), d);
                 }
             }
