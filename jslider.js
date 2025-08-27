@@ -68,7 +68,13 @@ const SlidePresenter = {
 
     // --- D3 Map Module ---
     d3Map: {
-        render(highlightedCountries) { // Accepts highlightedCountries as an argument
+        render(mapData) { // MODIFIED: Accepts the entire map slide object
+            // --- Extract data and set defaults ---
+            const highlightedCountries = mapData.highlightedCountries || [];
+            const mapConfig = mapData.mapConfig || {};
+            const center = mapConfig.center || [0, 0]; // Default to world center
+            const scale = mapConfig.scale || 150;     // Default to world view scale
+            
             function toTitleCase(str) {
                 return str.replace(/\w\S*/g, function(txt) {
                     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
@@ -105,7 +111,8 @@ const SlidePresenter = {
             svg.call(zoom).on("dblclick.zoom", null);
 
             const selectionBox = g.append("rect").attr("class", "selection-box").style("display", "none");
-            const projection = d3.geoMercator().center([48, 12.5]).scale(1200).translate([width / 2, height / 2]);
+            // MODIFIED: Use the dynamic center and scale variables here
+            const projection = d3.geoMercator().center(center).scale(scale).translate([width / 2, height / 2]);
             const pathGenerator = d3.geoPath().projection(projection);
             const citiesUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/world_cities.geojson';
             const bordersUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/country_borders.geojson';
@@ -236,7 +243,8 @@ const SlidePresenter = {
         // Initialize all modules
         const mapSlideData = this.config.slidesData.find(slide => slide.layout === 'map');
         if (mapSlideData && document.getElementById('map-container')) {
-            this.d3Map.render(mapSlideData.highlightedCountries || []);
+            // MODIFIED: Pass the entire map slide data object to the renderer
+            this.d3Map.render(mapSlideData);
         }
         this.toolbar.init();
         this.sideNav.update();
