@@ -16,16 +16,25 @@ const SlidePresenter = {
                 if (button && button.dataset.command) {
                     e.preventDefault();
                     const command = button.dataset.command;
-                    
-                    if (command === 'save-pptx') {
-                        SlidePresenter.exportToPptx(button);
-                    } else {
-                        document.execCommand(command, false, null);
-                    }
+                    if (command === 'print') window.print();
+                    else document.execCommand(command, false, null);
                 }
             });
             document.getElementById('font-selector').addEventListener('change', (e) => document.execCommand('fontName', false, e.target.value));
             document.getElementById('color-picker').addEventListener('input', (e) => document.execCommand('foreColor', false, e.target.value));
+
+            // Added event listener for the new PPTX export button
+            const exportBtn = document.getElementById('export-pptx-btn');
+            if (exportBtn) {
+                exportBtn.addEventListener('click', () => {
+                    exportBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                    exportBtn.disabled = true;
+                    SlidePresenter.pptxExporter.export().finally(() => {
+                        exportBtn.innerHTML = '<i class="fas fa-file-powerpoint"></i>';
+                        exportBtn.disabled = false;
+                    });
+                });
+            }
         }
     },
 
@@ -72,41 +81,58 @@ const SlidePresenter = {
 
     // --- D3 Map Module ---
     d3Map: {
-        render(mapData) {
+        render(mapData) { // MODIFIED: Accepts the entire map slide object
+            // --- Extract data and set defaults ---
             const highlightedCountries = mapData.highlightedCountries || [];
             const mapConfig = mapData.mapConfig || {};
-            const center = mapConfig.center || [0, 0];
-            const scale = mapConfig.scale || 150;
-            function toTitleCase(str) { return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()); }
+            const center = mapConfig.center || [0, 0]; // Default to world center
+            const scale = mapConfig.scale || 150;     // Default to world view scale
+            
+            function toTitleCase(str) {
+                return str.replace(/\w\S*/g, function(txt) {
+                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                });
+            }
+
             const width = 800, height = 450;
             let selectedLabel = null;
             const svg = d3.select("#map-container").append("svg").attr("width", width).attr("height", height);
             const g = svg.append("g");
+
             const minZoom = 0.25, maxZoom = 12;
+
             const fontSizeScale = d3.scaleLinear().domain([minZoom, 1, maxZoom]).range([24, 16, 6]).clamp(true);
             const radiusScale = d3.scaleLinear().domain([minZoom, 1, maxZoom]).range([12, 8, 3]).clamp(true);
             const starScale = d3.scaleLinear().domain([minZoom, 1, maxZoom]).range([1.2, 0.8, 0.3]).clamp(true);
-            const zoom = d3.zoom().scaleExtent([minZoom, maxZoom]).on("zoom", () => {
-                const transform = d3.event.transform;
-                const k = transform.k;
-                g.attr("transform", transform);
-                g.selectAll('.label').style('font-size', `${fontSizeScale(k)}px`).style('stroke-width', `${0.5 / k}px`);
-                g.selectAll('.major-city-icon').attr('r', radiusScale(k));
-                g.selectAll('.capital-icon').each(function() {
-                    const icon = d3.select(this);
-                    const currentTransform = icon.attr('transform');
-                    const translatePart = currentTransform.split(')')[0] + ')';
-                    icon.attr('transform', `${translatePart} scale(${starScale(k)})`);
+
+            const zoom = d3.zoom()
+                .scaleExtent([minZoom, maxZoom])
+                .on("zoom", () => {
+                    const transform = d3.event.transform;
+                    const k = transform.k;
+                    g.attr("transform", transform);
+                    g.selectAll('.label').style('font-size', fontSizeScale(k) + 'px').style('stroke-width', (0.5 / k) + 'px');
+                    g.selectAll('.major-city-icon').attr('r', radiusScale(k));
+                    g.selectAll('.capital-icon').each(function() {
+                        const icon = d3.select(this);
+                        const currentTransform = icon.attr('transform');
+                        const translatePart = currentTransform.split(')')[0] + ')';
+                        icon.attr('transform', `${translatePart} scale(${starScale(k)})`);
+                    });
                 });
-            });
+
             svg.call(zoom).on("dblclick.zoom", null);
+
             const selectionBox = g.append("rect").attr("class", "selection-box").style("display", "none");
+            // MODIFIED: Use the dynamic center and scale variables here
             const projection = d3.geoMercator().center(center).scale(scale).translate([width / 2, height / 2]);
             const pathGenerator = d3.geoPath().projection(projection);
             const citiesUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/world_cities.geojson';
             const bordersUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/country_borders.geojson';
+            
             svg.on("click", () => { if (selectedLabel) { selectedLabel = null; selectionBox.style("display", "none"); } });
             d3.select("body").on("keydown", () => { if (selectedLabel && (d3.event.key === "Delete" || d3.event.key === "Backspace")) { selectedLabel.remove(); selectedLabel = null; selectionBox.style("display", "none"); } });
+            
             Promise.all([d3.json(bordersUrl), d3.json(citiesUrl)]).then(([borderData, cityData]) => {
                 g.selectAll(".country").data(borderData.features).enter().append("path").attr("class", "country").attr("d", pathGenerator).attr("fill", d => highlightedCountries.includes(d.properties.name) ? 'rgb(255, 204, 102)' : 'rgb(255, 219, 183)');
                 const cityGroup = g.append("g").attr("class", "cities");
@@ -117,28 +143,52 @@ const SlidePresenter = {
                 labelGroup.selectAll(".country-label").data(borderData.features.filter(d => highlightedCountries.includes(d.properties.name))).enter().append("text").attr("class", "label country-label").text(d => d.properties.name.toUpperCase()).attr("transform", d => `translate(${pathGenerator.centroid(d)[0]}, ${pathGenerator.centroid(d)[1]})`).call(createDragHandler()).on("click", selectHandler).on("dblclick", createEditHandler);
                 labelGroup.selectAll(".city-label").data(cityData.features.filter(d => highlightedCountries.includes(d.properties.country))).enter().append("text").attr("class", "label city-label").text(d => d.properties.city).attr("transform", d => `translate(${projection(d.geometry.coordinates)[0]}, ${projection(d.geometry.coordinates)[1] + (d.properties.isCapital ? -18 : -12)})`).call(createDragHandler()).on("click", selectHandler).on("dblclick", createEditHandler);
             });
+
             function selectHandler(d) { d3.event.stopPropagation(); selectedLabel = d3.select(this); const bbox = this.getBBox(); const transform = selectedLabel.attr("transform"); selectionBox.attr("x", bbox.x - 4).attr("y", bbox.y - 4).attr("width", bbox.width + 8).attr("height", bbox.height + 8).attr("transform", transform).style("display", "block").raise(); }
             function createDragHandler() { let offsetX, offsetY; return d3.drag().on("start", function() { const transform = d3.select(this).attr("transform"); const parts = /translate\(([^,]+),([^)]+)\)/.exec(transform); if (parts) { const currentX = parseFloat(parts[1]); const currentY = parseFloat(parts[2]); offsetX = d3.event.x - currentX; offsetY = d3.event.y - currentY; } d3.select(this).raise().classed("active", true); }).on("drag", function() { const newX = d3.event.x - offsetX; const newY = d3.event.y - offsetY; const newTransform = `translate(${newX}, ${newY})`; d3.select(this).attr("transform", newTransform); if (selectedLabel && selectedLabel.node() === this) { selectionBox.attr("transform", newTransform); } }).on("end", function() { d3.select(this).classed("active", false); }); }
+            
             function createEditHandler(d) {
                 d3.event.stopPropagation();
                 const textElement = d3.select(this);
                 const isCity = !!d.properties.city;
                 const bbox = textElement.node().getBBox();
+                
                 textElement.style("display", "none");
                 if (selectedLabel && selectedLabel.node() === this) selectionBox.style("display", "none");
+
                 const currentTransform = d3.zoomTransform(g.node());
                 const k = currentTransform.k;
+                
                 const transformAttr = textElement.attr('transform');
                 const parts = /translate\(([^,]+),([^)]+)\)/.exec(transformAttr);
                 const textX = parts ? parseFloat(parts[1]) : 0;
                 const textY = parts ? parseFloat(parts[2]) : 0;
+                
                 const foWidth = bbox.width + 10;
                 const foHeight = bbox.height + 5;
-                const foreignObject = g.append("foreignObject").attr("x", bbox.x - 5).attr("y", bbox.y - 2).attr("width", foWidth).attr("height", foHeight).attr("transform", `translate(${textX}, ${textY}) scale(${1/k})`);
+
+                const foreignObject = g.append("foreignObject")
+                    .attr("x", bbox.x - 5)
+                    .attr("y", bbox.y - 2)
+                    .attr("width", foWidth)
+                    .attr("height", foHeight)
+                    .attr("transform", `translate(${textX}, ${textY}) scale(${1/k})`);
+
                 const currentText = (d.properties && d.properties.displayName) || (d.properties && d.properties.city) || (d.properties && d.properties.name);
-                const input = foreignObject.append("xhtml:input").attr("type", "text").attr("class", "label-editor-input").style("width", `${foWidth}px`).style("height", `${foHeight}px`).style("font-size", `${fontSizeScale(k)}px`).property("value", currentText).on("blur", finishEditing).on("keydown", function() { if (d3.event.key === "Enter") finishEditing.call(this); });
+                
+                const input = foreignObject.append("xhtml:input")
+                    .attr("type", "text")
+                    .attr("class", "label-editor-input")
+                    .style("width", `${foWidth}px`)
+                    .style("height", `${foHeight}px`)
+                    .style("font-size", `${fontSizeScale(k)}px`)
+                    .property("value", currentText)
+                    .on("blur", finishEditing)
+                    .on("keydown", function() { if (d3.event.key === "Enter") finishEditing.call(this); });
+                
                 input.node().focus();
                 input.node().select();
+
                 function finishEditing() {
                     const newText = input.node().value;
                     if (d.properties) d.properties.displayName = newText;
@@ -150,121 +200,173 @@ const SlidePresenter = {
         }
     },
 
-    // --- PPTX Export Module ---
-    exportToPptx: async function(button) {
-        if (typeof PptxGenJS === 'undefined' || typeof html2canvas === 'undefined') {
-            alert('Error: A required library for PPTX export is not loaded!');
-            return;
+    // --- ADDED: PPTX Exporter Module ---
+    pptxExporter: {
+        /**
+         * Helper function to fetch an image and convert it to a Base64 string.
+         * PptxGenJS requires images to be in Base64 format.
+         * @param {string} url The URL of the image to convert.
+         * @returns {Promise<string>} A promise that resolves with the Base64 data URI.
+         */
+        imageToB64: async function(url) {
+            try {
+                // Use a CORS proxy for external images if necessary, but try direct fetch first
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok for url: ${url}`);
+                }
+                const blob = await response.blob();
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(blob);
+                });
+            } catch (error) {
+                console.error('Error converting image to Base64:', url, error);
+                return null;
+            }
+        },
+
+        /**
+         * Main function to generate and download the PPTX file.
+         */
+        export: async function() {
+            if (typeof PptxGenJS === 'undefined' || typeof html2canvas === 'undefined') {
+                alert('Error: A required library for exporting (PptxGenJS or html2canvas) is not loaded.');
+                return;
+            }
+
+            let pptx = new PptxGenJS();
+            pptx.layout = 'LAYOUT_16x9';
+            pptx.author = 'SlidePresenter';
+            pptx.company = 'Gemini AI';
+            pptx.title = 'Web-Based Presentation';
+
+            const slideWrappers = document.querySelectorAll('.slide-wrapper');
+
+            for (let i = 0; i < SlidePresenter.config.slidesData.length; i++) {
+                const slideData = SlidePresenter.config.slidesData[i];
+                const slideElem = slideWrappers[i]?.querySelector('.slide');
+                if (!slideElem) continue;
+
+                const slide = pptx.addSlide();
+
+                // Handle special case: black slide
+                if (slideData.layout === 'black') {
+                    slide.background = { color: '000000' };
+                    continue; // Skip to next slide
+                }
+                
+                slide.background = { color: 'FFFFFF' };
+
+                // --- Common Elements: Header & Footer ---
+                // Header CUI
+                slide.addText("CUI", { x: 0.3, y: 0.25, fontSize: 12, bold: true, fontFace: 'Arial' });
+                // Header Title
+                const headerTitleElem = slideElem.querySelector('header h1');
+                if (headerTitleElem) {
+                    slide.addText(headerTitleElem.innerText, { x: 5.0, y: 0.5, w: 4.7, h: 0.5, fontSize: 24, bold: true, align: 'right' });
+                }
+                // Header Banner Line (as a shape)
+                slide.addShape(pptx.shapes.LINE, { x: 0.3, y: 1.5, w: 9.4, h: 0, line: { color: '4A5568', width: 2 } });
+                // Footer Text
+                const footerTextElem = slideElem.querySelector('footer > div:first-child');
+                if (footerTextElem) {
+                    slide.addText(footerTextElem.innerText, { x: 0.3, y: 5.2, w: 7, h: 0.3, fontSize: 8, color: '6B7280' });
+                }
+                // Footer CUI
+                slide.addText("CUI", { x: 9.0, y: 5.1, w: 0.7, h: 0.3, fontSize: 12, bold: true, fontFace: 'Arial', align: 'right' });
+
+                // --- Slide-Specific Content ---
+                switch (slideData.layout) {
+                    case 'title': {
+                        const logoB64 = await this.imageToB64('https://upload.wikimedia.org/wikipedia/commons/d/da/Joint_Chiefs_of_Staff_seal_%282%29.svg');
+                        if(logoB64) slide.addImage({ data: logoB64, x: 0.4, y: 0.85, w: 1, h: 1 });
+                        
+                        const titleElem = slideElem.querySelector('main h1');
+                        if (titleElem) slide.addText(titleElem.innerText, { x: 0.5, y: 2.2, w: 9, h: 1.0, fontSize: 44, bold: true, align: 'center', fontFace: 'Arial' });
+
+                        const subtitleElem = slideElem.querySelector('main h2');
+                        if (subtitleElem) slide.addText(subtitleElem.innerText, { x: 0.5, y: 3.5, w: 9, h: 0.7, fontSize: 32, bold: true, align: 'center', fontFace: 'Arial' });
+                        
+                        const cuiBoxElem = slideElem.querySelector('footer div[contenteditable="true"][style*="bottom: 5rem"]');
+                        if (cuiBoxElem) slide.addText(cuiBoxElem.innerText, { x: 6.5, y: 3.0, w: 3.0, h: 1.5, fontSize: 9, fontFace: 'Arial' });
+                        break;
+                    }
+                    case 'bullet_list': {
+                        const ulElem = slideElem.querySelector('main ul');
+                        if (ulElem) {
+                            const bullets = Array.from(ulElem.querySelectorAll('li')).map(li => ({ text: li.innerText }));
+                            const fontSize = slideData.fontSize === 'text-5xl' ? 32 : 24;
+                            slide.addText(bullets, { x: 1.0, y: 1.8, w: 8.5, h: 3.2, fontSize: fontSize, bullet: true, bold: true, lineSpacing: fontSize * 1.5 });
+                        }
+                        break;
+                    }
+                    case 'two_column_image': {
+                        const ulElem = slideElem.querySelector('main ul');
+                        if (ulElem) {
+                            const bullets = Array.from(ulElem.querySelectorAll('li')).map(li => ({ text: li.innerText }));
+                            slide.addText(bullets, { x: 0.7, y: 1.8, w: 5.0, h: 3.2, fontSize: 24, bullet: true, bold: true, lineSpacing: 36 });
+                        }
+                        const imageContainer = slideElem.querySelector('.editable-image-column');
+                        if (imageContainer) {
+                            const images = imageContainer.querySelectorAll('img');
+                            let yPos = 1.8;
+                            for (const img of images) {
+                                const caption = img.previousElementSibling?.innerText || '';
+                                slide.addText(caption, { x: 6.2, y: yPos, w: 3.5, h: 0.3, fontSize: 10, bold: true });
+                                const imgB64 = await this.imageToB64(img.src);
+                                if(imgB64) slide.addImage({ data: imgB64, x: 6.2, y: yPos + 0.25, w: 3.5, h: 1.25 });
+                                yPos += 1.8; // Increment Y position for the next image
+                            }
+                        }
+                        break;
+                    }
+                     case 'two_column_text': {
+                        const uls = slideElem.querySelectorAll('main ul');
+                        if (uls.length === 2) {
+                            const bulletsLeft = Array.from(uls[0].querySelectorAll('li')).map(li => ({ text: li.innerText }));
+                            slide.addText(bulletsLeft, { x: 0.7, y: 1.8, w: 4.3, h: 3.2, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
+
+                            const bulletsRight = Array.from(uls[1].querySelectorAll('li')).map(li => ({ text: li.innerText }));
+                            slide.addText(bulletsRight, { x: 5.3, y: 1.8, w: 4.3, h: 3.2, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
+                        }
+                        break;
+                    }
+                    case 'map': {
+                        const mapTitleElem = slideElem.querySelector('main h2');
+                        if (mapTitleElem) slide.addText(mapTitleElem.innerText, { x: 0.5, y: 1.6, w: 9, h: 0.4, fontSize: 16, bold: true, align: 'center' });
+                        
+                        try {
+                            await new Promise(res => setTimeout(res, 500)); // Wait for map render
+                            const mapContainer = slideElem.querySelector('#map-container');
+                            const canvas = await html2canvas(mapContainer, { logging: false, useCORS: true, backgroundColor: null });
+                            const mapB64 = canvas.toDataURL('image/png');
+                            slide.addImage({ data: mapB64, x: 1.5, y: 2.0, w: 5.33, h: 3.0 });
+                        } catch (error) {
+                            console.error('Failed to capture map canvas:', error);
+                            slide.addText('Error capturing map image.', { x: 1.5, y: 2.5, w: 5.33, h: 1, color: 'FF0000', align: 'center' });
+                        }
+
+                        const ulElem = slideElem.querySelector('main ul');
+                         if (ulElem) {
+                            const bullets = Array.from(ulElem.querySelectorAll('li')).map(li => ({ text: li.innerText }));
+                            slide.addText(bullets, { x: 1, y: 3.8, w: 8, h: 1.5, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
+                        }
+                        break;
+                    }
+                    case 'questions':
+                    case 'backups': {
+                        const titleElem = slideElem.querySelector('main h1');
+                        if (titleElem) slide.addText(titleElem.innerText, { x: 0.5, y: 2.0, w: 9, h: 1.5, fontSize: 48, bold: true, align: 'center' });
+                        break;
+                    }
+                }
+            }
+
+            pptx.writeFile({ fileName: `Presentation-${new Date().toISOString().split('T')[0]}.pptx` });
         }
-
-        const originalIcon = button.innerHTML;
-        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-        button.disabled = true;
-
-        const pptx = new PptxGenJS();
-        pptx.layout = 'LAYOUT_16x9';
-        pptx.author = 'Slide Presenter';
-        pptx.title = 'Web-Based Presentation';
-
-        const slideElements = document.querySelectorAll('.slide-wrapper .slide');
-        const delay = ms => new Promise(res => setTimeout(res, ms));
-
-        const imageToBase64 = async (url) => {
-            const response = await fetch(url);
-            const blob = await response.blob();
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(blob);
-            });
-        };
-
-        const addMasterSlideElements = (pptxSlide, htmlSlide) => {
-            const header = htmlSlide.querySelector('header');
-            const footer = htmlSlide.querySelector('footer');
-
-            if (header) {
-                const headerTitle = header.querySelector('h1');
-                pptxSlide.addText('CUI', { x: 0.25, y: 0.25, w: 1, h: 0.5, fontSize: 14, bold: true });
-                if (headerTitle) {
-                    pptxSlide.addText(headerTitle.innerText, { x: 4.5, y: 0.25, w: 5.25, h: 0.75, fontSize: 24, bold: true, align: 'right' });
-                }
-            }
-            if (footer) {
-                const footerLeft = footer.querySelector('div:first-child');
-                if(footerLeft) pptxSlide.addText(footerLeft.innerText, { x: 0.25, y: 5.2, w: 6, h: 0.3, fontSize: 10, color: '6c757d' });
-                pptxSlide.addText('CUI', { x: 9.0, y: 5.1, w: 1, h: 0.5, fontSize: 14, bold: true, align: 'right' });
-            }
-        };
-
-        for (const slideEl of slideElements) {
-            const layout = slideEl.getAttribute('data-layout');
-            const slide = pptx.addSlide();
-            slide.background = { color: 'FFFFFF' };
-
-            if (layout !== 'black' && layout !== 'title') {
-                addMasterSlideElements(slide, slideEl);
-            }
-            
-            if (layout === 'title') {
-                const h1 = slideEl.querySelector('main h1');
-                const h2 = slideEl.querySelector('main h2');
-                if (h1) slide.addText(h1.innerText, { x: 0.5, y: 2.0, w: 9, h: 1.5, fontSize: 44, bold: true, align: 'center' });
-                if (h2) slide.addText(h2.innerText, { x: 0.5, y: 3.5, w: 9, h: 1, fontSize: 32, align: 'center' });
-                addMasterSlideElements(slide, slideEl);
-            } 
-            else if (layout === 'bullet_list') {
-                const bullets = Array.from(slideEl.querySelectorAll('li')).map(li => ({ text: li.innerText }));
-                slide.addText(bullets, { x: 1, y: 1.5, w: 8, h: 3.5, fontSize: 28, bullet: true, lineSpacing: 42 });
-            }
-            else if (layout === 'two_column_text') {
-                 const columns = slideEl.querySelectorAll('main > div');
-                 if (columns.length === 2) {
-                    const bullets1 = Array.from(columns[0].querySelectorAll('li')).map(li => ({ text: li.innerText }));
-                    slide.addText(bullets1, { x: 0.5, y: 1.5, w: 4.5, h: 3.5, fontSize: 18, bullet: true, lineSpacing: 36 });
-                    const bullets2 = Array.from(columns[1].querySelectorAll('li')).map(li => ({ text: li.innerText }));
-                    slide.addText(bullets2, { x: 5.25, y: 1.5, w: 4.5, h: 3.5, fontSize: 18, bullet: true, lineSpacing: 36 });
-                 }
-            }
-            else if (layout === 'two_column_image') {
-                const bullets = Array.from(slideEl.querySelectorAll('li')).map(li => ({ text: li.innerText }));
-                slide.addText(bullets, { x: 0.5, y: 1.5, w: 5, h: 3.5, fontSize: 24, bullet: true, lineSpacing: 40 });
-                const images = slideEl.querySelectorAll('img');
-                let yPos = 1.5;
-                for (const img of images) {
-                     try {
-                        const base64 = await imageToBase64(img.src);
-                        slide.addImage({ data: base64, x: 6, y: yPos, w: 3.5, h: 1.5, sizing: { type: 'contain', w: 3.5, h: 1.5 } });
-                        yPos += 1.7;
-                     } catch(err) { console.error(err); }
-                }
-            }
-            else if (layout === 'map') {
-                try {
-                    await delay(500);
-                    const mapContainer = slideEl.querySelector('#map-container');
-                    const canvas = await html2canvas(mapContainer, { logging: false, useCORS: true, backgroundColor: null });
-                    const mapImageData = canvas.toDataURL('image/png');
-                    slide.addImage({ data: mapImageData, x: 1, y: 1.5, w: 8, h: 4.5, sizing: { type: 'contain', w: 8, h: 4.5 } });
-                } catch (err) {
-                    console.error("Error generating map slide:", err);
-                    slide.addText("Error: Could not generate map image.", { x: 1, y: 2.5, w: 8, color: 'FF0000', align: 'center' });
-                }
-            }
-            else if (layout === 'questions' || layout === 'backups') {
-                const h1 = slideEl.querySelector('main h1');
-                if(h1) slide.addText(h1.innerText, { x: 0, y: 0, w: '100%', h: '100%', align: 'center', valign: 'middle', fontSize: 48, bold: true });
-            }
-            else if (layout === 'black') {
-                slide.background = { color: '000000' };
-            }
-        }
-
-        pptx.writeFile({ fileName: 'Presentation.pptx' });
-
-        button.innerHTML = originalIcon;
-        button.disabled = false;
     },
 
     // --- Main Initializer ---
@@ -316,17 +418,14 @@ const SlidePresenter = {
             const slideWrapper = document.createElement('div');
             slideWrapper.className = 'slide-wrapper';
             slideWrapper.id = `slide-wrapper-${index}`;
-            const slideHtml = getLayoutHtml(slideData, index);
-            const tempDiv = document.createElement('div');
-            tempDiv.innerHTML = slideHtml;
-            const slideDiv = tempDiv.firstChild;
-            slideDiv.setAttribute('data-layout', slideData.layout);
-            slideWrapper.appendChild(slideDiv);
+            slideWrapper.innerHTML = getLayoutHtml(slideData, index);
             this.config.presentationContainer.appendChild(slideWrapper);
         });
 
+        // Initialize all modules
         const mapSlideData = this.config.slidesData.find(slide => slide.layout === 'map');
         if (mapSlideData && document.getElementById('map-container')) {
+            // MODIFIED: Pass the entire map slide data object to the renderer
             this.d3Map.render(mapSlideData);
         }
         this.toolbar.init();
