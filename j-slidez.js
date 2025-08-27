@@ -23,7 +23,6 @@ const SlidePresenter = {
             document.getElementById('font-selector').addEventListener('change', (e) => document.execCommand('fontName', false, e.target.value));
             document.getElementById('color-picker').addEventListener('input', (e) => document.execCommand('foreColor', false, e.target.value));
 
-            // Added event listener for the new PPTX export button
             const exportBtn = document.getElementById('export-pptx-btn');
             if (exportBtn) {
                 exportBtn.addEventListener('click', () => {
@@ -81,12 +80,11 @@ const SlidePresenter = {
 
     // --- D3 Map Module ---
     d3Map: {
-        render(mapData) { // MODIFIED: Accepts the entire map slide object
-            // --- Extract data and set defaults ---
+        render(mapData) {
             const highlightedCountries = mapData.highlightedCountries || [];
             const mapConfig = mapData.mapConfig || {};
-            const center = mapConfig.center || [0, 0]; // Default to world center
-            const scale = mapConfig.scale || 150;     // Default to world view scale
+            const center = mapConfig.center || [0, 0];
+            const scale = mapConfig.scale || 150;
             
             function toTitleCase(str) {
                 return str.replace(/\w\S*/g, function(txt) {
@@ -124,7 +122,6 @@ const SlidePresenter = {
             svg.call(zoom).on("dblclick.zoom", null);
 
             const selectionBox = g.append("rect").attr("class", "selection-box").style("display", "none");
-            // MODIFIED: Use the dynamic center and scale variables here
             const projection = d3.geoMercator().center(center).scale(scale).translate([width / 2, height / 2]);
             const pathGenerator = d3.geoPath().projection(projection);
             const citiesUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/world_cities.geojson';
@@ -200,21 +197,10 @@ const SlidePresenter = {
         }
     },
 
-    // --- ADDED: PPTX Exporter Module ---
     pptxExporter: {
-        /**
-         * Helper function to fetch an image and convert it to a Base64 string.
-         * PptxGenJS requires images to be in Base64 format.
-         * @param {string} url The URL of the image to convert.
-         * @returns {Promise<string>} A promise that resolves with the Base64 data URI.
-         */
         imageToB64: async function(url) {
             try {
-                // Use a CORS proxy for external images if necessary, but try direct fetch first
                 const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok for url: ${url}`);
-                }
                 const blob = await response.blob();
                 return new Promise((resolve, reject) => {
                     const reader = new FileReader();
@@ -228,9 +214,19 @@ const SlidePresenter = {
             }
         },
 
-        /**
-         * Main function to generate and download the PPTX file.
-         */
+        // FIXED: Added a dedicated function to handle SVG to Base64 conversion correctly
+        svgToB64: async function(url) {
+            try {
+                const response = await fetch(url);
+                const svgText = await response.text();
+                // We need to base64 encode the raw SVG XML text, not the file blob
+                return `data:image/svg+xml;base64,${btoa(svgText)}`;
+            } catch (error) {
+                console.error('Error converting SVG to Base64:', url, error);
+                return null;
+            }
+        },
+
         export: async function() {
             if (typeof PptxGenJS === 'undefined' || typeof html2canvas === 'undefined') {
                 alert('Error: A required library for exporting (PptxGenJS or html2canvas) is not loaded.');
@@ -252,37 +248,36 @@ const SlidePresenter = {
 
                 const slide = pptx.addSlide();
 
-                // Handle special case: black slide
                 if (slideData.layout === 'black') {
                     slide.background = { color: '000000' };
-                    continue; // Skip to next slide
+                    continue;
                 }
                 
                 slide.background = { color: 'FFFFFF' };
 
-                // --- Common Elements: Header & Footer ---
+                // FIXED: Adjusted all Y coordinates up for better positioning
                 // Header CUI
-                slide.addText("CUI", { x: 0.3, y: 0.25, fontSize: 12, bold: true, fontFace: 'Arial' });
+                slide.addText("CUI", { x: 0.3, y: 0.2, fontSize: 12, bold: true, fontFace: 'Arial' });
                 // Header Title
                 const headerTitleElem = slideElem.querySelector('header h1');
                 if (headerTitleElem) {
-                    slide.addText(headerTitleElem.innerText, { x: 5.0, y: 0.5, w: 4.7, h: 0.5, fontSize: 24, bold: true, align: 'right' });
+                    slide.addText(headerTitleElem.innerText, { x: 5.0, y: 0.4, w: 4.7, h: 0.5, fontSize: 24, bold: true, align: 'right' });
                 }
-                // Header Banner Line (as a shape)
-                slide.addShape(pptx.shapes.LINE, { x: 0.3, y: 1.5, w: 9.4, h: 0, line: { color: '4A5568', width: 2 } });
+                // Header Banner Line
+                slide.addShape(pptx.shapes.LINE, { x: 0.3, y: 1.2, w: 9.4, h: 0, line: { color: '4A5568', width: 2 } });
                 // Footer Text
                 const footerTextElem = slideElem.querySelector('footer > div:first-child');
                 if (footerTextElem) {
-                    slide.addText(footerTextElem.innerText, { x: 0.3, y: 5.2, w: 7, h: 0.3, fontSize: 8, color: '6B7280' });
+                    slide.addText(footerTextElem.innerText, { x: 0.3, y: 5.25, w: 7, h: 0.3, fontSize: 8, color: '6B7280' });
                 }
                 // Footer CUI
-                slide.addText("CUI", { x: 9.0, y: 5.1, w: 0.7, h: 0.3, fontSize: 12, bold: true, fontFace: 'Arial', align: 'right' });
+                slide.addText("CUI", { x: 9.0, y: 5.15, w: 0.7, h: 0.3, fontSize: 12, bold: true, fontFace: 'Arial', align: 'right' });
 
-                // --- Slide-Specific Content ---
                 switch (slideData.layout) {
                     case 'title': {
-                        const logoB64 = await this.imageToB64('https://upload.wikimedia.org/wikipedia/commons/d/da/Joint_Chiefs_of_Staff_seal_%282%29.svg');
-                        if(logoB64) slide.addImage({ data: logoB64, x: 0.4, y: 0.85, w: 1, h: 1 });
+                        // FIXED: Use the correct svgToB64 helper for the purple seal
+                        const logoB64 = await this.svgToB64('https://upload.wikimedia.org/wikipedia/commons/d/da/Joint_Chiefs_of_Staff_seal_%282%29.svg');
+                        if(logoB64) slide.addImage({ data: logoB64, x: 0.4, y: 0.5, w: 1, h: 1 });
                         
                         const titleElem = slideElem.querySelector('main h1');
                         if (titleElem) slide.addText(titleElem.innerText, { x: 0.5, y: 2.2, w: 9, h: 1.0, fontSize: 44, bold: true, align: 'center', fontFace: 'Arial' });
@@ -297,28 +292,32 @@ const SlidePresenter = {
                     case 'bullet_list': {
                         const ulElem = slideElem.querySelector('main ul');
                         if (ulElem) {
-                            const bullets = Array.from(ulElem.querySelectorAll('li')).map(li => ({ text: li.innerText }));
+                            // FIXED: Join bullets with newlines to ensure they render on separate lines
+                            const bullets = Array.from(ulElem.querySelectorAll('li'))
+                                .map(li => li.textContent.trim())
+                                .filter(text => text) // remove empty lines
+                                .join('\n');
                             const fontSize = slideData.fontSize === 'text-5xl' ? 32 : 24;
-                            slide.addText(bullets, { x: 1.0, y: 1.8, w: 8.5, h: 3.2, fontSize: fontSize, bullet: true, bold: true, lineSpacing: fontSize * 1.5 });
+                            slide.addText(bullets, { x: 1.0, y: 1.4, w: 8.5, h: 3.5, fontSize: fontSize, bullet: true, bold: true, lineSpacing: fontSize * 1.5 });
                         }
                         break;
                     }
                     case 'two_column_image': {
                         const ulElem = slideElem.querySelector('main ul');
                         if (ulElem) {
-                            const bullets = Array.from(ulElem.querySelectorAll('li')).map(li => ({ text: li.innerText }));
-                            slide.addText(bullets, { x: 0.7, y: 1.8, w: 5.0, h: 3.2, fontSize: 24, bullet: true, bold: true, lineSpacing: 36 });
+                            const bullets = Array.from(ulElem.querySelectorAll('li')).map(li => li.textContent.trim()).filter(text => text).join('\n');
+                            slide.addText(bullets, { x: 0.7, y: 1.4, w: 5.0, h: 3.5, fontSize: 24, bullet: true, bold: true, lineSpacing: 36 });
                         }
                         const imageContainer = slideElem.querySelector('.editable-image-column');
                         if (imageContainer) {
                             const images = imageContainer.querySelectorAll('img');
-                            let yPos = 1.8;
+                            let yPos = 1.4;
                             for (const img of images) {
                                 const caption = img.previousElementSibling?.innerText || '';
                                 slide.addText(caption, { x: 6.2, y: yPos, w: 3.5, h: 0.3, fontSize: 10, bold: true });
                                 const imgB64 = await this.imageToB64(img.src);
                                 if(imgB64) slide.addImage({ data: imgB64, x: 6.2, y: yPos + 0.25, w: 3.5, h: 1.25 });
-                                yPos += 1.8; // Increment Y position for the next image
+                                yPos += 1.8;
                             }
                         }
                         break;
@@ -326,24 +325,24 @@ const SlidePresenter = {
                      case 'two_column_text': {
                         const uls = slideElem.querySelectorAll('main ul');
                         if (uls.length === 2) {
-                            const bulletsLeft = Array.from(uls[0].querySelectorAll('li')).map(li => ({ text: li.innerText }));
-                            slide.addText(bulletsLeft, { x: 0.7, y: 1.8, w: 4.3, h: 3.2, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
+                            const bulletsLeft = Array.from(uls[0].querySelectorAll('li')).map(li => li.textContent.trim()).filter(text => text).join('\n');
+                            slide.addText(bulletsLeft, { x: 0.7, y: 1.4, w: 4.3, h: 3.5, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
 
-                            const bulletsRight = Array.from(uls[1].querySelectorAll('li')).map(li => ({ text: li.innerText }));
-                            slide.addText(bulletsRight, { x: 5.3, y: 1.8, w: 4.3, h: 3.2, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
+                            const bulletsRight = Array.from(uls[1].querySelectorAll('li')).map(li => li.textContent.trim()).filter(text => text).join('\n');
+                            slide.addText(bulletsRight, { x: 5.3, y: 1.4, w: 4.3, h: 3.5, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
                         }
                         break;
                     }
                     case 'map': {
                         const mapTitleElem = slideElem.querySelector('main h2');
-                        if (mapTitleElem) slide.addText(mapTitleElem.innerText, { x: 0.5, y: 1.6, w: 9, h: 0.4, fontSize: 16, bold: true, align: 'center' });
+                        if (mapTitleElem) slide.addText(mapTitleElem.innerText, { x: 0.5, y: 1.3, w: 9, h: 0.4, fontSize: 16, bold: true, align: 'center' });
                         
                         try {
-                            await new Promise(res => setTimeout(res, 500)); // Wait for map render
+                            await new Promise(res => setTimeout(res, 500));
                             const mapContainer = slideElem.querySelector('#map-container');
                             const canvas = await html2canvas(mapContainer, { logging: false, useCORS: true, backgroundColor: null });
                             const mapB64 = canvas.toDataURL('image/png');
-                            slide.addImage({ data: mapB64, x: 1.5, y: 2.0, w: 5.33, h: 3.0 });
+                            slide.addImage({ data: mapB64, x: 1.5, y: 1.7, w: 5.33, h: 3.0 });
                         } catch (error) {
                             console.error('Failed to capture map canvas:', error);
                             slide.addText('Error capturing map image.', { x: 1.5, y: 2.5, w: 5.33, h: 1, color: 'FF0000', align: 'center' });
@@ -351,15 +350,19 @@ const SlidePresenter = {
 
                         const ulElem = slideElem.querySelector('main ul');
                          if (ulElem) {
-                            const bullets = Array.from(ulElem.querySelectorAll('li')).map(li => ({ text: li.innerText }));
-                            slide.addText(bullets, { x: 1, y: 3.8, w: 8, h: 1.5, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
+                            const bullets = Array.from(ulElem.querySelectorAll('li')).map(li => li.textContent.trim()).filter(text => text).join('\n');
+                            slide.addText(bullets, { x: 1.0, y: 3.6, w: 8, h: 1.5, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
                         }
                         break;
                     }
                     case 'questions':
                     case 'backups': {
                         const titleElem = slideElem.querySelector('main h1');
-                        if (titleElem) slide.addText(titleElem.innerText, { x: 0.5, y: 2.0, w: 9, h: 1.5, fontSize: 48, bold: true, align: 'center' });
+                        // Vertically center the title
+                        const textHeight = 1.5;
+                        const slideHeight = 5.625;
+                        const centeredY = (slideHeight - textHeight) / 2;
+                        if (titleElem) slide.addText(titleElem.innerText, { x: 0.5, y: centeredY, w: 9, h: textHeight, fontSize: 48, bold: true, align: 'center' });
                         break;
                     }
                 }
@@ -369,7 +372,6 @@ const SlidePresenter = {
         }
     },
 
-    // --- Main Initializer ---
     init(slidesData) {
         this.config.slidesData = slidesData;
         this.config.presentationContainer = document.getElementById('presentation-container');
@@ -412,7 +414,6 @@ const SlidePresenter = {
             }
         }
 
-        // Render all slides to the DOM
         this.config.presentationContainer.innerHTML = '';
         this.config.slidesData.forEach((slideData, index) => {
             const slideWrapper = document.createElement('div');
@@ -422,10 +423,8 @@ const SlidePresenter = {
             this.config.presentationContainer.appendChild(slideWrapper);
         });
 
-        // Initialize all modules
         const mapSlideData = this.config.slidesData.find(slide => slide.layout === 'map');
         if (mapSlideData && document.getElementById('map-container')) {
-            // MODIFIED: Pass the entire map slide data object to the renderer
             this.d3Map.render(mapSlideData);
         }
         this.toolbar.init();
