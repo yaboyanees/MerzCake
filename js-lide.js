@@ -212,7 +212,7 @@ const SlidePresenter = {
                 const h2 = slideEl.querySelector('main h2');
                 if (h1) slide.addText(h1.innerText, { x: 0.5, y: 2.0, w: 9, h: 1.5, fontSize: 44, bold: true, align: 'center' });
                 if (h2) slide.addText(h2.innerText, { x: 0.5, y: 3.5, w: 9, h: 1, fontSize: 32, align: 'center' });
-                addMasterSlideElements(slide, slideEl); // Special call for title footer
+                addMasterSlideElements(slide, slideEl);
             } 
             else if (layout === 'bullet_list') {
                 const bullets = Array.from(slideEl.querySelectorAll('li')).map(li => ({ text: li.innerText }));
@@ -310,6 +310,7 @@ const SlidePresenter = {
             }
         }
 
+        // Render all slides to the DOM
         this.config.presentationContainer.innerHTML = '';
         this.config.slidesData.forEach((slideData, index) => {
             const slideWrapper = document.createElement('div');
