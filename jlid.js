@@ -225,6 +225,46 @@ const SlidePresenter = {
             }
         },
 
+        // --- ADDED: Helper function to parse HTML and its styles into PptxGenJS text objects ---
+        htmlToPptxTextObjects: function(element) {
+            if (!element) return [{ text: '', options: {} }];
+
+            const results = [];
+
+            // Helper to convert rgb(r, g, b) to RRGGBB hex
+            const rgbToHex = (rgb) => {
+                if (!rgb || !rgb.startsWith('rgb')) return '000000';
+                const [r, g, b] = rgb.match(/\d+/g).map(Number);
+                return [r, g, b].map(x => x.toString(16).padStart(2, '0')).join('');
+            };
+
+            const traverse = (node) => {
+                if (node.nodeType === Node.TEXT_NODE && node.textContent.trim() !== '') {
+                    const parent = node.parentElement;
+                    const style = window.getComputedStyle(parent);
+                    const options = {
+                        fontFace: style.fontFamily.split(',')[0].trim().replace(/"/g, ''),
+                        fontSize: Math.round(parseFloat(style.fontSize) * 0.75), // px to points
+                        color: rgbToHex(style.color),
+                        bold: parseInt(style.fontWeight, 10) >= 700 || style.fontWeight === 'bold',
+                        italic: style.fontStyle === 'italic',
+                        underline: style.textDecorationLine.includes('underline'),
+                    };
+                    results.push({ text: node.textContent.replace(/\s+/g, ' '), options });
+                } else if (node.nodeType === Node.ELEMENT_NODE) {
+                    // Handle line breaks from <p> and <div> tags inside contenteditable
+                    if (['P', 'DIV'].includes(node.tagName) && results.length > 0 && !results[results.length-1].text.endsWith('\n')) {
+                        results.push({ text: '\n', options: {} });
+                    }
+                    Array.from(node.childNodes).forEach(traverse);
+                }
+            };
+            
+            traverse(element);
+            return results.length > 0 ? results : [{ text: ' ', options: {} }]; // Return non-empty for empty elements
+        },
+
+
         export: async function() {
             if (typeof PptxGenJS === 'undefined' || typeof html2canvas === 'undefined') {
                 alert('Error: A required library for exporting (PptxGenJS or html2canvas) is not loaded.');
@@ -232,7 +272,6 @@ const SlidePresenter = {
             }
 
             let pptx = new PptxGenJS();
-            // --- CHANGED: Set aspect ratio to standard 4:3 ---
             pptx.layout = 'LAYOUT_4x3';
             pptx.author = 'SlidePresenter';
             pptx.company = 'Gemini AI';
@@ -254,24 +293,24 @@ const SlidePresenter = {
                 
                 slide.background = { color: 'FFFFFF' };
 
-                // Header CUI
-                slide.addText("CUI", { x: 0.3, y: 0.2, fontSize: 12, bold: true, fontFace: 'Arial' });
-                // Header Title
+                // --- MODIFIED: Use htmlToPptxTextObjects to preserve styles ---
+                slide.addText(this.htmlToPptxTextObjects(slideElem.querySelector('header .font-arial')), { x: 0.3, y: 0.2 });
+                
                 const headerTitleElem = slideElem.querySelector('header h1');
                 if (headerTitleElem) {
-                    slide.addText(headerTitleElem.innerText, { x: 5.0, y: 0.4, w: 4.7, h: 0.5, fontSize: 24, bold: true, align: 'right' });
+                    slide.addText(this.htmlToPptxTextObjects(headerTitleElem), { x: 5.0, y: 0.4, w: 4.7, h: 0.5, align: 'right' });
                 }
                 
-                // --- ADDED: Logic to render the purple segmented header banner ---
+                // --- MODIFIED: Render thicker, gradient purple banner with correct positioning ---
                 const bannerSegmentsGrow = [369, 46, 42, 34, 34, 29, 25, 21, 17, 12, 8, 4];
                 const totalGrow = bannerSegmentsGrow.reduce((sum, val) => sum + val, 0);
-                const bannerTotalWidth = 9.4; // Total width in inches
+                const bannerTotalWidth = 9.4;
                 const bannerStartX = 0.3;
-                const bannerY = 1.2;
-                const bannerHeight = 0.05;
-                const bannerColor = '6A0DAD'; // Purple color
+                const bannerHeight = 0.2; // Thicker banner
+                // Position banner through seal on title, lower on other slides
+                const bannerY = slideData.layout === 'title' ? 1.0 - (bannerHeight / 2) : 1.2;
+                const bannerGap = 0.02;
                 const numGaps = bannerSegmentsGrow.length - 1;
-                const bannerGap = 0.02; // Small gap between segments
                 const availableWidthForRects = bannerTotalWidth - (numGaps * bannerGap);
                 
                 let currentX = bannerStartX;
@@ -283,24 +322,20 @@ const SlidePresenter = {
                            y: bannerY,
                            w: segmentWidth,
                            h: bannerHeight,
-                           fill: { color: bannerColor },
-                           line: { width: 0 } // No border on the rectangles
+                           // Added vertical gradient fill
+                           fill: { type: 'gradient', color: ['6A0DAD', 'C3B1E1'], angle: 90 },
+                           line: { width: 0 }
                        });
                        currentX += segmentWidth + bannerGap;
                     }
                 }
                 
-                // --- REMOVED: Old Header Banner Line ---
-                // slide.addShape(pptx.shapes.LINE, { x: 0.3, y: 1.2, w: 9.4, h: 0, line: { color: '4A5568', width: 2 } });
-                
-                // --- CHANGED: Adjusted footer Y-coordinates for 4:3 aspect ratio ---
-                // Footer Text
+                // Footer
                 const footerTextElem = slideElem.querySelector('footer > div:first-child');
                 if (footerTextElem) {
-                    slide.addText(footerTextElem.innerText, { x: 0.3, y: 7.0, w: 7, h: 0.3, fontSize: 8, color: '6B7280' });
+                    slide.addText(this.htmlToPptxTextObjects(footerTextElem), { x: 0.3, y: 7.0, w: 7, h: 0.3, fontSize: 8 });
                 }
-                // Footer CUI
-                slide.addText("CUI", { x: 9.0, y: 6.9, w: 0.7, h: 0.3, fontSize: 12, bold: true, fontFace: 'Arial', align: 'right' });
+                slide.addText(this.htmlToPptxTextObjects(slideElem.querySelector('footer .font-arial')), { x: 9.0, y: 6.9, w: 0.7, h: 0.3, align: 'right' });
 
                 switch (slideData.layout) {
                     case 'title': {
@@ -308,90 +343,82 @@ const SlidePresenter = {
                         if(logoB64) slide.addImage({ data: logoB64, x: 0.4, y: 0.5, w: 1, h: 1 });
                         
                         const titleElem = slideElem.querySelector('main h1');
-                        if (titleElem) slide.addText(titleElem.innerText, { x: 0.5, y: 2.2, w: 9, h: 1.0, fontSize: 44, bold: true, align: 'center', fontFace: 'Arial' });
+                        if (titleElem) slide.addText(this.htmlToPptxTextObjects(titleElem), { x: 0.5, y: 2.2, w: 9, h: 1.0, align: 'center' });
 
                         const subtitleElem = slideElem.querySelector('main h2');
-                        if (subtitleElem) slide.addText(subtitleElem.innerText, { x: 0.5, y: 3.5, w: 9, h: 0.7, fontSize: 32, bold: true, align: 'center', fontFace: 'Arial' });
+                        if (subtitleElem) slide.addText(this.htmlToPptxTextObjects(subtitleElem), { x: 0.5, y: 3.5, w: 9, h: 0.7, align: 'center' });
                         
-                        const cuiBoxElem = slideElem.querySelector('footer div[contenteditable="true"][style*="bottom: 5rem"]');
-                        if (cuiBoxElem) slide.addText(cuiBoxElem.innerText, { x: 6.5, y: 3.0, w: 3.0, h: 1.5, fontSize: 9, fontFace: 'Arial' });
+                        const cuiBoxElem = slideElem.querySelector('footer div[style*="bottom: 5rem"]');
+                        if (cuiBoxElem) slide.addText(this.htmlToPptxTextObjects(cuiBoxElem), { x: 6.5, y: 3.0, w: 3.0, h: 1.5 });
                         break;
                     }
-                    case 'bullet_list': {
-                        const ulElem = slideElem.querySelector('main ul');
-                        if (ulElem) {
-                            const bullets = Array.from(ulElem.querySelectorAll('li'))
-                                .map(li => li.textContent.trim())
-                                .filter(text => text)
-                                .join('\n');
-                            const fontSize = slideData.fontSize === 'text-5xl' ? 32 : 24;
-                            slide.addText(bullets, { x: 1.0, y: 1.4, w: 8.5, h: 4.5, fontSize: fontSize, bullet: true, bold: true, lineSpacing: fontSize * 1.5 });
-                        }
-                        break;
-                    }
-                    case 'two_column_image': {
-                        const ulElem = slideElem.querySelector('main ul');
-                        if (ulElem) {
-                            const bullets = Array.from(ulElem.querySelectorAll('li')).map(li => li.textContent.trim()).filter(text => text).join('\n');
-                            slide.addText(bullets, { x: 0.7, y: 1.4, w: 5.0, h: 4.5, fontSize: 24, bullet: true, bold: true, lineSpacing: 36 });
-                        }
-                        const imageContainer = slideElem.querySelector('.editable-image-column');
-                        if (imageContainer) {
-                            const images = imageContainer.querySelectorAll('img');
-                            let yPos = 1.4;
-                            for (const img of images) {
-                                const caption = img.previousElementSibling?.innerText || '';
-                                slide.addText(caption, { x: 6.2, y: yPos, w: 3.5, h: 0.3, fontSize: 10, bold: true });
-                                const imgB64 = await this.imageToB64(img.src);
-                                if(imgB64) slide.addImage({ data: imgB64, x: 6.2, y: yPos + 0.25, w: 3.5, h: 1.5 });
-                                yPos += 2.0;
-                            }
-                        }
-                        break;
-                    }
-                     case 'two_column_text': {
-                        const uls = slideElem.querySelectorAll('main ul');
-                        if (uls.length === 2) {
-                            const bulletsLeft = Array.from(uls[0].querySelectorAll('li')).map(li => li.textContent.trim()).filter(text => text).join('\n');
-                            slide.addText(bulletsLeft, { x: 0.7, y: 1.4, w: 4.3, h: 4.5, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
-
-                            const bulletsRight = Array.from(uls[1].querySelectorAll('li')).map(li => li.textContent.trim()).filter(text => text).join('\n');
-                            slide.addText(bulletsRight, { x: 5.3, y: 1.4, w: 4.3, h: 4.5, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
-                        }
-                        break;
-                    }
+                    case 'bullet_list':
+                    case 'two_column_image':
+                    case 'two_column_text':
                     case 'map': {
-                        const mapTitleElem = slideElem.querySelector('main h2');
-                        if (mapTitleElem) slide.addText(mapTitleElem.innerText, { x: 0.5, y: 1.3, w: 9, h: 0.4, fontSize: 16, bold: true, align: 'center' });
+                        // --- MODIFIED: Advanced bullet/list processing to preserve styles ---
+                        const uls = slideElem.querySelectorAll('main ul');
+                        const xPositions = uls.length > 1 ? [0.7, 5.3] : [1.0];
+                        const widths = uls.length > 1 ? [4.3, 4.3] : [8.5];
                         
-                        try {
-                            await new Promise(res => setTimeout(res, 500));
-                            const mapContainer = slideElem.querySelector('#map-container');
-                            const canvas = await html2canvas(mapContainer, { logging: false, useCORS: true, backgroundColor: null });
-                            const mapB64 = canvas.toDataURL('image/png');
-                            // Adjusted map size for 4:3
-                            slide.addImage({ data: mapB64, x: 1.0, y: 1.7, w: 8.0, h: 4.5 });
-                        } catch (error) {
-                            console.error('Failed to capture map canvas:', error);
-                            slide.addText('Error capturing map image.', { x: 1.5, y: 2.5, w: 7, h: 1, color: 'FF0000', align: 'center' });
-                        }
+                        uls.forEach((ul, ulIndex) => {
+                            const listItems = ul.querySelectorAll('li');
+                            let allBulletPoints = [];
+                            listItems.forEach((li, liIndex) => {
+                                allBulletPoints = allBulletPoints.concat(this.htmlToPptxTextObjects(li));
+                                if (liIndex < listItems.length - 1) {
+                                    allBulletPoints.push({ text: '\n', options: {} });
+                                }
+                            });
+                             // Use default font size for spacing unless specified
+                            const defaultFontSize = uls.length > 1 ? 18 : (slideData.fontSize === 'text-5xl' ? 32 : 24);
+                            
+                            slide.addText(allBulletPoints, {
+                                x: xPositions[ulIndex], y: 1.4, w: widths[ulIndex], h: 4.5,
+                                bullet: true,
+                                lineSpacing: defaultFontSize * 1.5
+                            });
+                        });
 
-                        const ulElem = slideElem.querySelector('main ul');
-                         if (ulElem) {
-                            const bullets = Array.from(ulElem.querySelectorAll('li')).map(li => li.textContent.trim()).filter(text => text).join('\n');
-                            // Adjusted y-pos for map bullets
-                            slide.addText(bullets, { x: 1.0, y: 5.0, w: 8, h: 1.5, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
+                        // Handle non-bullet content for specific layouts
+                        if (slideData.layout === 'two_column_image') {
+                           const imageContainer = slideElem.querySelector('.editable-image-column');
+                           if (imageContainer) {
+                               const imageDivs = imageContainer.querySelectorAll('div');
+                               let yPos = 1.4;
+                               for (const div of imageDivs) {
+                                   const caption = div.querySelector('p');
+                                   const img = div.querySelector('img');
+                                   if (caption) slide.addText(this.htmlToPptxTextObjects(caption), { x: 6.2, y: yPos, w: 3.5, h: 0.3 });
+                                   if (img) {
+                                      const imgB64 = await this.imageToB64(img.src);
+                                      if(imgB64) slide.addImage({ data: imgB64, x: 6.2, y: yPos + 0.25, w: 3.5, h: 1.5 });
+                                   }
+                                   yPos += 2.0;
+                               }
+                           }
+                        } else if (slideData.layout === 'map') {
+                             const mapTitleElem = slideElem.querySelector('main h2');
+                             if (mapTitleElem) slide.addText(this.htmlToPptxTextObjects(mapTitleElem), { x: 0.5, y: 1.3, w: 9, h: 0.4, align: 'center' });
+                             try {
+                                 await new Promise(res => setTimeout(res, 500));
+                                 const mapContainer = slideElem.querySelector('#map-container');
+                                 const canvas = await html2canvas(mapContainer, { logging: false, useCORS: true, backgroundColor: null });
+                                 const mapB64 = canvas.toDataURL('image/png');
+                                 slide.addImage({ data: mapB64, x: 1.0, y: 1.7, w: 8.0, h: 4.5 });
+                             } catch (error) {
+                                 console.error('Failed to capture map canvas:', error);
+                             }
                         }
                         break;
                     }
                     case 'questions':
                     case 'backups': {
                         const titleElem = slideElem.querySelector('main h1');
-                        // Vertically center the title in 4:3 slide
                         const textHeight = 1.5;
-                        const slideContentHeight = 7.5; // Total height for 4:3
+                        const slideContentHeight = 7.5;
                         const centeredY = (slideContentHeight - textHeight) / 2;
-                        if (titleElem) slide.addText(titleElem.innerText, { x: 0.5, y: centeredY - 0.5, w: 9, h: textHeight, fontSize: 48, bold: true, align: 'center' });
+                        if (titleElem) slide.addText(this.htmlToPptxTextObjects(titleElem), { x: 0.5, y: centeredY - 0.5, w: 9, h: textHeight, align: 'center' });
                         break;
                     }
                 }
@@ -411,26 +438,29 @@ const SlidePresenter = {
             const titleHtml = slideData.layout !== 'questions' && slideData.layout !== 'backups' 
                 ? `<h1 contenteditable="true" class="text-4xl font-bold absolute top-10 right-6 text-black ${slideData.layout === 'bullet_list' && slideData.title === 'Overview' ? 'italic' : ''}">(U) ${slideData.title}</h1>` 
                 : '';
-            return `<header class="relative w-full p-6 h-36 flex-shrink-0"><div class="absolute top-6 left-6 font-arial font-bold text-lg text-black">CUI</div>${titleHtml}<div class="absolute bottom-11 left-6 w-[calc(100%-3rem)]"><div class="header-banner w-full">${bannerSegmentsHtml}</div></div></header>`;
+            return `<header class="relative w-full p-6 h-36 flex-shrink-0"><div contenteditable="true" class="absolute top-6 left-6 font-arial font-bold text-lg text-black">CUI</div>${titleHtml}<div class="absolute bottom-11 left-6 w-[calc(100%-3rem)]"><div class="header-banner w-full">${bannerSegmentsHtml}</div></div></header>`;
         }
 
         function getStandardFooter(pageNumber) {
             const today = new Date();
             const dateString = `${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getDate().toString().padStart(2, '0')}/${today.getFullYear()}`;
-            return `<footer class="w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div><span>${pageNumber} ${dateString} TITLE OF BRIEF.pptx</span></div><div class="font-arial font-bold text-lg text-black">CUI</div></footer>`;
+            return `<footer class="w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div contenteditable="true"><span>${pageNumber} ${dateString} TITLE OF BRIEF.pptx</span></div><div contenteditable="true" class="font-arial font-bold text-lg text-black">CUI</div></footer>`;
         }
 
         function getLayoutHtml(slideData, slideIndex) {
             const pageNumber = slideIndex + 1;
             switch (slideData.layout) {
                 case 'title':
-                    return `<div class="slide" id="${slideData.id}"><header class="relative w-full p-6 h-36 flex-shrink-0"><div class="absolute top-6 left-6 font-arial font-bold text-lg text-black">CUI</div><div class="absolute bottom-1 left-6 w-[calc(100%-3rem)] h-24 flex items-center"><div class="w-24 h-24 absolute top-1/2 -translate-y-1/2 left-0 z-10 flex-shrink-0"><img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Joint_Chiefs_of_Staff_seal_%282%29.svg" alt="Joint Chiefs of Staff seal" class="w-full h-full object-contain"></div><div class="header-banner w-full">${bannerSegmentsHtml}</div></div></header><main class="flex-grow flex flex-col items-center justify-center text-center"><h1 contenteditable="true" class="text-7xl font-black tracking-wider text-gray-800">(U) TITLE OF BRIEF</h1><h2 contenteditable="true" class="text-5xl font-arial font-bold text-black mt-16">Subtitle</h2></main><footer class="relative w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div contenteditable="true"><span>${pageNumber} ${new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })} TITLE OF BRIEF.pptx</span></div><div contenteditable="true" class="absolute text-left text-xs leading-tight font-arial font-bold text-black" style="bottom: 5rem; right: 6rem; width: 240px;"><p><span>Controlled By:</span></p><p><span>CUI Category:</span></p><p><span>LDC:</span></p><p><span>POC:</span></p><br><p><span>Classified by:</span></p><p><span>Derived From:</span></p><p><span>Decl on:</span></p></div><div class="font-arial font-bold text-lg text-black">CUI</div></footer></div>`;
+                    return `<div class="slide" id="${slideData.id}"><header class="relative w-full p-6 h-36 flex-shrink-0"><div contenteditable="true" class="absolute top-6 left-6 font-arial font-bold text-lg text-black">CUI</div><div class="absolute bottom-1 left-6 w-[calc(100%-3rem)] h-24 flex items-center"><div class="w-24 h-24 absolute top-1/2 -translate-y-1/2 left-0 z-10 flex-shrink-0"><img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Joint_Chiefs_of_Staff_seal_%282%29.svg" alt="Joint Chiefs of Staff seal" class="w-full h-full object-contain"></div><div class="header-banner w-full">${bannerSegmentsHtml}</div></div></header><main class="flex-grow flex flex-col items-center justify-center text-center"><h1 contenteditable="true" class="text-7xl font-black tracking-wider text-gray-800">(U) TITLE OF BRIEF</h1><h2 contenteditable="true" class="text-5xl font-arial font-bold text-black mt-16">Subtitle</h2></main><footer class="relative w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div contenteditable="true"><span>${pageNumber} ${new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })} TITLE OF BRIEF.pptx</span></div><div contenteditable="true" class="absolute text-left text-xs leading-tight font-arial font-bold text-black" style="bottom: 5rem; right: 6rem; width: 240px;"><p><span>Controlled By:</span></p><p><span>CUI Category:</span></p><p><span>LDC:</span></p><p><span>POC:</span></p><br><p><span>Classified by:</span></p><p><span>Derived From:</span></p><p><span>Decl on:</span></p></div><div contenteditable="true" class="font-arial font-bold text-lg text-black">CUI</div></footer></div>`;
                 case 'bullet_list':
                     const fontSizeClass = slideData.fontSize || 'text-4xl';
                     const listItems = slideData.content.map(item => `<li>${item}</li>`).join('');
                     return `<div class="slide" id="${slideData.id}">${getStandardHeader(slideData)}<main class="flex p-12"><ul contenteditable="true" class="list-disc pl-16 space-y-6 font-bold ${fontSizeClass}">${listItems}</ul></main>${getStandardFooter(pageNumber)}</div>`;
                 case 'two_column_image':
-                    return `<div class="slide" id="${slideData.id}">${getStandardHeader(slideData)}<main class="flex p-12 gap-8 items-start"><div class="w-3/5"><ul contenteditable="true" class="list-disc pl-8 space-y-8 text-4xl font-bold"><li>(U) Bullet example text</li><li>(U) Sets the stage for highlighting issues</li><li>(U) Other bullet point here</li></ul></div><div class="w-2/5 flex flex-col justify-start gap-4 editable-image-column" contenteditable="true"><div><p class="font-bold text-lg mb-2">(U) Destroyer in Pacific</p><img src="https://www.naval-technology.com/wp-content/uploads/sites/15/2023/01/Featured-Image-Arleigh-Burke-Class-destroyer.jpg" class="border-2 border-black"></div><div><p class="font-bold text-lg mb-2">(U) Submarine off coast of San Diego</p><img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/US_Navy_040730-N-1234E-002_PCU_Virginia_%28SSN_774%29_returns_to_the_General_Dynamics_Electric_Boat_shipyard.jpg" class="border-2 border-black"></div></div></main>${getStandardFooter(pageNumber)}</div>`;
+                    return `<div class="slide" id="${slideData.id}">${getStandardHeader(slideData)}<main class="flex p-12 gap-8 items-start"><div class="w-3/5"><ul contenteditable="true" class="list-disc pl-8 space-y-8 text-4xl font-bold"><li>(U) Bullet example text</li><li>(U) Sets the stage for highlighting issues</li><li>(U) Other bullet point here</li></ul></div><div class="w-2/5 flex flex-col justify-start gap-4 editable-image-column">
+                    <div contenteditable="true"><p class="font-bold text-lg mb-2">(U) Destroyer in Pacific</p></div><img src="https://www.naval-technology.com/wp-content/uploads/sites/15/2023/01/Featured-Image-Arleigh-Burke-Class-destroyer.jpg" class="border-2 border-black">
+                    <div contenteditable="true"><p class="font-bold text-lg mb-2">(U) Submarine off coast of San Diego</p></div><img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/US_Navy_040730-N-1234E-002_PCU_Virginia_%28SSN_774%29_returns_to_the_General_Dynamics_Electric_Boat_shipyard.jpg" class="border-2 border-black">
+                    </div></main>${getStandardFooter(pageNumber)}</div>`;
                 case 'two_column_text':
                     return `<div class="slide" id="${slideData.id}">${getStandardHeader(slideData)}<main class="flex p-12 gap-16 items-start"><div class="w-1/2"><ul contenteditable="true" class="list-disc pl-8 space-y-6 text-3xl font-bold"><li>(U) First point for the left column.</li><li>(U) Another point to illustrate the layout.</li><li>(U) This column can contain key takeaways.</li><li>(U) Additional bullet point.</li></ul></div><div class="w-1/2"><ul contenteditable="true" class="list-disc pl-8 space-y-6 text-3xl font-bold"><li>(U) First point for the right column.</li><li>(U) Supporting details or contrasting points.</li><li>(U) This column provides more information.</li><li>(U) Final bullet point for this side.</li></ul></div></main>${getStandardFooter(pageNumber)}</div>`;
                 case 'map':
