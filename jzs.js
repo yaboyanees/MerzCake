@@ -228,42 +228,27 @@ const SlidePresenter = {
             }
         },
 
-        // NEW FUNCTION: To draw the header banner segments as rectangles
         addHeaderBanner: function(slide) {
-            // These colors approximate the current banner segments
-            const colors = [
-                '5F2A63', // Dark Purple
-                '7F3E83',
-                '9A4B9F',
-                'AF5BB3',
-                'C46BC8',
-                'D97BE0',
-                'EC8AF0',
-                'FA99FC',
-                'FFACFF',
-                'FFBEFF',
-                'FFD0FF',
-                'FFE3FF'  // Lightest Pink
-            ];
-            
-            // PPTX slide width is 10 inches for LAYOUT_4x3
-            const totalBannerWidth = 9.4; // Corresponds to w: 9.4 in the HTML line
+            const colors = ['5F2A63', '7F3E83', '9A4B9F', 'AF5BB3', 'C46BC8', 'D97BE0', 'EC8AF0', 'FA99FC', 'FFACFF', 'FFBEFF', 'FFD0FF', 'FFE3FF'];
+            const totalBannerWidth = 9.4;
             const segmentFlexGrows = [369, 46, 42, 34, 34, 29, 25, 21, 17, 12, 8, 4];
             const totalFlexGrow = segmentFlexGrows.reduce((sum, val) => sum + val, 0);
 
-            let currentX = 0.3; // Starting X position for the banner
-            const bannerHeight = 0.1; // Height of each banner segment
-            const bannerY = 1.1; // Y position for the banner, just below the header line
+            let currentX = 0.3;
+            const bannerHeight = 0.1;
+            const bannerY = 1.1;
 
             segmentFlexGrows.forEach((flexGrow, index) => {
                 const segmentWidth = (flexGrow / totalFlexGrow) * totalBannerWidth;
-                slide.addShape(pptx.shapes.RECTANGLE, {
+                // **THE FIX IS HERE**
+                // Using the global PptxGenJS object instead of the out-of-scope 'pptx' variable
+                slide.addShape(PptxGenJS.shapes.RECTANGLE, {
                     x: currentX,
                     y: bannerY,
                     w: segmentWidth,
                     h: bannerHeight,
-                    fill: { color: colors[index] || 'CCCCCC' }, // Use color, default to gray
-                    line: { color: colors[index] || 'CCCCCC', width: 0 } // No border line
+                    fill: { color: colors[index] || 'CCCCCC' },
+                    line: { color: colors[index] || 'CCCCCC', width: 0 }
                 });
                 currentX += segmentWidth;
             });
@@ -276,7 +261,6 @@ const SlidePresenter = {
             }
 
             let pptx = new PptxGenJS();
-            // FIXED: Changed layout to LAYOUT_4x3 for standard aspect ratio
             pptx.layout = 'LAYOUT_4x3';
             pptx.author = 'SlidePresenter';
             pptx.company = 'Gemini AI';
@@ -298,31 +282,21 @@ const SlidePresenter = {
                 
                 slide.background = { color: 'FFFFFF' };
 
-                // --- Common Elements: Header & Footer ---
-                // Header CUI
                 slide.addText("CUI", { x: 0.3, y: 0.2, fontSize: 12, bold: true, fontFace: 'Arial' });
-                // Header Title
                 const headerTitleElem = slideElem.querySelector('header h1');
                 if (headerTitleElem) {
-                    // Adjusted Y position for header title
                     slide.addText(headerTitleElem.innerText, { x: 5.0, y: 0.3, w: 4.7, h: 0.4, fontSize: 22, bold: true, align: 'right' });
                 }
-                // NEW: Add the header banner segments
                 this.addHeaderBanner(slide);
-                // Footer Text
                 const footerTextElem = slideElem.querySelector('footer > div:first-child');
                 if (footerTextElem) {
-                    // Adjusted Y position for footer text
                     slide.addText(footerTextElem.innerText, { x: 0.3, y: 7.0, w: 7, h: 0.3, fontSize: 8, color: '6B7280' });
                 }
-                // Footer CUI
-                // Adjusted Y position for footer CUI
                 slide.addText("CUI", { x: 9.0, y: 6.9, w: 0.7, h: 0.3, fontSize: 12, bold: true, fontFace: 'Arial', align: 'right' });
 
                 switch (slideData.layout) {
                     case 'title': {
                         const logoB64 = await this.svgToB64('https://upload.wikimedia.org/wikipedia/commons/d/da/Joint_Chiefs_of_Staff_seal_%282%29.svg');
-                        // Adjusted Y position for logo
                         if(logoB64) slide.addImage({ data: logoB64, x: 0.4, y: 0.4, w: 1, h: 1 });
                         
                         const titleElem = slideElem.querySelector('main h1');
@@ -338,12 +312,8 @@ const SlidePresenter = {
                     case 'bullet_list': {
                         const ulElem = slideElem.querySelector('main ul');
                         if (ulElem) {
-                            const bullets = Array.from(ulElem.querySelectorAll('li'))
-                                .map(li => li.textContent.trim())
-                                .filter(text => text)
-                                .join('\n');
+                            const bullets = Array.from(ulElem.querySelectorAll('li')).map(li => li.textContent.trim()).filter(text => text).join('\n');
                             const fontSize = slideData.fontSize === 'text-5xl' ? 32 : 24;
-                            // Adjusted Y position for bullets
                             slide.addText(bullets, { x: 1.0, y: 1.5, w: 8.5, h: 4.5, fontSize: fontSize, bullet: true, bold: true, lineSpacing: fontSize * 1.5 });
                         }
                         break;
@@ -388,8 +358,7 @@ const SlidePresenter = {
                             const mapContainer = slideElem.querySelector('#map-container');
                             const canvas = await html2canvas(mapContainer, { logging: false, useCORS: true, backgroundColor: null });
                             const mapB64 = canvas.toDataURL('image/png');
-                            // Adjusted Y position for map image
-                            slide.addImage({ data: mapB64, x: 1.0, y: 1.7, w: 8.0, h: 4.5 }); // Increased map height to better fit 4x3
+                            slide.addImage({ data: mapB64, x: 1.0, y: 1.7, w: 8.0, h: 4.5 });
                         } catch (error) {
                             console.error('Failed to capture map canvas:', error);
                             slide.addText('Error capturing map image.', { x: 1.5, y: 2.5, w: 5.33, h: 1, color: 'FF0000', align: 'center' });
@@ -406,9 +375,8 @@ const SlidePresenter = {
                     case 'backups': {
                         const titleElem = slideElem.querySelector('main h1');
                         const textHeight = 1.5;
-                        // PPTX slide height for 4x3 is 7.5 inches. Header is ~1.5, footer is ~0.5
-                        const availableHeight = 7.5 - 1.5 - 0.5; // Total - Header - Footer
-                        const centeredY = 1.5 + (availableHeight - textHeight) / 2; // Start after header
+                        const availableHeight = 7.5 - 1.5 - 0.5;
+                        const centeredY = 1.5 + (availableHeight - textHeight) / 2;
                         if (titleElem) slide.addText(titleElem.innerText, { x: 0.5, y: centeredY, w: 9, h: textHeight, fontSize: 48, bold: true, align: 'center' });
                         break;
                     }
@@ -423,7 +391,6 @@ const SlidePresenter = {
         this.config.slidesData = slidesData;
         this.config.presentationContainer = document.getElementById('presentation-container');
         
-        // Removed header-banner-html for dynamic generation
         const bannerSegmentsHtml = `<div class="banner-segment" style="flex-grow: 369;"></div><div class="banner-segment" style="flex-grow: 46;"></div><div class="banner-segment" style="flex-grow: 42;"></div><div class="banner-segment" style="flex-grow: 34;"></div><div class="banner-segment" style="flex-grow: 34;"></div><div class="banner-segment" style="flex-grow: 29;"></div><div class="banner-segment" style="flex-grow: 25;"></div><div class="banner-segment" style="flex-grow: 21;"></div><div class="banner-segment" style="flex-grow: 17;"></div><div class="banner-segment" style="flex-grow: 12;"></div><div class="banner-segment" style="flex-grow: 8;"></div><div class="banner-segment" style="flex-grow: 4;"></div>`;
 
         function getStandardHeader(slideData) {
@@ -432,18 +399,19 @@ const SlidePresenter = {
                 : '';
             return `<header class="relative w-full p-6 h-36 flex-shrink-0"><div class="absolute top-6 left-6 font-arial font-bold text-lg text-black">CUI</div>${titleHtml}<div class="absolute bottom-11 left-6 w-[calc(100%-3rem)]"><div class="header-banner w-full">${bannerSegmentsHtml}</div></div></header>`;
         }
-
+        
         function getStandardFooter(pageNumber) {
             const today = new Date();
             const dateString = `${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getDate().toString().padStart(2, '0')}/${today.getFullYear()}`;
-            return `<footer class="w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div><span>${pageNumber} ${dateString} Washington, District of Columbia, United States TITLE OF BRIEF.pptx</span></div><div class="font-arial font-bold text-lg text-black">CUI</div></footer>`;
+            return `<footer class="w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div><span>${pageNumber} ${dateString} TITLE OF BRIEF.pptx</span></div><div class="font-arial font-bold text-lg text-black">CUI</div></footer>`;
         }
-
+        
         function getLayoutHtml(slideData, slideIndex) {
             const pageNumber = slideIndex + 1;
             switch (slideData.layout) {
                 case 'title':
-                    return `<div class="slide" id="${slideData.id}"><header class="relative w-full p-6 h-36 flex-shrink-0"><div class="absolute top-6 left-6 font-arial font-bold text-lg text-black">CUI</div><div class="absolute bottom-1 left-6 w-[calc(100%-3rem)] h-24 flex items-center"><div class="w-24 h-24 absolute top-1/2 -translate-y-1/2 left-0 z-10 flex-shrink-0"><img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Joint_Chiefs_of_Staff_seal_%282%29.svg" alt="Joint Chiefs of Staff seal" class="w-full h-full object-contain"></div><div class="header-banner w-full">${bannerSegmentsHtml}</div></div></header><main class="flex-grow flex flex-col items-center justify-center text-center"><h1 contenteditable="true" class="text-7xl font-black tracking-wider text-gray-800">(U) TITLE OF BRIEF</h1><h2 contenteditable="true" class="text-5xl font-arial font-bold text-black mt-16">Subtitle</h2></main><footer class="relative w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div contenteditable="true"><span>${pageNumber} ${new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })} Washington, District of Columbia, United States TITLE OF BRIEF.pptx</span></div><div contenteditable="true" class="absolute text-left text-xs leading-tight font-arial font-bold text-black" style="bottom: 5rem; right: 6rem; width: 240px;"><p><span>Controlled By:</span></p><p><span>CUI Category:</span></p><p><span>LDC:</span></p><p><span>POC:</span></p><br><p><span>Classified by:</span></p><p><span>Derived From:</span></p><p><span>Decl on:</span></p></div><div class="font-arial font-bold text-lg text-black">CUI</div></footer></div>`;
+                    const titleDateString = new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
+                    return `<div class="slide" id="${slideData.id}"><header class="relative w-full p-6 h-36 flex-shrink-0"><div class="absolute top-6 left-6 font-arial font-bold text-lg text-black">CUI</div><div class="absolute bottom-1 left-6 w-[calc(100%-3rem)] h-24 flex items-center"><div class="w-24 h-24 absolute top-1/2 -translate-y-1/2 left-0 z-10 flex-shrink-0"><img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Joint_Chiefs_of_Staff_seal_%282%29.svg" alt="Joint Chiefs of Staff seal" class="w-full h-full object-contain"></div><div class="header-banner w-full">${bannerSegmentsHtml}</div></div></header><main class="flex-grow flex flex-col items-center justify-center text-center"><h1 contenteditable="true" class="text-7xl font-black tracking-wider text-gray-800">(U) TITLE OF BRIEF</h1><h2 contenteditable="true" class="text-5xl font-arial font-bold text-black mt-16">Subtitle</h2></main><footer class="relative w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div contenteditable="true"><span>${pageNumber} ${titleDateString} TITLE OF BRIEF.pptx</span></div><div contenteditable="true" class="absolute text-left text-xs leading-tight font-arial font-bold text-black" style="bottom: 5rem; right: 6rem; width: 240px;"><p><span>Controlled By:</span></p><p><span>CUI Category:</span></p><p><span>LDC:</span></p><p><span>POC:</span></p><br><p><span>Classified by:</span></p><p><span>Derived From:</span></p><p><span>Decl on:</span></p></div><div class="font-arial font-bold text-lg text-black">CUI</div></footer></div>`;
                 case 'bullet_list':
                     const fontSizeClass = slideData.fontSize || 'text-4xl';
                     const listItems = slideData.content.map(item => `<li>${item}</li>`).join('');
