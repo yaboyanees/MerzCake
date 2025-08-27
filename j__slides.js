@@ -18,7 +18,7 @@ const SlidePresenter = {
                     const command = button.dataset.command;
                     
                     if (command === 'save-pptx') {
-                        SlidePresenter.exportToPptx(button); // Pass the button for UI feedback
+                        SlidePresenter.exportToPptx(button);
                     } else {
                         document.execCommand(command, false, null);
                     }
@@ -77,51 +77,36 @@ const SlidePresenter = {
             const mapConfig = mapData.mapConfig || {};
             const center = mapConfig.center || [0, 0];
             const scale = mapConfig.scale || 150;
-            
-            function toTitleCase(str) {
-                return str.replace(/\w\S*/g, function(txt) {
-                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                });
-            }
-
+            function toTitleCase(str) { return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()); }
             const width = 800, height = 450;
             let selectedLabel = null;
             const svg = d3.select("#map-container").append("svg").attr("width", width).attr("height", height);
             const g = svg.append("g");
-
             const minZoom = 0.25, maxZoom = 12;
-
             const fontSizeScale = d3.scaleLinear().domain([minZoom, 1, maxZoom]).range([24, 16, 6]).clamp(true);
             const radiusScale = d3.scaleLinear().domain([minZoom, 1, maxZoom]).range([12, 8, 3]).clamp(true);
             const starScale = d3.scaleLinear().domain([minZoom, 1, maxZoom]).range([1.2, 0.8, 0.3]).clamp(true);
-
-            const zoom = d3.zoom()
-                .scaleExtent([minZoom, maxZoom])
-                .on("zoom", () => {
-                    const transform = d3.event.transform;
-                    const k = transform.k;
-                    g.attr("transform", transform);
-                    g.selectAll('.label').style('font-size', fontSizeScale(k) + 'px').style('stroke-width', (0.5 / k) + 'px');
-                    g.selectAll('.major-city-icon').attr('r', radiusScale(k));
-                    g.selectAll('.capital-icon').each(function() {
-                        const icon = d3.select(this);
-                        const currentTransform = icon.attr('transform');
-                        const translatePart = currentTransform.split(')')[0] + ')';
-                        icon.attr('transform', `${translatePart} scale(${starScale(k)})`);
-                    });
+            const zoom = d3.zoom().scaleExtent([minZoom, maxZoom]).on("zoom", () => {
+                const transform = d3.event.transform;
+                const k = transform.k;
+                g.attr("transform", transform);
+                g.selectAll('.label').style('font-size', `${fontSizeScale(k)}px`).style('stroke-width', `${0.5 / k}px`);
+                g.selectAll('.major-city-icon').attr('r', radiusScale(k));
+                g.selectAll('.capital-icon').each(function() {
+                    const icon = d3.select(this);
+                    const currentTransform = icon.attr('transform');
+                    const translatePart = currentTransform.split(')')[0] + ')';
+                    icon.attr('transform', `${translatePart} scale(${starScale(k)})`);
                 });
-
+            });
             svg.call(zoom).on("dblclick.zoom", null);
-
             const selectionBox = g.append("rect").attr("class", "selection-box").style("display", "none");
             const projection = d3.geoMercator().center(center).scale(scale).translate([width / 2, height / 2]);
             const pathGenerator = d3.geoPath().projection(projection);
             const citiesUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/world_cities.geojson';
             const bordersUrl = 'https://cdn.jsdelivr.net/gh/yaboyanees/MerzCake@main/country_borders.geojson';
-            
             svg.on("click", () => { if (selectedLabel) { selectedLabel = null; selectionBox.style("display", "none"); } });
             d3.select("body").on("keydown", () => { if (selectedLabel && (d3.event.key === "Delete" || d3.event.key === "Backspace")) { selectedLabel.remove(); selectedLabel = null; selectionBox.style("display", "none"); } });
-            
             Promise.all([d3.json(bordersUrl), d3.json(citiesUrl)]).then(([borderData, cityData]) => {
                 g.selectAll(".country").data(borderData.features).enter().append("path").attr("class", "country").attr("d", pathGenerator).attr("fill", d => highlightedCountries.includes(d.properties.name) ? 'rgb(255, 204, 102)' : 'rgb(255, 219, 183)');
                 const cityGroup = g.append("g").attr("class", "cities");
@@ -132,52 +117,28 @@ const SlidePresenter = {
                 labelGroup.selectAll(".country-label").data(borderData.features.filter(d => highlightedCountries.includes(d.properties.name))).enter().append("text").attr("class", "label country-label").text(d => d.properties.name.toUpperCase()).attr("transform", d => `translate(${pathGenerator.centroid(d)[0]}, ${pathGenerator.centroid(d)[1]})`).call(createDragHandler()).on("click", selectHandler).on("dblclick", createEditHandler);
                 labelGroup.selectAll(".city-label").data(cityData.features.filter(d => highlightedCountries.includes(d.properties.country))).enter().append("text").attr("class", "label city-label").text(d => d.properties.city).attr("transform", d => `translate(${projection(d.geometry.coordinates)[0]}, ${projection(d.geometry.coordinates)[1] + (d.properties.isCapital ? -18 : -12)})`).call(createDragHandler()).on("click", selectHandler).on("dblclick", createEditHandler);
             });
-
             function selectHandler(d) { d3.event.stopPropagation(); selectedLabel = d3.select(this); const bbox = this.getBBox(); const transform = selectedLabel.attr("transform"); selectionBox.attr("x", bbox.x - 4).attr("y", bbox.y - 4).attr("width", bbox.width + 8).attr("height", bbox.height + 8).attr("transform", transform).style("display", "block").raise(); }
             function createDragHandler() { let offsetX, offsetY; return d3.drag().on("start", function() { const transform = d3.select(this).attr("transform"); const parts = /translate\(([^,]+),([^)]+)\)/.exec(transform); if (parts) { const currentX = parseFloat(parts[1]); const currentY = parseFloat(parts[2]); offsetX = d3.event.x - currentX; offsetY = d3.event.y - currentY; } d3.select(this).raise().classed("active", true); }).on("drag", function() { const newX = d3.event.x - offsetX; const newY = d3.event.y - offsetY; const newTransform = `translate(${newX}, ${newY})`; d3.select(this).attr("transform", newTransform); if (selectedLabel && selectedLabel.node() === this) { selectionBox.attr("transform", newTransform); } }).on("end", function() { d3.select(this).classed("active", false); }); }
-            
             function createEditHandler(d) {
                 d3.event.stopPropagation();
                 const textElement = d3.select(this);
                 const isCity = !!d.properties.city;
                 const bbox = textElement.node().getBBox();
-                
                 textElement.style("display", "none");
                 if (selectedLabel && selectedLabel.node() === this) selectionBox.style("display", "none");
-
                 const currentTransform = d3.zoomTransform(g.node());
                 const k = currentTransform.k;
-                
                 const transformAttr = textElement.attr('transform');
                 const parts = /translate\(([^,]+),([^)]+)\)/.exec(transformAttr);
                 const textX = parts ? parseFloat(parts[1]) : 0;
                 const textY = parts ? parseFloat(parts[2]) : 0;
-                
                 const foWidth = bbox.width + 10;
                 const foHeight = bbox.height + 5;
-
-                const foreignObject = g.append("foreignObject")
-                    .attr("x", bbox.x - 5)
-                    .attr("y", bbox.y - 2)
-                    .attr("width", foWidth)
-                    .attr("height", foHeight)
-                    .attr("transform", `translate(${textX}, ${textY}) scale(${1/k})`);
-
+                const foreignObject = g.append("foreignObject").attr("x", bbox.x - 5).attr("y", bbox.y - 2).attr("width", foWidth).attr("height", foHeight).attr("transform", `translate(${textX}, ${textY}) scale(${1/k})`);
                 const currentText = (d.properties && d.properties.displayName) || (d.properties && d.properties.city) || (d.properties && d.properties.name);
-                
-                const input = foreignObject.append("xhtml:input")
-                    .attr("type", "text")
-                    .attr("class", "label-editor-input")
-                    .style("width", `${foWidth}px`)
-                    .style("height", `${foHeight}px`)
-                    .style("font-size", `${fontSizeScale(k)}px`)
-                    .property("value", currentText)
-                    .on("blur", finishEditing)
-                    .on("keydown", function() { if (d3.event.key === "Enter") finishEditing.call(this); });
-                
+                const input = foreignObject.append("xhtml:input").attr("type", "text").attr("class", "label-editor-input").style("width", `${foWidth}px`).style("height", `${foHeight}px`).style("font-size", `${fontSizeScale(k)}px`).property("value", currentText).on("blur", finishEditing).on("keydown", function() { if (d3.event.key === "Enter") finishEditing.call(this); });
                 input.node().focus();
                 input.node().select();
-
                 function finishEditing() {
                     const newText = input.node().value;
                     if (d.properties) d.properties.displayName = newText;
@@ -219,14 +180,31 @@ const SlidePresenter = {
             });
         };
 
+        const addMasterSlideElements = (pptxSlide, htmlSlide) => {
+            const header = htmlSlide.querySelector('header');
+            const footer = htmlSlide.querySelector('footer');
+
+            if (header) {
+                const headerTitle = header.querySelector('h1');
+                pptxSlide.addText('CUI', { x: 0.25, y: 0.25, w: 1, h: 0.5, fontSize: 14, bold: true });
+                if (headerTitle) {
+                    pptxSlide.addText(headerTitle.innerText, { x: 4.5, y: 0.25, w: 5.25, h: 0.75, fontSize: 24, bold: true, align: 'right' });
+                }
+            }
+            if (footer) {
+                const footerLeft = footer.querySelector('div:first-child');
+                if(footerLeft) pptxSlide.addText(footerLeft.innerText, { x: 0.25, y: 5.2, w: 6, h: 0.3, fontSize: 10, color: '6c757d' });
+                pptxSlide.addText('CUI', { x: 9.0, y: 5.1, w: 1, h: 0.5, fontSize: 14, bold: true, align: 'right' });
+            }
+        };
+
         for (const slideEl of slideElements) {
             const layout = slideEl.getAttribute('data-layout');
             const slide = pptx.addSlide();
             slide.background = { color: 'FFFFFF' };
 
-            const headerTitle = slideEl.querySelector('header h1');
-            if (headerTitle) {
-                slide.addText(headerTitle.innerText, { x: 4.5, y: 0.25, w: 5.25, h: 0.75, fontSize: 24, bold: true, align: 'right' });
+            if (layout !== 'black' && layout !== 'title') {
+                addMasterSlideElements(slide, slideEl);
             }
             
             if (layout === 'title') {
@@ -234,6 +212,7 @@ const SlidePresenter = {
                 const h2 = slideEl.querySelector('main h2');
                 if (h1) slide.addText(h1.innerText, { x: 0.5, y: 2.0, w: 9, h: 1.5, fontSize: 44, bold: true, align: 'center' });
                 if (h2) slide.addText(h2.innerText, { x: 0.5, y: 3.5, w: 9, h: 1, fontSize: 32, align: 'center' });
+                addMasterSlideElements(slide, slideEl); // Special call for title footer
             } 
             else if (layout === 'bullet_list') {
                 const bullets = Array.from(slideEl.querySelectorAll('li')).map(li => ({ text: li.innerText }));
@@ -331,7 +310,6 @@ const SlidePresenter = {
             }
         }
 
-        // Render all slides to the DOM
         this.config.presentationContainer.innerHTML = '';
         this.config.slidesData.forEach((slideData, index) => {
             const slideWrapper = document.createElement('div');
@@ -341,14 +319,11 @@ const SlidePresenter = {
             const tempDiv = document.createElement('div');
             tempDiv.innerHTML = slideHtml;
             const slideDiv = tempDiv.firstChild;
-            
             slideDiv.setAttribute('data-layout', slideData.layout);
-            
             slideWrapper.appendChild(slideDiv);
             this.config.presentationContainer.appendChild(slideWrapper);
         });
 
-        // Initialize all modules
         const mapSlideData = this.config.slidesData.find(slide => slide.layout === 'map');
         if (mapSlideData && document.getElementById('map-container')) {
             this.d3Map.render(mapSlideData);
