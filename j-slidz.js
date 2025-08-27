@@ -201,6 +201,9 @@ const SlidePresenter = {
         imageToB64: async function(url) {
             try {
                 const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok for url: ${url}`);
+                }
                 const blob = await response.blob();
                 return new Promise((resolve, reject) => {
                     const reader = new FileReader();
@@ -214,17 +217,56 @@ const SlidePresenter = {
             }
         },
 
-        // FIXED: Added a dedicated function to handle SVG to Base64 conversion correctly
         svgToB64: async function(url) {
             try {
                 const response = await fetch(url);
                 const svgText = await response.text();
-                // We need to base64 encode the raw SVG XML text, not the file blob
                 return `data:image/svg+xml;base64,${btoa(svgText)}`;
             } catch (error) {
                 console.error('Error converting SVG to Base64:', url, error);
                 return null;
             }
+        },
+
+        // NEW FUNCTION: To draw the header banner segments as rectangles
+        addHeaderBanner: function(slide) {
+            // These colors approximate the current banner segments
+            const colors = [
+                '5F2A63', // Dark Purple
+                '7F3E83',
+                '9A4B9F',
+                'AF5BB3',
+                'C46BC8',
+                'D97BE0',
+                'EC8AF0',
+                'FA99FC',
+                'FFACFF',
+                'FFBEFF',
+                'FFD0FF',
+                'FFE3FF'  // Lightest Pink
+            ];
+            
+            // PPTX slide width is 10 inches for LAYOUT_4x3
+            const totalBannerWidth = 9.4; // Corresponds to w: 9.4 in the HTML line
+            const segmentFlexGrows = [369, 46, 42, 34, 34, 29, 25, 21, 17, 12, 8, 4];
+            const totalFlexGrow = segmentFlexGrows.reduce((sum, val) => sum + val, 0);
+
+            let currentX = 0.3; // Starting X position for the banner
+            const bannerHeight = 0.1; // Height of each banner segment
+            const bannerY = 1.1; // Y position for the banner, just below the header line
+
+            segmentFlexGrows.forEach((flexGrow, index) => {
+                const segmentWidth = (flexGrow / totalFlexGrow) * totalBannerWidth;
+                slide.addShape(pptx.shapes.RECTANGLE, {
+                    x: currentX,
+                    y: bannerY,
+                    w: segmentWidth,
+                    h: bannerHeight,
+                    fill: { color: colors[index] || 'CCCCCC' }, // Use color, default to gray
+                    line: { color: colors[index] || 'CCCCCC', width: 0 } // No border line
+                });
+                currentX += segmentWidth;
+            });
         },
 
         export: async function() {
@@ -234,7 +276,8 @@ const SlidePresenter = {
             }
 
             let pptx = new PptxGenJS();
-            pptx.layout = 'LAYOUT_16x9';
+            // FIXED: Changed layout to LAYOUT_4x3 for standard aspect ratio
+            pptx.layout = 'LAYOUT_4x3';
             pptx.author = 'SlidePresenter';
             pptx.company = 'Gemini AI';
             pptx.title = 'Web-Based Presentation';
@@ -255,50 +298,53 @@ const SlidePresenter = {
                 
                 slide.background = { color: 'FFFFFF' };
 
-                // FIXED: Adjusted all Y coordinates up for better positioning
+                // --- Common Elements: Header & Footer ---
                 // Header CUI
                 slide.addText("CUI", { x: 0.3, y: 0.2, fontSize: 12, bold: true, fontFace: 'Arial' });
                 // Header Title
                 const headerTitleElem = slideElem.querySelector('header h1');
                 if (headerTitleElem) {
-                    slide.addText(headerTitleElem.innerText, { x: 5.0, y: 0.4, w: 4.7, h: 0.5, fontSize: 24, bold: true, align: 'right' });
+                    // Adjusted Y position for header title
+                    slide.addText(headerTitleElem.innerText, { x: 5.0, y: 0.3, w: 4.7, h: 0.4, fontSize: 22, bold: true, align: 'right' });
                 }
-                // Header Banner Line
-                slide.addShape(pptx.shapes.LINE, { x: 0.3, y: 1.2, w: 9.4, h: 0, line: { color: '4A5568', width: 2 } });
+                // NEW: Add the header banner segments
+                this.addHeaderBanner(slide);
                 // Footer Text
                 const footerTextElem = slideElem.querySelector('footer > div:first-child');
                 if (footerTextElem) {
-                    slide.addText(footerTextElem.innerText, { x: 0.3, y: 5.25, w: 7, h: 0.3, fontSize: 8, color: '6B7280' });
+                    // Adjusted Y position for footer text
+                    slide.addText(footerTextElem.innerText, { x: 0.3, y: 7.0, w: 7, h: 0.3, fontSize: 8, color: '6B7280' });
                 }
                 // Footer CUI
-                slide.addText("CUI", { x: 9.0, y: 5.15, w: 0.7, h: 0.3, fontSize: 12, bold: true, fontFace: 'Arial', align: 'right' });
+                // Adjusted Y position for footer CUI
+                slide.addText("CUI", { x: 9.0, y: 6.9, w: 0.7, h: 0.3, fontSize: 12, bold: true, fontFace: 'Arial', align: 'right' });
 
                 switch (slideData.layout) {
                     case 'title': {
-                        // FIXED: Use the correct svgToB64 helper for the purple seal
                         const logoB64 = await this.svgToB64('https://upload.wikimedia.org/wikipedia/commons/d/da/Joint_Chiefs_of_Staff_seal_%282%29.svg');
-                        if(logoB64) slide.addImage({ data: logoB64, x: 0.4, y: 0.5, w: 1, h: 1 });
+                        // Adjusted Y position for logo
+                        if(logoB64) slide.addImage({ data: logoB64, x: 0.4, y: 0.4, w: 1, h: 1 });
                         
                         const titleElem = slideElem.querySelector('main h1');
-                        if (titleElem) slide.addText(titleElem.innerText, { x: 0.5, y: 2.2, w: 9, h: 1.0, fontSize: 44, bold: true, align: 'center', fontFace: 'Arial' });
+                        if (titleElem) slide.addText(titleElem.innerText, { x: 0.5, y: 2.0, w: 9, h: 1.0, fontSize: 44, bold: true, align: 'center', fontFace: 'Arial' });
 
                         const subtitleElem = slideElem.querySelector('main h2');
-                        if (subtitleElem) slide.addText(subtitleElem.innerText, { x: 0.5, y: 3.5, w: 9, h: 0.7, fontSize: 32, bold: true, align: 'center', fontFace: 'Arial' });
+                        if (subtitleElem) slide.addText(subtitleElem.innerText, { x: 0.5, y: 3.3, w: 9, h: 0.7, fontSize: 32, bold: true, align: 'center', fontFace: 'Arial' });
                         
                         const cuiBoxElem = slideElem.querySelector('footer div[contenteditable="true"][style*="bottom: 5rem"]');
-                        if (cuiBoxElem) slide.addText(cuiBoxElem.innerText, { x: 6.5, y: 3.0, w: 3.0, h: 1.5, fontSize: 9, fontFace: 'Arial' });
+                        if (cuiBoxElem) slide.addText(cuiBoxElem.innerText, { x: 6.5, y: 2.8, w: 3.0, h: 1.5, fontSize: 9, fontFace: 'Arial' });
                         break;
                     }
                     case 'bullet_list': {
                         const ulElem = slideElem.querySelector('main ul');
                         if (ulElem) {
-                            // FIXED: Join bullets with newlines to ensure they render on separate lines
                             const bullets = Array.from(ulElem.querySelectorAll('li'))
                                 .map(li => li.textContent.trim())
-                                .filter(text => text) // remove empty lines
+                                .filter(text => text)
                                 .join('\n');
                             const fontSize = slideData.fontSize === 'text-5xl' ? 32 : 24;
-                            slide.addText(bullets, { x: 1.0, y: 1.4, w: 8.5, h: 3.5, fontSize: fontSize, bullet: true, bold: true, lineSpacing: fontSize * 1.5 });
+                            // Adjusted Y position for bullets
+                            slide.addText(bullets, { x: 1.0, y: 1.5, w: 8.5, h: 4.5, fontSize: fontSize, bullet: true, bold: true, lineSpacing: fontSize * 1.5 });
                         }
                         break;
                     }
@@ -306,12 +352,12 @@ const SlidePresenter = {
                         const ulElem = slideElem.querySelector('main ul');
                         if (ulElem) {
                             const bullets = Array.from(ulElem.querySelectorAll('li')).map(li => li.textContent.trim()).filter(text => text).join('\n');
-                            slide.addText(bullets, { x: 0.7, y: 1.4, w: 5.0, h: 3.5, fontSize: 24, bullet: true, bold: true, lineSpacing: 36 });
+                            slide.addText(bullets, { x: 0.7, y: 1.5, w: 5.0, h: 4.5, fontSize: 24, bullet: true, bold: true, lineSpacing: 36 });
                         }
                         const imageContainer = slideElem.querySelector('.editable-image-column');
                         if (imageContainer) {
                             const images = imageContainer.querySelectorAll('img');
-                            let yPos = 1.4;
+                            let yPos = 1.5;
                             for (const img of images) {
                                 const caption = img.previousElementSibling?.innerText || '';
                                 slide.addText(caption, { x: 6.2, y: yPos, w: 3.5, h: 0.3, fontSize: 10, bold: true });
@@ -326,10 +372,10 @@ const SlidePresenter = {
                         const uls = slideElem.querySelectorAll('main ul');
                         if (uls.length === 2) {
                             const bulletsLeft = Array.from(uls[0].querySelectorAll('li')).map(li => li.textContent.trim()).filter(text => text).join('\n');
-                            slide.addText(bulletsLeft, { x: 0.7, y: 1.4, w: 4.3, h: 3.5, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
+                            slide.addText(bulletsLeft, { x: 0.7, y: 1.5, w: 4.3, h: 4.5, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
 
                             const bulletsRight = Array.from(uls[1].querySelectorAll('li')).map(li => li.textContent.trim()).filter(text => text).join('\n');
-                            slide.addText(bulletsRight, { x: 5.3, y: 1.4, w: 4.3, h: 3.5, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
+                            slide.addText(bulletsRight, { x: 5.3, y: 1.5, w: 4.3, h: 4.5, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
                         }
                         break;
                     }
@@ -342,7 +388,8 @@ const SlidePresenter = {
                             const mapContainer = slideElem.querySelector('#map-container');
                             const canvas = await html2canvas(mapContainer, { logging: false, useCORS: true, backgroundColor: null });
                             const mapB64 = canvas.toDataURL('image/png');
-                            slide.addImage({ data: mapB64, x: 1.5, y: 1.7, w: 5.33, h: 3.0 });
+                            // Adjusted Y position for map image
+                            slide.addImage({ data: mapB64, x: 1.0, y: 1.7, w: 8.0, h: 4.5 }); // Increased map height to better fit 4x3
                         } catch (error) {
                             console.error('Failed to capture map canvas:', error);
                             slide.addText('Error capturing map image.', { x: 1.5, y: 2.5, w: 5.33, h: 1, color: 'FF0000', align: 'center' });
@@ -351,17 +398,17 @@ const SlidePresenter = {
                         const ulElem = slideElem.querySelector('main ul');
                          if (ulElem) {
                             const bullets = Array.from(ulElem.querySelectorAll('li')).map(li => li.textContent.trim()).filter(text => text).join('\n');
-                            slide.addText(bullets, { x: 1.0, y: 3.6, w: 8, h: 1.5, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
+                            slide.addText(bullets, { x: 1.0, y: 5.8, w: 8, h: 1.5, fontSize: 18, bullet: true, bold: true, lineSpacing: 30 });
                         }
                         break;
                     }
                     case 'questions':
                     case 'backups': {
                         const titleElem = slideElem.querySelector('main h1');
-                        // Vertically center the title
                         const textHeight = 1.5;
-                        const slideHeight = 5.625;
-                        const centeredY = (slideHeight - textHeight) / 2;
+                        // PPTX slide height for 4x3 is 7.5 inches. Header is ~1.5, footer is ~0.5
+                        const availableHeight = 7.5 - 1.5 - 0.5; // Total - Header - Footer
+                        const centeredY = 1.5 + (availableHeight - textHeight) / 2; // Start after header
                         if (titleElem) slide.addText(titleElem.innerText, { x: 0.5, y: centeredY, w: 9, h: textHeight, fontSize: 48, bold: true, align: 'center' });
                         break;
                     }
@@ -376,6 +423,7 @@ const SlidePresenter = {
         this.config.slidesData = slidesData;
         this.config.presentationContainer = document.getElementById('presentation-container');
         
+        // Removed header-banner-html for dynamic generation
         const bannerSegmentsHtml = `<div class="banner-segment" style="flex-grow: 369;"></div><div class="banner-segment" style="flex-grow: 46;"></div><div class="banner-segment" style="flex-grow: 42;"></div><div class="banner-segment" style="flex-grow: 34;"></div><div class="banner-segment" style="flex-grow: 34;"></div><div class="banner-segment" style="flex-grow: 29;"></div><div class="banner-segment" style="flex-grow: 25;"></div><div class="banner-segment" style="flex-grow: 21;"></div><div class="banner-segment" style="flex-grow: 17;"></div><div class="banner-segment" style="flex-grow: 12;"></div><div class="banner-segment" style="flex-grow: 8;"></div><div class="banner-segment" style="flex-grow: 4;"></div>`;
 
         function getStandardHeader(slideData) {
@@ -388,14 +436,14 @@ const SlidePresenter = {
         function getStandardFooter(pageNumber) {
             const today = new Date();
             const dateString = `${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getDate().toString().padStart(2, '0')}/${today.getFullYear()}`;
-            return `<footer class="w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div><span>${pageNumber} ${dateString} TITLE OF BRIEF.pptx</span></div><div class="font-arial font-bold text-lg text-black">CUI</div></footer>`;
+            return `<footer class="w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div><span>${pageNumber} ${dateString} Washington, District of Columbia, United States TITLE OF BRIEF.pptx</span></div><div class="font-arial font-bold text-lg text-black">CUI</div></footer>`;
         }
 
         function getLayoutHtml(slideData, slideIndex) {
             const pageNumber = slideIndex + 1;
             switch (slideData.layout) {
                 case 'title':
-                    return `<div class="slide" id="${slideData.id}"><header class="relative w-full p-6 h-36 flex-shrink-0"><div class="absolute top-6 left-6 font-arial font-bold text-lg text-black">CUI</div><div class="absolute bottom-1 left-6 w-[calc(100%-3rem)] h-24 flex items-center"><div class="w-24 h-24 absolute top-1/2 -translate-y-1/2 left-0 z-10 flex-shrink-0"><img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Joint_Chiefs_of_Staff_seal_%282%29.svg" alt="Joint Chiefs of Staff seal" class="w-full h-full object-contain"></div><div class="header-banner w-full">${bannerSegmentsHtml}</div></div></header><main class="flex-grow flex flex-col items-center justify-center text-center"><h1 contenteditable="true" class="text-7xl font-black tracking-wider text-gray-800">(U) TITLE OF BRIEF</h1><h2 contenteditable="true" class="text-5xl font-arial font-bold text-black mt-16">Subtitle</h2></main><footer class="relative w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div contenteditable="true"><span>${pageNumber} ${new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })} TITLE OF BRIEF.pptx</span></div><div contenteditable="true" class="absolute text-left text-xs leading-tight font-arial font-bold text-black" style="bottom: 5rem; right: 6rem; width: 240px;"><p><span>Controlled By:</span></p><p><span>CUI Category:</span></p><p><span>LDC:</span></p><p><span>POC:</span></p><br><p><span>Classified by:</span></p><p><span>Derived From:</span></p><p><span>Decl on:</span></p></div><div class="font-arial font-bold text-lg text-black">CUI</div></footer></div>`;
+                    return `<div class="slide" id="${slideData.id}"><header class="relative w-full p-6 h-36 flex-shrink-0"><div class="absolute top-6 left-6 font-arial font-bold text-lg text-black">CUI</div><div class="absolute bottom-1 left-6 w-[calc(100%-3rem)] h-24 flex items-center"><div class="w-24 h-24 absolute top-1/2 -translate-y-1/2 left-0 z-10 flex-shrink-0"><img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Joint_Chiefs_of_Staff_seal_%282%29.svg" alt="Joint Chiefs of Staff seal" class="w-full h-full object-contain"></div><div class="header-banner w-full">${bannerSegmentsHtml}</div></div></header><main class="flex-grow flex flex-col items-center justify-center text-center"><h1 contenteditable="true" class="text-7xl font-black tracking-wider text-gray-800">(U) TITLE OF BRIEF</h1><h2 contenteditable="true" class="text-5xl font-arial font-bold text-black mt-16">Subtitle</h2></main><footer class="relative w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div contenteditable="true"><span>${pageNumber} ${new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })} Washington, District of Columbia, United States TITLE OF BRIEF.pptx</span></div><div contenteditable="true" class="absolute text-left text-xs leading-tight font-arial font-bold text-black" style="bottom: 5rem; right: 6rem; width: 240px;"><p><span>Controlled By:</span></p><p><span>CUI Category:</span></p><p><span>LDC:</span></p><p><span>POC:</span></p><br><p><span>Classified by:</span></p><p><span>Derived From:</span></p><p><span>Decl on:</span></p></div><div class="font-arial font-bold text-lg text-black">CUI</div></footer></div>`;
                 case 'bullet_list':
                     const fontSizeClass = slideData.fontSize || 'text-4xl';
                     const listItems = slideData.content.map(item => `<li>${item}</li>`).join('');
@@ -403,7 +451,7 @@ const SlidePresenter = {
                 case 'two_column_image':
                     return `<div class="slide" id="${slideData.id}">${getStandardHeader(slideData)}<main class="flex p-12 gap-8 items-start"><div class="w-3/5"><ul contenteditable="true" class="list-disc pl-8 space-y-8 text-4xl font-bold"><li>(U) Bullet example text</li><li>(U) Sets the stage for highlighting issues</li><li>(U) Other bullet point here</li></ul></div><div class="w-2/5 flex flex-col justify-start gap-4 editable-image-column" contenteditable="true"><div><p class="font-bold text-lg mb-2">(U) Destroyer in Pacific</p><img src="https://www.naval-technology.com/wp-content/uploads/sites/15/2023/01/Featured-Image-Arleigh-Burke-Class-destroyer.jpg" class="border-2 border-black"></div><div><p class="font-bold text-lg mb-2">(U) Submarine off coast of San Diego</p><img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/US_Navy_040730-N-1234E-002_PCU_Virginia_%28SSN_774%29_returns_to_the_General_Dynamics_Electric_Boat_shipyard.jpg" class="border-2 border-black"></div></div></main>${getStandardFooter(pageNumber)}</div>`;
                 case 'two_column_text':
-                    return `<div class="slide" id="${slideData.id}">${getStandardHeader(slideData)}<main class="flex p-12 gap-16 items-start"><div class="w-1/2"><ul contenteditable="true" class="list-disc pl-8 space-y-6 text-3xl font-bold"><li>(U) First point for the left column.</li><li>(U) Another point to illustrate the layout.</li><li>(U) This column can contain key takeaways.</li><li>(U) Additional bullet point.</li></ul></div><div class="w-1/2"><ul contenteditable="true" class="list-disc pl-8 space-y-6 text-3xl font-bold"><li>(U) First point for the right column.</li><li>(U) Supporting details or contrasting points.</li><li>(U) This column provides more information.</li><li>(U) Final bullet point for this side.</li></ul></div></main>${getStandardFooter(pageNumber)}</div>`;
+                    return `<div class="slide" id="${slideData.id}">${getStandardHeader(slideData)}<main class="flex p-12 gap-16 items-start"><div class="w-1/2"><ul contenteditable="true" class="list-disc pl-8 space-y-6 text-3xl font-bold"><li>(U) First point for the left column.</li><li>(U) Another point to illustrate the layout.</li></li><li>(U) This column can contain key takeaways.</li><li>(U) Additional bullet point.</li></ul></div><div class="w-1/2"><ul contenteditable="true" class="list-disc pl-8 space-y-6 text-3xl font-bold"><li>(U) First point for the right column.</li><li>(U) Supporting details or contrasting points.</li><li>(U) This column provides more information.</li><li>(U) Final bullet point for this side.</li></ul></div></main>${getStandardFooter(pageNumber)}</div>`;
                 case 'map':
                     return `<div class="slide" id="${slideData.id}">${getStandardHeader(slideData)}<main class="relative flex flex-col items-center pt-2"><h2 contenteditable="true" class="text-2xl font-bold mb-2">(U) Region Map of Gulf of Aden & Red Sea</h2><div id="map-container"></div><ul contenteditable="true" class="list-disc pl-12 mt-8 text-3xl font-bold self-start ml-32 space-y-6"><li>(U) Callout bullet #1 goes here</li><li>(U) Callout bullet #2 goes here</li></ul></main>${getStandardFooter(pageNumber)}</div>`;
                 case 'questions': case 'backups':
