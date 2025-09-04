@@ -197,6 +197,7 @@ const SlidePresenter = {
         }
     },
 
+    // --- PPTX Exporter Module ---
     pptxExporter: {
         imageToB64: async function(url) {
             try {
@@ -224,14 +225,11 @@ const SlidePresenter = {
                 return null;
             }
         },
-
-        // --- ADDED: Helper function to parse HTML and its styles into PptxGenJS text objects ---
         htmlToPptxTextObjects: function(element) {
             if (!element) return [{ text: '', options: {} }];
 
             const results = [];
 
-            // Helper to convert rgb(r, g, b) to RRGGBB hex
             const rgbToHex = (rgb) => {
                 if (!rgb || !rgb.startsWith('rgb')) return '000000';
                 const [r, g, b] = rgb.match(/\d+/g).map(Number);
@@ -252,7 +250,6 @@ const SlidePresenter = {
                     };
                     results.push({ text: node.textContent.replace(/\s+/g, ' '), options });
                 } else if (node.nodeType === Node.ELEMENT_NODE) {
-                    // Handle line breaks from <p> and <div> tags inside contenteditable
                     if (['P', 'DIV'].includes(node.tagName) && results.length > 0 && !results[results.length-1].text.endsWith('\n')) {
                         results.push({ text: '\n', options: {} });
                     }
@@ -261,10 +258,8 @@ const SlidePresenter = {
             };
             
             traverse(element);
-            return results.length > 0 ? results : [{ text: ' ', options: {} }]; // Return non-empty for empty elements
+            return results.length > 0 ? results : [{ text: ' ', options: {} }];
         },
-
-
         export: async function() {
             if (typeof PptxGenJS === 'undefined' || typeof html2canvas === 'undefined') {
                 alert('Error: A required library for exporting (PptxGenJS or html2canvas) is not loaded.');
@@ -293,7 +288,6 @@ const SlidePresenter = {
                 
                 slide.background = { color: 'FFFFFF' };
 
-                // --- MODIFIED: Use htmlToPptxTextObjects to preserve styles ---
                 slide.addText(this.htmlToPptxTextObjects(slideElem.querySelector('header .font-arial')), { x: 0.3, y: 0.2 });
                 
                 const headerTitleElem = slideElem.querySelector('header h1');
@@ -301,13 +295,11 @@ const SlidePresenter = {
                     slide.addText(this.htmlToPptxTextObjects(headerTitleElem), { x: 5.0, y: 0.4, w: 4.7, h: 0.5, align: 'right' });
                 }
                 
-                // --- MODIFIED: Render thicker, gradient purple banner with correct positioning ---
                 const bannerSegmentsGrow = [369, 46, 42, 34, 34, 29, 25, 21, 17, 12, 8, 4];
                 const totalGrow = bannerSegmentsGrow.reduce((sum, val) => sum + val, 0);
                 const bannerTotalWidth = 9.4;
                 const bannerStartX = 0.3;
-                const bannerHeight = 0.2; // Thicker banner
-                // Position banner through seal on title, lower on other slides
+                const bannerHeight = 0.2;
                 const bannerY = slideData.layout === 'title' ? 1.0 - (bannerHeight / 2) : 1.2;
                 const bannerGap = 0.02;
                 const numGaps = bannerSegmentsGrow.length - 1;
@@ -322,7 +314,6 @@ const SlidePresenter = {
                            y: bannerY,
                            w: segmentWidth,
                            h: bannerHeight,
-                           // Added vertical gradient fill
                            fill: { type: 'gradient', color: ['6A0DAD', 'C3B1E1'], angle: 90 },
                            line: { width: 0 }
                        });
@@ -330,7 +321,6 @@ const SlidePresenter = {
                     }
                 }
                 
-                // Footer
                 const footerTextElem = slideElem.querySelector('footer > div:first-child');
                 if (footerTextElem) {
                     slide.addText(this.htmlToPptxTextObjects(footerTextElem), { x: 0.3, y: 7.0, w: 7, h: 0.3, fontSize: 8 });
@@ -356,7 +346,6 @@ const SlidePresenter = {
                     case 'two_column_image':
                     case 'two_column_text':
                     case 'map': {
-                        // --- MODIFIED: Advanced bullet/list processing to preserve styles ---
                         const uls = slideElem.querySelectorAll('main ul');
                         const xPositions = uls.length > 1 ? [0.7, 5.3] : [1.0];
                         const widths = uls.length > 1 ? [4.3, 4.3] : [8.5];
@@ -370,7 +359,6 @@ const SlidePresenter = {
                                     allBulletPoints.push({ text: '\n', options: {} });
                                 }
                             });
-                             // Use default font size for spacing unless specified
                             const defaultFontSize = uls.length > 1 ? 18 : (slideData.fontSize === 'text-5xl' ? 32 : 24);
                             
                             slide.addText(allBulletPoints, {
@@ -380,23 +368,22 @@ const SlidePresenter = {
                             });
                         });
 
-                        // Handle non-bullet content for specific layouts
                         if (slideData.layout === 'two_column_image') {
-                           const imageContainer = slideElem.querySelector('.editable-image-column');
-                           if (imageContainer) {
-                               const imageDivs = imageContainer.querySelectorAll('div');
-                               let yPos = 1.4;
-                               for (const div of imageDivs) {
-                                   const caption = div.querySelector('p');
-                                   const img = div.querySelector('img');
-                                   if (caption) slide.addText(this.htmlToPptxTextObjects(caption), { x: 6.2, y: yPos, w: 3.5, h: 0.3 });
-                                   if (img) {
-                                      const imgB64 = await this.imageToB64(img.src);
-                                      if(imgB64) slide.addImage({ data: imgB64, x: 6.2, y: yPos + 0.25, w: 3.5, h: 1.5 });
-                                   }
-                                   yPos += 2.0;
-                               }
-                           }
+                            const imageContainer = slideElem.querySelector('.editable-image-column');
+                            if (imageContainer) {
+                                const imageDivs = imageContainer.querySelectorAll('div');
+                                let yPos = 1.4;
+                                for (const div of imageDivs) {
+                                    const caption = div.querySelector('p');
+                                    const img = div.querySelector('img');
+                                    if (caption) slide.addText(this.htmlToPptxTextObjects(caption), { x: 6.2, y: yPos, w: 3.5, h: 0.3 });
+                                    if (img) {
+                                        const imgB64 = await this.imageToB64(img.src);
+                                        if(imgB64) slide.addImage({ data: imgB64, x: 6.2, y: yPos + 0.25, w: 3.5, h: 1.5 });
+                                    }
+                                    yPos += 2.0;
+                                }
+                            }
                         } else if (slideData.layout === 'map') {
                              const mapTitleElem = slideElem.querySelector('main h2');
                              if (mapTitleElem) slide.addText(this.htmlToPptxTextObjects(mapTitleElem), { x: 0.5, y: 1.3, w: 9, h: 0.4, align: 'center' });
@@ -428,64 +415,49 @@ const SlidePresenter = {
         }
     },
 
-    init(slidesData) {
-        this.config.slidesData = slidesData;
+    // --- MODIFIED: The Main Initialization Function ---
+    init() {
         this.config.presentationContainer = document.getElementById('presentation-container');
-        
-        const bannerSegmentsHtml = `<div class="banner-segment" style="flex-grow: 369;"></div><div class="banner-segment" style="flex-grow: 46;"></div><div class="banner-segment" style="flex-grow: 42;"></div><div class="banner-segment" style="flex-grow: 34;"></div><div class="banner-segment" style="flex-grow: 34;"></div><div class="banner-segment" style="flex-grow: 29;"></div><div class="banner-segment" style="flex-grow: 25;"></div><div class="banner-segment" style="flex-grow: 21;"></div><div class="banner-segment" style="flex-grow: 17;"></div><div class="banner-segment" style="flex-grow: 12;"></div><div class="banner-segment" style="flex-grow: 8;"></div><div class="banner-segment" style="flex-grow: 4;"></div>`;
-
-        function getStandardHeader(slideData) {
-            const titleHtml = slideData.layout !== 'questions' && slideData.layout !== 'backups' 
-                ? `<h1 contenteditable="true" class="text-4xl font-bold absolute top-10 right-6 text-black ${slideData.layout === 'bullet_list' && slideData.title === 'Overview' ? 'italic' : ''}">(U) ${slideData.title}</h1>` 
-                : '';
-            return `<header class="relative w-full p-6 h-36 flex-shrink-0"><div contenteditable="true" class="absolute top-6 left-6 font-arial font-bold text-lg text-black">CUI</div>${titleHtml}<div class="absolute bottom-11 left-6 w-[calc(100%-3rem)]"><div class="header-banner w-full">${bannerSegmentsHtml}</div></div></header>`;
+        if (!this.config.presentationContainer) {
+            console.error("Presentation container not found!");
+            return;
         }
 
-        function getStandardFooter(pageNumber) {
-            const today = new Date();
-            const dateString = `${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getDate().toString().padStart(2, '0')}/${today.getFullYear()}`;
-            return `<footer class="w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div contenteditable="true"><span>${pageNumber} ${dateString} TITLE OF BRIEF.pptx</span></div><div contenteditable="true" class="font-arial font-bold text-lg text-black">CUI</div></footer>`;
-        }
+        const discoveredSlides = [];
+        const slideElements = this.config.presentationContainer.querySelectorAll('.slide');
 
-        function getLayoutHtml(slideData, slideIndex) {
-            const pageNumber = slideIndex + 1;
-            switch (slideData.layout) {
-                case 'title':
-                    return `<div class="slide" id="${slideData.id}"><header class="relative w-full p-6 h-36 flex-shrink-0"><div contenteditable="true" class="absolute top-6 left-6 font-arial font-bold text-lg text-black">CUI</div><div class="absolute bottom-1 left-6 w-[calc(100%-3rem)] h-24 flex items-center"><div class="w-24 h-24 absolute top-1/2 -translate-y-1/2 left-0 z-10 flex-shrink-0"><img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Joint_Chiefs_of_Staff_seal_%282%29.svg" alt="Joint Chiefs of Staff seal" class="w-full h-full object-contain"></div><div class="header-banner w-full">${bannerSegmentsHtml}</div></div></header><main class="flex-grow flex flex-col items-center justify-center text-center"><h1 contenteditable="true" class="text-7xl font-black tracking-wider text-gray-800">(U) TITLE OF BRIEF</h1><h2 contenteditable="true" class="text-5xl font-arial font-bold text-black mt-16">Subtitle</h2></main><footer class="relative w-full p-6 text-sm text-gray-500 flex justify-between items-end flex-shrink-0"><div contenteditable="true"><span>${pageNumber} ${new Date().toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' })} TITLE OF BRIEF.pptx</span></div><div contenteditable="true" class="absolute text-left text-xs leading-tight font-arial font-bold text-black" style="bottom: 5rem; right: 6rem; width: 240px;"><p><span>Controlled By:</span></p><p><span>CUI Category:</span></p><p><span>LDC:</span></p><p><span>POC:</span></p><br><p><span>Classified by:</span></p><p><span>Derived From:</span></p><p><span>Decl on:</span></p></div><div contenteditable="true" class="font-arial font-bold text-lg text-black">CUI</div></footer></div>`;
-                case 'bullet_list':
-                    const fontSizeClass = slideData.fontSize || 'text-4xl';
-                    const listItems = slideData.content.map(item => `<li>${item}</li>`).join('');
-                    return `<div class="slide" id="${slideData.id}">${getStandardHeader(slideData)}<main class="flex p-12"><ul contenteditable="true" class="list-disc pl-16 space-y-6 font-bold ${fontSizeClass}">${listItems}</ul></main>${getStandardFooter(pageNumber)}</div>`;
-                case 'two_column_image':
-                    return `<div class="slide" id="${slideData.id}">${getStandardHeader(slideData)}<main class="flex p-12 gap-8 items-start"><div class="w-3/5"><ul contenteditable="true" class="list-disc pl-8 space-y-8 text-4xl font-bold"><li>(U) Bullet example text</li><li>(U) Sets the stage for highlighting issues</li><li>(U) Other bullet point here</li></ul></div><div class="w-2/5 flex flex-col justify-start gap-4 editable-image-column">
-                    <div contenteditable="true"><p class="font-bold text-lg mb-2">(U) Destroyer in Pacific</p></div><img src="https://www.naval-technology.com/wp-content/uploads/sites/15/2023/01/Featured-Image-Arleigh-Burke-Class-destroyer.jpg" class="border-2 border-black">
-                    <div contenteditable="true"><p class="font-bold text-lg mb-2">(U) Submarine off coast of San Diego</p></div><img src="https://upload.wikimedia.org/wikipedia/commons/b/bb/US_Navy_040730-N-1234E-002_PCU_Virginia_%28SSN_774%29_returns_to_the_General_Dynamics_Electric_Boat_shipyard.jpg" class="border-2 border-black">
-                    </div></main>${getStandardFooter(pageNumber)}</div>`;
-                case 'two_column_text':
-                    return `<div class="slide" id="${slideData.id}">${getStandardHeader(slideData)}<main class="flex p-12 gap-16 items-start"><div class="w-1/2"><ul contenteditable="true" class="list-disc pl-8 space-y-6 text-3xl font-bold"><li>(U) First point for the left column.</li><li>(U) Another point to illustrate the layout.</li><li>(U) This column can contain key takeaways.</li><li>(U) Additional bullet point.</li></ul></div><div class="w-1/2"><ul contenteditable="true" class="list-disc pl-8 space-y-6 text-3xl font-bold"><li>(U) First point for the right column.</li><li>(U) Supporting details or contrasting points.</li><li>(U) This column provides more information.</li><li>(U) Final bullet point for this side.</li></ul></div></main>${getStandardFooter(pageNumber)}</div>`;
-                case 'map':
-                    return `<div class="slide" id="${slideData.id}">${getStandardHeader(slideData)}<main class="relative flex flex-col items-center pt-2"><h2 contenteditable="true" class="text-2xl font-bold mb-2">(U) Region Map of Gulf of Aden & Red Sea</h2><div id="map-container"></div><ul contenteditable="true" class="list-disc pl-12 mt-8 text-3xl font-bold self-start ml-32 space-y-6"><li>(U) Callout bullet #1 goes here</li><li>(U) Callout bullet #2 goes here</li></ul></main>${getStandardFooter(pageNumber)}</div>`;
-                case 'questions': case 'backups':
-                     return `<div class="slide" id="${slideData.id}">${getStandardHeader(slideData)}<main class="flex items-center justify-center"><h1 contenteditable="true" class="text-7xl font-bold">${slideData.title}</h1></main>${getStandardFooter(pageNumber)}</div>`;
-                case 'black':
-                    return `<div class="slide bg-black" id="${slideData.id}"></div>`;
-                default: return '';
+        slideElements.forEach((slideEl, index) => {
+            // Ensure parent wrapper has the correct ID for the observer
+            const wrapper = slideEl.closest('.slide-wrapper');
+            if (wrapper) {
+                wrapper.id = `slide-wrapper-${index}`;
             }
-        }
 
-        this.config.presentationContainer.innerHTML = '';
-        this.config.slidesData.forEach((slideData, index) => {
-            const slideWrapper = document.createElement('div');
-            slideWrapper.className = 'slide-wrapper';
-            slideWrapper.id = `slide-wrapper-${index}`;
-            slideWrapper.innerHTML = getLayoutHtml(slideData, index);
-            this.config.presentationContainer.appendChild(slideWrapper);
+            // Build the slide data object from data-* attributes
+            const slideData = {
+                id: slideEl.id || `slide-${index}`,
+                title: slideEl.dataset.title || 'Untitled',
+                layout: slideEl.dataset.layout || 'default',
+                // You can add more data attributes for other properties if needed
+                // e.g., highlightedCountries: slideEl.dataset.countries ? slideEl.dataset.countries.split(',') : []
+            };
+            discoveredSlides.push(slideData);
         });
 
+        this.config.slidesData = discoveredSlides;
+        
+        // Render the D3 map if a map slide exists in the discovered data
         const mapSlideData = this.config.slidesData.find(slide => slide.layout === 'map');
         if (mapSlideData && document.getElementById('map-container')) {
-            this.d3Map.render(mapSlideData);
+            // NOTE: If map config is dynamic, you'll need to pass it via data-* attributes too
+            // For now, it uses a default configuration.
+            this.d3Map.render({ 
+                highlightedCountries: ['Yemen', 'Somalia', 'Ethiopia', 'Saudi Arabia', 'Djibouti', 'Eritrea'],
+                mapConfig: { center: [48, 12.5], scale: 1200 }
+            });
         }
+        
+        // Initialize all the interactive components
         this.toolbar.init();
         this.sideNav.update();
         this.presentationManager.initObserver();
