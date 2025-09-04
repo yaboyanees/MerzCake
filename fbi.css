@@ -1,0 +1,126 @@
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e2e8f0; /* bg-gray-300 */
+        }
+
+        /* Styles for the page container to simulate a document */
+        .page {
+            background: white;
+            width: 8.5in;
+            min-height: 11in; /* Keep a minimum height for visual structure */
+            margin: 0 auto 20px auto;
+            padding: 1in;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            /* FIX: Use flexbox to push the footer to the bottom */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-header, .page-footer {
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: bold;
+            color: #555;
+            font-size: 11pt;
+            flex-shrink: 0; /* Prevent header/footer from shrinking */
+        }
+
+        .page-header {
+            margin-bottom: 1.5rem; /* Keep space below the header */
+        }
+        
+        .page-footer {
+             margin-top: auto; /* This is the key change to push the footer to the bottom */
+             padding-top: 1.5rem; /* Add some space above the footer */
+        }
+
+
+        /* Styles for the document content to mimic a real document */
+        .report-content {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            color: #000;
+            font-size: 12pt;
+            box-sizing: border-box;
+            /* The flex container handles the layout, no extra properties needed here */
+        }
+        .report-content h3 {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        .report-content ul {
+            list-style-type: disc;
+            padding-left: 40px;
+        }
+        .report-content li {
+            margin-bottom: 8px;
+        }
+        .report-content p {
+            margin-bottom: 10px;
+        }
+        .report-content strong {
+            font-weight: bold;
+        }
+        .report-meta strong {
+            display: inline-block;
+            width: 200px;
+        }
+        
+        /* New section header styling from screenshot */
+        .section-header {
+            background-color: #014791; /* FBI Blue */
+            color: white;
+            padding: 8px 12px;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+        .section-header h2 {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        /* Editable content styling */
+        [contenteditable="true"] {
+            outline: 2px solid transparent;
+            transition: outline 0.2s;
+        }
+        [contenteditable="true"]:focus {
+            outline: 2px solid #3b82f6; /* blue-500 */
+            background-color: #eff6ff; /* blue-50 */
+        }
+        
+        /* Custom scrollbar for a cleaner look */
+        .doc-viewer-body::-webkit-scrollbar {
+            width: 8px;
+        }
+        .doc-viewer-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .doc-viewer-body::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        .doc-viewer-body::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Print styles to handle page breaks */
+        @media print {
+            body {
+                background-color: #fff;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+            header, #download-button {
+                display: none !important;
+            }
+            .doc-viewer-body {
+                padding: 0 !important;
+            }
+        }
