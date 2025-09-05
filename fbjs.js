@@ -9,14 +9,10 @@ document.getElementById('download-button').addEventListener('click', async funct
         Preparing Download...
     `;
     
-    // Get the HTML content of the report wrapper
     let content = document.getElementById('report-content-wrapper').innerHTML;
-    
-    // Create a temporary DOM element to manipulate the content for download
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = content;
 
-    // --- Image Embedding & Layout Conversion Logic ---
     const imageElements = tempDiv.querySelectorAll('img');
     const imagePromises = Array.from(imageElements).map(async (img) => {
         const src = img.getAttribute('src');
@@ -40,20 +36,22 @@ document.getElementById('download-button').addEventListener('click', async funct
 
     await Promise.all(imagePromises);
 
-    // Convert the flexbox header to a table for better DOCX compatibility
     tempDiv.querySelectorAll('.flex.items-center.space-x-6').forEach(flexContainer => {
         const img = flexContainer.querySelector('img');
         const textDiv = flexContainer.querySelector('div');
         if(img && textDiv) {
             const table = document.createElement('table');
-            table.setAttribute('style', 'width: 100%; border-collapse: collapse;');
+            table.setAttribute('style', 'width: 100%; border-collapse: collapse; margin-bottom: 24px;');
             const tbody = document.createElement('tbody');
             const tr = document.createElement('tr');
             
             const td1 = document.createElement('td');
-            td1.setAttribute('style', 'width: 1.25in; vertical-align: top;');
+            td1.setAttribute('style', 'width: 1.1in; vertical-align: top;');
             const imgClone = img.cloneNode(true);
-            imgClone.setAttribute('style', 'width: 0.9in; height: auto;');
+            
+            // ✅ FIX 1: IMAGE RESIZE (using px for reliability)
+            imgClone.setAttribute('style', 'width: 90px; height: auto;');
+            
             td1.appendChild(imgClone);
 
             const td2 = document.createElement('td');
@@ -70,9 +68,11 @@ document.getElementById('download-button').addEventListener('click', async funct
 
     tempDiv.querySelectorAll('[contenteditable="true"]').forEach(el => el.removeAttribute('contenteditable'));
     
+    // ✅ FIX 2: HEADER/FOOTER LOGIC
+    // Extract text for the real DOCX header/footer
     const headerText = tempDiv.querySelector('.page-header')?.textContent || 'UNCLASSIFIED//FOR OFFICIAL USE ONLY';
-    const footerText = tempDiv.querySelector('.page-footer')?.textContent || 'UNCLASSIFIED//FOR OFFICIAL USE ONLY';
-
+    
+    // Remove the old header/footer divs from the main content so they don't appear in the body
     tempDiv.querySelectorAll('.page-header, .page-footer').forEach(el => el.remove());
 
     const finalContent = tempDiv.innerHTML;
@@ -93,6 +93,7 @@ document.getElementById('download-button').addEventListener('click', async funct
                 .report-meta strong { display: inline-block; width: 200px; }
                 .main-title { text-align: center; font-size: 16pt; font-weight: bold; margin-bottom: 20px; }
                 
+                /* ✅ FIX 3: INCREASED SECTION HEADER HEIGHT */
                 .section-header { 
                     background-color: #014791; 
                     color: white; 
@@ -110,25 +111,16 @@ document.getElementById('download-button').addEventListener('click', async funct
                 ${headerText}
             </div>
             <div id="footer" style="text-align: center; font-family: 'Times New Roman', Times, serif; font-weight: bold;">
-                ${footerText}
-            </div>
-
+                ${headerText} </div>
             ${finalContent}
         </body>
         </html>
     `;
     
-    // Convert the HTML string to a DOCX blob
     const converted = htmlDocx.asBlob(fullHtml, {
         orientation: 'portrait',
-        margins: {
-            top: 720,
-            right: 720,
-            bottom: 720,
-            left: 720,
-            header: 360,
-            footer: 360,
-        },
+        margins: { top: 720, right: 720, bottom: 720, left: 720, header: 360, footer: 360 },
+        // Enable native header and footer processing
         header: true,
         footer: true,
     });
