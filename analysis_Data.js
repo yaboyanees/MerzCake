@@ -10,6 +10,46 @@ const analysisData = {
     ],
     "narrativeOfChanges": "The document revision process from v0 to v1 involved a comprehensive enhancement of the existing text. The introduction was enriched with more engaging language and a more detailed historical account, specifying the 19th and 20th centuries as the key period for industrial growth. In the section on candy categories, the descriptions were made more evocative; for instance, hard candies are now described as 'offering long-lasting flavor,' and the textural differences between caramels and gummies are articulated. The original version's simple list of 'licorice, sour candies, and chewing gum' was replaced with a more descriptive sentence, and 'chewing gum' was removed. The final paragraph on cultural significance saw the most significant expansion, with added details on the emotional and social roles of candy and more specific examples for holiday associations. A new concluding thought was added to address the industry's response to health trends, including the rise of sugar-free and artisanal products."
   },
+  "advancedAnalysis": {
+    "readability": {
+      "version0": { "gradeLevel": "10th Grade" },
+      "version1": { "gradeLevel": "11th Grade" },
+      "assessment": "The document's complexity has slightly increased, making it suitable for a slightly more advanced audience."
+    },
+    "complexity": {
+      "version0": { "avgSentenceLength": 19.8, "complexWordPercentage": 14 },
+      "version1": { "avgSentenceLength": 22.5, "complexWordPercentage": 18 },
+      "assessment": "Sentences are longer and use more complex vocabulary in the revised version, contributing to a more detailed and descriptive text."
+    },
+    "sentiment": {
+      "version0": { "label": "Neutral", "score": 0.1 },
+      "version1": { "label": "Slightly Positive", "score": 0.4 },
+      "assessment": "The sentiment has shifted to be more positive through the addition of engaging and descriptive adjectives like 'delight', 'rich', and 'immense pleasure'."
+    },
+    "toneAndStyle": {
+      "version0": { "tones": ["Informative", "Formal"] },
+      "version1": { "tones": ["Descriptive", "Engaging", "Informative"] },
+      "assessment": "The tone has evolved from being purely informational to more descriptive and engaging, aiming to create a more vivid reader experience."
+    },
+    "keywords": {
+      "new": ["innovation", "artisanal", "piquant", "resilience", "palate"],
+      "removed": ["chewing gum"]
+    },
+    "keyInformationPoints": {
+      "additions": [
+        "Introduced the concept of the candy industry's innovation in response to health consciousness (sugar-free, artisanal).",
+        "Added more evocative descriptions for candy experiences (e.g., 'rich, buttery experience' for caramels).",
+        "Expanded on the emotional and social roles of candy, linking it to childhood memories and rituals."
+      ],
+      "deletions": [
+        "The classification of 'chewing gum' as a significant candy type was removed."
+      ],
+      "modifications": [
+        "Historical context was enriched with specific timeframes (19th and 20th centuries).",
+        "Holiday associations were made more specific (e.g., 'Halloween trick-or-treating' instead of just 'Halloween')."
+      ]
+    }
+  },
   "tableOfChanges": [
     { "type": "Modification", "section": "Introduction", "originalText": "Candy, a broad term for confectionery, encompasses a diverse range of sweet treats primarily made from sugar or sugar substitutes.", "revisedText": "Candy, a broad term for confectionery and a near-universal delight, encompasses a diverse range of sweet treats primarily composed of sugar or sugar substitutes." },
     { "type": "Modification", "section": "Introduction", "originalText": "The history of candy dates back to ancient civilizations, where people enjoyed confections made from honey, fruits, and nuts.", "revisedText": "The history of candy stretches back to ancient civilizations, where people first satisfied their sweet cravings with confections made from honey, fruits, and nuts." },
@@ -23,7 +63,7 @@ const analysisData = {
     { "type": "Modification", "section": "Cultural Significance", "originalText": "Beyond being a simple treat, candy holds cultural significance worldwide.", "revisedText": "Beyond being a simple source of sweetness, candy holds significant cultural weight worldwide." },
     { "type": "Addition", "section": "Cultural Significance", "originalText": null, "revisedText": "Often tied to childhood memories and reward, it functions as a key element in social gatherings and personal rituals." },
     { "type": "Modification", "section": "Cultural Significance", "originalText": "It is closely associated with holidays such as Halloween, Easter, Valentine's Day, and Christmas, frequently used for gifts, decorations, and celebratory rituals.", "revisedText": "It is closely associated with holidays such as Halloween trick-or-treating, Easter baskets, Valentine's Day gifts, and Christmas stockings, frequently used for gifts and celebratory traditions." },
-    { "type": "Deletion", "section": "Candy Categories", "originalText": "and chewing gum.", "revisedText": null },
+    { "type": "Deletion", "section": "Candy Categories", "originalText": "and chewing gum.", "revisedText": null},
     { "type": "Addition", "section": "Cultural Significance", "originalText": null, "revisedText": "In response to growing health consciousness, the industry continually innovates, offering sugar-free alternatives and artisanal creations using high-quality ingredients." }
   ],
   "documents": {
