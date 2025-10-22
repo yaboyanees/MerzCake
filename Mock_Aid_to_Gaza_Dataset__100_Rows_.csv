@@ -1,0 +1,101 @@
+donor_country,aid_type,sub_category,dollar_value,delivery_channel,status,year,month,target_sector,transport_method,data_source
+Germany,Economic,Infrastructure Investment,116970000.0,Red Crescent,In-Transit,2023,January,Health,Air,UN OCHA SitRep
+Turkey,Security,Training Equipment,37430000.0,Bilateral,Pledged,2023,March,Energy,Sea,Reuters
+Norway,Economic,Job Creation Programs,26640000.0,Bilateral,In-Transit,2023,March,Education,Land,AP News
+Norway,Personnel,Logistics Teams,70300000.0,UN,Delivered,2023,February,Infrastructure,Sea,AP News
+United Arab Emirates,Personnel,Medical Staff,146130000.0,Red Crescent,Delivered,2023,August,Infrastructure,Air,World Bank
+United States,Security,Peacekeeping Support,90350000.0,UN,In-Transit,2023,January,Energy,Land,Reuters
+Norway,Humanitarian,Reconstruction,91910000.0,NGO,Delivered,2023,June,Health,Air,Ministry of Foreign Affairs
+Canada,Economic,Job Creation Programs,125580000.0,Red Crescent,Delivered,2024,July,Education,Sea,AP News
+Germany,Personnel,Medical Staff,51130000.0,Bilateral,In-Transit,2023,June,Infrastructure,Land,World Bank
+United Arab Emirates,Economic,Budget Support,144960000.0,NGO,In-Transit,2024,October,Infrastructure,Sea,UN OCHA SitRep
+Canada,Humanitarian,Medical Aid,9840000.0,Red Crescent,Pledged,2025,November,Education,Air,AP News
+Egypt,Personnel,Medical Staff,96090000.0,NGO,Pledged,2024,March,Energy,Sea,Reuters
+Saudi Arabia,Economic,Job Creation Programs,112790000.0,UN,Delivered,2024,May,Health,Land,World Bank
+Turkey,Security,Training Equipment,61770000.0,UN,Pledged,2024,February,Health,Land,UN OCHA SitRep
+Germany,Economic,Infrastructure Investment,43210000.0,UN,Delivered,2023,February,Energy,Sea,AP News
+Saudi Arabia,Humanitarian,Shelter,131090000.0,Bilateral,In-Transit,2024,October,Food Security,Air,World Bank
+France,Security,Training Equipment,42890000.0,Red Crescent,Pledged,2025,October,Food Security,Sea,AP News
+Turkey,Economic,Infrastructure Investment,11540000.0,UN,Delivered,2024,November,Food Security,Air,Ministry of Foreign Affairs
+Canada,Economic,Infrastructure Investment,85460000.0,Red Crescent,Delivered,2024,June,Infrastructure,Land,Ministry of Foreign Affairs
+Egypt,Personnel,Logistics Teams,25480000.0,UN,Delivered,2023,March,Energy,Air,World Bank
+United Arab Emirates,Security,Border Monitoring,54750000.0,UN,Delivered,2025,February,Health,Land,Ministry of Foreign Affairs
+Saudi Arabia,Security,Border Monitoring,119260000.0,Bilateral,Pledged,2025,August,Education,Air,AP News
+Qatar,Personnel,Medical Staff,131030000.0,NGO,In-Transit,2023,March,Food Security,Land,World Bank
+United States,Personnel,Engineers,88150000.0,NGO,In-Transit,2025,October,Education,Sea,AP News
+Egypt,Economic,Budget Support,75150000.0,NGO,In-Transit,2024,May,Health,Sea,World Bank
+Norway,Personnel,Medical Staff,85980000.0,UN,In-Transit,2025,November,Food Security,Air,World Bank
+France,Economic,Job Creation Programs,14370000.0,Red Crescent,Pledged,2025,April,Education,Air,Ministry of Foreign Affairs
+United States,Personnel,Engineers,139710000.0,Red Crescent,Delivered,2024,August,Food Security,Sea,Reuters
+United States,Humanitarian,Medical Aid,102210000.0,Red Crescent,In-Transit,2023,January,Energy,Land,Ministry of Foreign Affairs
+Turkey,Security,Training Equipment,55990000.0,Red Crescent,Delivered,2023,February,Health,Land,Ministry of Foreign Affairs
+Germany,Economic,Job Creation Programs,134060000.0,Red Crescent,In-Transit,2023,January,Infrastructure,Air,Ministry of Foreign Affairs
+Egypt,Humanitarian,Medical Aid,98120000.0,Bilateral,Pledged,2023,July,Energy,Land,Ministry of Foreign Affairs
+United States,Personnel,Medical Staff,126320000.0,Bilateral,Delivered,2024,December,Energy,Air,World Bank
+Turkey,Economic,Infrastructure Investment,31050000.0,Red Crescent,In-Transit,2024,June,Health,Sea,World Bank
+Norway,Economic,Budget Support,142770000.0,Red Crescent,Pledged,2024,September,Education,Land,World Bank
+Norway,Security,Peacekeeping Support,36290000.0,UN,Delivered,2023,February,Food Security,Air,AP News
+Germany,Security,Training Equipment,57190000.0,UN,Delivered,2023,November,Health,Sea,Ministry of Foreign Affairs
+France,Personnel,Logistics Teams,43770000.0,UN,Pledged,2024,September,Health,Air,Ministry of Foreign Affairs
+Turkey,Security,Training Equipment,64550000.0,Bilateral,Pledged,2024,June,Food Security,Air,UN OCHA SitRep
+United Arab Emirates,Humanitarian,Shelter,148670000.0,Red Crescent,In-Transit,2024,August,Health,Air,World Bank
+Turkey,Economic,Job Creation Programs,143800000.0,Red Crescent,In-Transit,2023,June,Food Security,Sea,AP News
+Canada,Personnel,Medical Staff,65760000.00000001,Bilateral,Pledged,2023,August,Health,Air,Ministry of Foreign Affairs
+Saudi Arabia,Economic,Infrastructure Investment,3280000.0,Red Crescent,In-Transit,2025,February,Food Security,Sea,Ministry of Foreign Affairs
+Saudi Arabia,Security,Border Monitoring,147120000.0,Red Crescent,Pledged,2024,September,Energy,Sea,Ministry of Foreign Affairs
+United Arab Emirates,Security,Peacekeeping Support,117680000.0,NGO,Delivered,2025,December,Health,Land,AP News
+Qatar,Security,Training Equipment,144330000.0,NGO,Delivered,2024,March,Health,Sea,UN OCHA SitRep
+Qatar,Security,Peacekeeping Support,77430000.0,NGO,In-Transit,2025,April,Education,Land,UN OCHA SitRep
+United States,Security,Training Equipment,51510000.0,Red Crescent,In-Transit,2023,April,Infrastructure,Air,AP News
+Egypt,Economic,Budget Support,139250000.0,UN,In-Transit,2023,December,Energy,Sea,Ministry of Foreign Affairs
+France,Humanitarian,Reconstruction,59280000.0,Bilateral,Delivered,2025,September,Energy,Sea,Reuters
+United Arab Emirates,Humanitarian,Shelter,92330000.0,Red Crescent,In-Transit,2024,July,Energy,Sea,AP News
+Turkey,Economic,Budget Support,2690000.0,NGO,In-Transit,2025,July,Food Security,Air,UN OCHA SitRep
+France,Security,Training Equipment,88280000.0,Bilateral,In-Transit,2025,June,Energy,Air,World Bank
+Qatar,Humanitarian,Medical Aid,37140000.0,Bilateral,Pledged,2024,February,Infrastructure,Sea,AP News
+Qatar,Humanitarian,Food Assistance,149680000.0,Red Crescent,Delivered,2025,June,Health,Air,AP News
+Norway,Economic,Budget Support,81790000.0,NGO,Delivered,2024,August,Education,Air,Ministry of Foreign Affairs
+France,Economic,Job Creation Programs,69140000.0,Bilateral,In-Transit,2024,February,Infrastructure,Air,Reuters
+Qatar,Humanitarian,Food Assistance,130570000.0,Bilateral,Delivered,2023,April,Health,Sea,Reuters
+United Arab Emirates,Economic,Infrastructure Investment,87230000.0,NGO,Pledged,2024,November,Food Security,Sea,Ministry of Foreign Affairs
+Turkey,Economic,Infrastructure Investment,42400000.0,Bilateral,In-Transit,2023,October,Education,Air,World Bank
+Saudi Arabia,Security,Border Monitoring,76860000.0,Red Crescent,Delivered,2023,October,Health,Land,AP News
+United States,Personnel,Logistics Teams,33080000.0,Bilateral,Delivered,2024,September,Food Security,Land,World Bank
+United Arab Emirates,Personnel,Engineers,58910000.0,Red Crescent,In-Transit,2025,March,Infrastructure,Air,World Bank
+Saudi Arabia,Security,Peacekeeping Support,130310000.0,Bilateral,In-Transit,2025,October,Energy,Air,Ministry of Foreign Affairs
+Turkey,Security,Training Equipment,47890000.0,Red Crescent,Pledged,2025,June,Education,Sea,Ministry of Foreign Affairs
+Germany,Personnel,Medical Staff,81590000.0,Red Crescent,In-Transit,2025,September,Infrastructure,Land,Reuters
+Germany,Security,Border Monitoring,41120000.0,Bilateral,Delivered,2025,February,Food Security,Land,UN OCHA SitRep
+Canada,Economic,Budget Support,13690000.0,Bilateral,In-Transit,2024,May,Energy,Air,Reuters
+Germany,Security,Border Monitoring,86420000.0,UN,Delivered,2024,September,Energy,Sea,Ministry of Foreign Affairs
+Norway,Economic,Job Creation Programs,96820000.0,Bilateral,Delivered,2025,November,Infrastructure,Sea,Ministry of Foreign Affairs
+Germany,Humanitarian,Shelter,9850000.0,Bilateral,In-Transit,2025,June,Infrastructure,Air,AP News
+Canada,Security,Peacekeeping Support,72710000.0,UN,Pledged,2025,December,Energy,Sea,Ministry of Foreign Affairs
+Norway,Economic,Budget Support,61790000.0,Bilateral,Delivered,2024,August,Education,Land,Reuters
+France,Economic,Infrastructure Investment,39930000.0,Red Crescent,In-Transit,2025,October,Education,Sea,Reuters
+Norway,Humanitarian,Shelter,135590000.0,Red Crescent,Pledged,2025,November,Education,Land,UN OCHA SitRep
+Egypt,Economic,Budget Support,35750000.0,Red Crescent,Delivered,2024,September,Health,Air,UN OCHA SitRep
+United Arab Emirates,Humanitarian,Food Assistance,110920000.0,Red Crescent,Delivered,2024,December,Education,Air,UN OCHA SitRep
+United States,Humanitarian,Fuel Supply,68770000.0,UN,In-Transit,2024,May,Infrastructure,Air,Reuters
+France,Economic,Job Creation Programs,119900000.0,Red Crescent,In-Transit,2023,April,Health,Air,Ministry of Foreign Affairs
+United States,Humanitarian,Food Assistance,73400000.0,Bilateral,In-Transit,2024,December,Education,Sea,UN OCHA SitRep
+Qatar,Security,Training Equipment,5440000.0,Bilateral,Pledged,2023,April,Infrastructure,Sea,UN OCHA SitRep
+Egypt,Economic,Infrastructure Investment,8890000.0,UN,In-Transit,2025,November,Energy,Air,World Bank
+Germany,Personnel,Logistics Teams,20120000.0,Bilateral,In-Transit,2025,October,Education,Land,AP News
+Egypt,Security,Training Equipment,103590000.0,NGO,Delivered,2023,December,Infrastructure,Sea,Ministry of Foreign Affairs
+Norway,Security,Border Monitoring,68910000.0,NGO,Pledged,2023,January,Education,Air,Ministry of Foreign Affairs
+Norway,Economic,Infrastructure Investment,48960000.0,UN,In-Transit,2024,July,Infrastructure,Sea,Reuters
+Turkey,Personnel,Engineers,72060000.0,Bilateral,Pledged,2024,October,Health,Land,UN OCHA SitRep
+Qatar,Economic,Budget Support,90390000.0,NGO,Delivered,2024,January,Energy,Sea,Reuters
+France,Economic,Job Creation Programs,23270000.0,Bilateral,Delivered,2023,June,Food Security,Sea,World Bank
+Saudi Arabia,Humanitarian,Medical Aid,43650000.0,Red Crescent,Pledged,2023,August,Education,Land,UN OCHA SitRep
+Germany,Humanitarian,Fuel Supply,47950000.0,Bilateral,Pledged,2024,September,Education,Air,World Bank
+Saudi Arabia,Personnel,Logistics Teams,13950000.0,UN,Pledged,2023,October,Energy,Sea,Ministry of Foreign Affairs
+Qatar,Security,Training Equipment,40150000.0,NGO,Delivered,2025,August,Health,Land,AP News
+Canada,Economic,Budget Support,127030000.0,UN,In-Transit,2025,November,Food Security,Sea,Ministry of Foreign Affairs
+United States,Humanitarian,Shelter,123270000.0,Red Crescent,In-Transit,2025,February,Food Security,Sea,UN OCHA SitRep
+Canada,Security,Border Monitoring,87570000.0,Bilateral,Pledged,2025,May,Energy,Land,World Bank
+Norway,Humanitarian,Food Assistance,79390000.0,Bilateral,In-Transit,2023,February,Food Security,Air,AP News
+Turkey,Security,Training Equipment,103290000.0,UN,Delivered,2025,September,Food Security,Land,UN OCHA SitRep
+Norway,Economic,Job Creation Programs,144030000.0,UN,Delivered,2024,March,Health,Sea,UN OCHA SitRep
+Qatar,Personnel,Logistics Teams,133169999.99999999,UN,Pledged,2024,October,Energy,Air,Ministry of Foreign Affairs
