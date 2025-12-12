@@ -1,0 +1,1497 @@
+{
+  "country": {
+    "name": "Germany",
+    "code": "GER",
+    "region": "Europe",
+    "reporting_year": 2025,
+    "section_start_page": 93,
+    "section_end_page": 96
+  },
+  "narratives": {
+    "capabilities_narrative_verbatim": "Germany released its first National Security Strategy (NSS) in 2023. The NSS was spurred by Russia’s 2022 invasion of Ukraine, which prompted Chancellor Olaf Scholz to invoke a turning point, or Zeitenwende, in German security policy. Germany pledged to contribute more to security in Europe and the government said it would promote the development and introduction of advanced capabilities. In 2024, it was announced that the US would, from 2026, deploy to Germany conventionally armed surface-to-surface missiles with 500 kilometre-plus ranges. Germany initiated the European Sky Shield Initiative and is improving domestic air and missile defence capability. Berlin is committed to bolstering NATO’s eastern flank and has the goal of stationing a brigade in Lithuania by 2027. Defence policy guidelines were updated in November 2023 and changes to organisational structures began with the October 2024 announcement of a new Operational Command and Support Command. The defence ministry has announced its objective to increase authorised active and reserve personnel numbers, but there are recruitment and retention challenges and the armed forces are struggling to improve readiness levels. A draft law on military registration was prepared in late 2024. Germany has indicated that it intends to provide, from 2025, around 35,000 personnel and some 200 vessels and aircraft at 30 days’ notice for NATO’s New Force Model. Shortages of spare parts and maintenance problems are reported across the services. Germany’s defence-industrial base can design and manufacture equipment to meet requirements across all domains, with strengths in land and naval systems. The government is pursuing closer defence-industrial cooperation in Europe.",
+    "capabilities_narrative_summary": "Post-Zeitenwende Germany is increasing defence spending and readiness, restructuring command, investing in air and missile defence, and committing substantial forces to NATO, while still struggling with readiness, spare parts, and recruitment challenges."
+  },
+  "demographics_and_economy": {
+    "population_total": 84119100,
+    "population_source_year": 2025,
+    "age_bands": [
+      { "band_label": "0–14", "male_percent": 7.0, "female_percent": 6.8 },
+      { "band_label": "15–19", "male_percent": 2.3, "female_percent": 2.2 },
+      { "band_label": "20–24", "male_percent": 2.5, "female_percent": 2.4 },
+      { "band_label": "25–29", "male_percent": 2.8, "female_percent": 2.7 },
+      { "band_label": "30–64", "male_percent": 24.1, "female_percent": 23.4 },
+      { "band_label": "65+", "male_percent": 10.6, "female_percent": 13.1 }
+    ],
+    "currency": "EUR",
+    "gdp_series": [
+      { "year": 2023, "gdp_local": 4.19e12, "gdp_usd": 4.53e12, "real_growth_percent": -0.3 },
+      { "year": 2024, "gdp_local": 4.32e12, "gdp_usd": 4.71e12, "real_growth_percent": 0.0 },
+      { "year": 2025, "gdp_local": 4.48e12, "gdp_usd": 4.92e12, "real_growth_percent": 0.8 }
+    ],
+    "defence_expenditure_series": [
+      {
+        "year": 2023,
+        "def_exp_local": 6.76e10,
+        "def_exp_usd": 7.31e10,
+        "def_budget_local": 6.20e10,
+        "def_budget_usd": 6.71e10,
+        "percent_gdp": null,
+        "notes": "NATO figure; budget includes Sondervermögen special fund allocation, military pensions and military aid to Ukraine."
+      },
+      {
+        "year": 2024,
+        "def_exp_local": 9.06e10,
+        "def_exp_usd": 9.77e10,
+        "def_budget_local": 7.89e10,
+        "def_budget_usd": 8.60e10,
+        "percent_gdp": null,
+        "notes": "NATO figure; budget includes Sondervermögen special fund allocation, military pensions and military aid to Ukraine."
+      },
+      {
+        "year": 2025,
+        "def_exp_local": null,
+        "def_exp_usd": null,
+        "def_budget_local": 7.93e10,
+        "def_budget_usd": 8.70e10,
+        "percent_gdp": null,
+        "notes": "Planned defence budget; includes Sondervermögen special fund allocation, military pensions and military aid to Ukraine."
+      }
+    ]
+  },
+  "personnel": {
+    "active_total": 179850,
+    "reserve_total": 34100,
+    "paramilitary_total": null,
+    "conscription_status": "Voluntary conscription only",
+    "conscription_term_months_max": 23,
+    "conscription_notes": "Voluntary conscripts can serve up to 23 months.",
+    "service_breakdown": [
+      { "service_name": "Army", "active_personnel": 60650, "reserve_personnel": 13500, "other_personnel": null },
+      { "service_name": "Navy", "active_personnel": 15350, "reserve_personnel": 2300, "other_personnel": null },
+      { "service_name": "Air Force", "active_personnel": 27000, "reserve_personnel": 4800, "other_personnel": null },
+      { "service_name": "Joint Support Service", "active_personnel": 22250, "reserve_personnel": 4850, "other_personnel": null },
+      { "service_name": "Joint Medical Service", "active_personnel": 20150, "reserve_personnel": 5350, "other_personnel": null },
+      { "service_name": "Cyber & Information Command", "active_personnel": 13700, "reserve_personnel": 1900, "other_personnel": null },
+      { "service_name": "Other", "active_personnel": 20750, "reserve_personnel": 1400, "other_personnel": null }
+    ]
+  },
+  "forces": {
+    "formations": [
+      {
+        "service": "Army",
+        "echelon": "division",
+        "name": "1st Armoured Division",
+        "role": "Armoured manoeuvre",
+        "subordinate_units": [
+          { "echelon": "brigade", "name": "9th Armoured Brigade", "notes": "1 armoured recce bn, 2 tank bn, 2 armoured infantry bn, 1 combat engineer bn, 1 support bn" },
+          { "echelon": "brigade", "name": "21st Mechanised Infantry Brigade", "notes": "1 armoured recce bn, 3 mechanised infantry bn, 1 combat engineer bn, 1 support bn" },
+          { "echelon": "brigade", "name": "41st Mechanised Infantry Brigade", "notes": "1 armoured recce bn, 2 armoured infantry bn, 1 combat engineer bn, 1 signals company, 1 support bn" }
+        ],
+        "notes": "Includes one additional tank battalion for Netherlands 43rd Brigade, one SP artillery battalion, one signals company."
+      },
+      {
+        "service": "Army",
+        "echelon": "division",
+        "name": "10th Armoured Division",
+        "role": "Armoured and mechanised",
+        "subordinate_units": [
+          { "echelon": "brigade", "name": "12th Armoured Brigade", "notes": "1 armoured recce bn, 1 recce bn, 2 tank bn, 2 armoured infantry bn, 1 combat engineer bn, 1 signals company, 1 support bn" },
+          { "echelon": "brigade", "name": "37th Mechanised Infantry Brigade", "notes": "1 armoured recce bn, 1 tank bn, 3 armoured infantry bn, 1 SP artillery bn (forming), 1 engineer bn, 1 signals company, 1 support bn" },
+          { "echelon": "regiment", "name": "Franco-German Brigade elements", "notes": "2 mechanised infantry bn, 1 artillery bn, 1 combat engineer company, 1 support bn" }
+        ],
+        "notes": "Also includes one SP artillery battalion and SP artillery training bn."
+      },
+      {
+        "service": "Army",
+        "echelon": "brigade",
+        "name": "45th Armoured Brigade",
+        "role": "Armoured",
+        "subordinate_units": [],
+        "notes": "Forming."
+      },
+      {
+        "service": "Army",
+        "echelon": "division",
+        "name": "Rapid Reaction Airborne Division",
+        "role": "Rapid reaction / airborne / mountain",
+        "subordinate_units": [
+          { "echelon": "brigade", "name": "Special Operations Forces Brigade", "notes": "3 SOF battalions" },
+          { "echelon": "brigade", "name": "23rd Mountain Infantry Brigade", "notes": "1 recce coy, 3 mountain infantry battalions, 1 engineer company, 1 support company" },
+          { "echelon": "brigade", "name": "Airborne Brigade", "notes": "2 recce companies, 2 parachute regiments, 2 combat engineer companies" },
+          { "echelon": "regiment", "name": "Attack Helicopter Regiment", "notes": null },
+          { "echelon": "regiment", "name": "Transport Helicopter Regiments (2)", "notes": null }
+        ],
+        "notes": "Rapid reaction division with airborne, mountain and SOF elements."
+      },
+      {
+        "service": "Air Force",
+        "echelon": "wing",
+        "name": "Fighter Wings",
+        "role": "Air defence / air superiority",
+        "subordinate_units": [
+          { "echelon": "squadron", "name": "Eurofighter Typhoon squadrons", "notes": "3 wings with 2 squadrons each operating Eurofighter Typhoon" }
+        ],
+        "notes": null
+      },
+      {
+        "service": "Air Force",
+        "echelon": "wing",
+        "name": "Fighter/Ground Attack Wings",
+        "role": "Multirole fighter and strike",
+        "subordinate_units": [
+          { "echelon": "squadron", "name": "Tornado IDS squadrons", "notes": "1 wing with 2 squadrons" },
+          { "echelon": "squadron", "name": "Additional Eurofighter Typhoon squadrons", "notes": "1 wing with 2 squadrons" }
+        ],
+        "notes": null
+      },
+      {
+        "service": "Air Force",
+        "echelon": "wing",
+        "name": "ISR Wing",
+        "role": "ISR and UAV",
+        "subordinate_units": [
+          { "echelon": "squadron", "name": "Tornado ECR/IDS ISR squadron", "notes": null },
+          { "echelon": "squadron", "name": "Heron TP UAV squadron", "notes": null }
+        ],
+        "notes": null
+      },
+      {
+        "service": "Navy",
+        "echelon": "command",
+        "name": "Naval Special Forces Command",
+        "role": "Naval special operations",
+        "subordinate_units": [
+          { "echelon": "company", "name": "Naval SF company", "notes": null }
+        ],
+        "notes": null
+      },
+      {
+        "service": "Navy",
+        "echelon": "battalion",
+        "name": "Sea Battalion",
+        "role": "Amphibious / maritime security",
+        "subordinate_units": [
+          { "echelon": "battalion", "name": "Marine battalion", "notes": null }
+        ],
+        "notes": null
+      }
+    ],
+    "space_capabilities": {
+      "satellites_total": 10,
+      "satellites": [
+        { "role": "communications", "name": "COMSATBw 1", "quantity": 1, "notes": null },
+        { "role": "communications", "name": "COMSATBw 2", "quantity": 1, "notes": null },
+        { "role": "ISR", "name": "SARah", "quantity": 3, "notes": null },
+        { "role": "ISR", "name": "SAR-Lupe", "quantity": 5, "notes": null }
+      ]
+    },
+    "cyber_and_information": {
+      "personnel": 13700,
+      "units": [
+        { "unit_type": "EW battalion", "count": 4, "notes": null },
+        { "unit_type": "signals battalion", "count": 6, "notes": null }
+      ]
+    }
+  },
+  "equipment": {
+    "items": [
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "MBT",
+        "subcategory": "Main battle tank",
+        "platform_name": "Leopard 2A5/A6",
+        "variant": null,
+        "role": "armoured",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 209, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "MBT",
+        "subcategory": "Main battle tank",
+        "platform_name": "Leopard 2A7V",
+        "variant": null,
+        "role": "armoured",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 104, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "Reconnaissance",
+        "subcategory": "Armoured recce vehicle",
+        "platform_name": "Fennek",
+        "variant": null,
+        "role": "reconnaissance",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 220, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": "Includes 24 engineer recce and 50 fire-support variants."
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "IFV",
+        "subcategory": "Infantry fighting vehicle",
+        "platform_name": "Marder 1A3/A4",
+        "variant": null,
+        "role": "mechanised infantry",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 258, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "IFV",
+        "subcategory": "Infantry fighting vehicle",
+        "platform_name": "Marder 1A5",
+        "variant": null,
+        "role": "mechanised infantry",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 72, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "IFV",
+        "subcategory": "Infantry fighting vehicle",
+        "platform_name": "Puma",
+        "variant": null,
+        "role": "mechanised infantry",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 350, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "APC",
+        "subcategory": "Tracked APC",
+        "platform_name": "Bv-206S",
+        "variant": null,
+        "role": "armoured transport",
+        "origin_country": null,
+        "generation": null,
+        "quantities": { "total": 75, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "APC",
+        "subcategory": "Tracked APC",
+        "platform_name": "M113 (incl variants)",
+        "variant": null,
+        "role": "armoured transport",
+        "origin_country": "United States",
+        "generation": null,
+        "quantities": { "total": 37, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": "Includes variants used for SP mortars and other roles."
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "APC",
+        "subcategory": "Wheeled APC",
+        "platform_name": "Boxer (incl variants)",
+        "variant": null,
+        "role": "armoured personnel carrier",
+        "origin_country": "Germany/Netherlands",
+        "generation": null,
+        "quantities": { "total": 331, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "APC",
+        "subcategory": "Wheeled APC",
+        "platform_name": "TPz-1 Fuchs (incl variants)",
+        "variant": null,
+        "role": "armoured personnel carrier",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 359, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "AUV",
+        "subcategory": "Armoured utility vehicle",
+        "platform_name": "Dingo 2",
+        "variant": null,
+        "role": "protected patrol vehicle",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 247, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "AUV",
+        "subcategory": "Armoured utility vehicle",
+        "platform_name": "Eagle IV/V",
+        "variant": null,
+        "role": "protected patrol vehicle",
+        "origin_country": "Switzerland/Germany",
+        "generation": null,
+        "quantities": { "total": 363, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "ABCV",
+        "subcategory": "Airborne armoured gun",
+        "platform_name": "Wiesel 1 Mk20",
+        "variant": null,
+        "role": "airborne fire support",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 73, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": "20mm gun",
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "Engineering vehicle",
+        "subcategory": "AEV",
+        "platform_name": "Dachs",
+        "variant": null,
+        "role": "armoured engineer vehicle",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 50, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "ARV",
+        "subcategory": "Armoured recovery vehicle",
+        "platform_name": "BPz-2",
+        "variant": null,
+        "role": "recovery",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 93, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "ARV",
+        "subcategory": "Armoured recovery vehicle",
+        "platform_name": "BPz-3 Büffel",
+        "variant": null,
+        "role": "recovery",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 75, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "Bridging",
+        "subcategory": "VLB",
+        "platform_name": "Biber",
+        "variant": null,
+        "role": "armoured bridge layer",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 5, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "Bridging",
+        "subcategory": "VLB",
+        "platform_name": "Leopard 2 with Leguan",
+        "variant": null,
+        "role": "armoured bridge layer",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 7, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "Bridging",
+        "subcategory": "Amphibious rig",
+        "platform_name": "M3",
+        "variant": null,
+        "role": "amphibious bridge/raft",
+        "origin_country": null,
+        "generation": null,
+        "quantities": { "total": 30, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "NBC vehicle",
+        "subcategory": "Reconnaissance",
+        "platform_name": "TPz-1 Fuchs NBC",
+        "variant": null,
+        "role": "NBC reconnaissance",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 44, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "ATGM",
+        "subcategory": "Self-propelled",
+        "platform_name": "Wiesel ATGM (TOW/MELLS)",
+        "variant": null,
+        "role": "anti-tank",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 107, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": "TOW or Spike-LR (MELLS) ATGM",
+        "notes": null
+      },
+
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "Artillery",
+        "subcategory": "Self-propelled 155mm",
+        "platform_name": "PzH 2000",
+        "variant": null,
+        "role": "self-propelled howitzer",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 109, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": "155mm gun",
+        "notes": null
+      },
+
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "MLRS",
+        "subcategory": "227mm",
+        "platform_name": "M270 MLRS",
+        "variant": null,
+        "role": "rocket artillery",
+        "origin_country": "United States",
+        "generation": null,
+        "quantities": { "total": 38, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": "227mm rockets",
+        "notes": null
+      },
+
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "Mortar",
+        "subcategory": "Towed 120mm",
+        "platform_name": "Tampella 120mm",
+        "variant": null,
+        "role": "indirect fire support",
+        "origin_country": null,
+        "generation": null,
+        "quantities": { "total": 58, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": "120mm mortar",
+        "notes": null
+      },
+
+      {
+        "service": "Army",
+        "domain": "land",
+        "category": "Mortar",
+        "subcategory": "SP 120mm",
+        "platform_name": "M113 with Tampella",
+        "variant": null,
+        "role": "self-propelled mortar",
+        "origin_country": "United States/Germany",
+        "generation": null,
+        "quantities": { "total": 40, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": "120mm mortar",
+        "notes": null
+      },
+
+      {
+        "service": "Army",
+        "domain": "air",
+        "category": "Helicopter",
+        "subcategory": "Attack",
+        "platform_name": "Tiger",
+        "variant": null,
+        "role": "attack helicopter",
+        "origin_country": "France/Germany",
+        "generation": null,
+        "quantities": { "total": 51, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Army",
+        "domain": "air",
+        "category": "Helicopter",
+        "subcategory": "MRH",
+        "platform_name": "H145M",
+        "variant": null,
+        "role": "multi-role helicopter",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 1, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Army",
+        "domain": "air",
+        "category": "Helicopter",
+        "subcategory": "Transport",
+        "platform_name": "NH90 TTH",
+        "variant": null,
+        "role": "medium transport helicopter",
+        "origin_country": "Multinational",
+        "generation": null,
+        "quantities": { "total": 82, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Army",
+        "domain": "air",
+        "category": "Helicopter",
+        "subcategory": "Light transport/training",
+        "platform_name": "Bell 206B3 Jet Ranger III",
+        "variant": null,
+        "role": "light helicopter (leased)",
+        "origin_country": "United States",
+        "generation": null,
+        "quantities": { "total": 6, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "leased",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Army",
+        "domain": "air",
+        "category": "Helicopter",
+        "subcategory": "Light",
+        "platform_name": "H135",
+        "variant": null,
+        "role": "light utility/training",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 13, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Army",
+        "domain": "air",
+        "category": "Helicopter",
+        "subcategory": "Light SAR",
+        "platform_name": "H145 (SAR)",
+        "variant": null,
+        "role": "search and rescue",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 7, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Army",
+        "domain": "air",
+        "category": "UAV",
+        "subcategory": "ISR medium",
+        "platform_name": "KZO",
+        "variant": null,
+        "role": "ISR UAV",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 35, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Army",
+        "domain": "air",
+        "category": "UAV",
+        "subcategory": "ISR light",
+        "platform_name": "LUNA",
+        "variant": null,
+        "role": "ISR UAV",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 87, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Navy",
+        "domain": "naval",
+        "category": "Submarine",
+        "subcategory": "SSK",
+        "platform_name": "Type-212A",
+        "variant": null,
+        "role": "diesel-electric attack submarine",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 6, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": "6 × 533mm torpedo tubes with DM2A4 heavyweight torpedoes",
+        "notes": "Air-independent propulsion (AIP)."
+      },
+
+      {
+        "service": "Navy",
+        "domain": "naval",
+        "category": "Destroyer",
+        "subcategory": "DDGHM",
+        "platform_name": "Sachsen (F124)",
+        "variant": null,
+        "role": "area air defence destroyer",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 3, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": "Harpoon, SM-2, ESSM, RAM, MU90, 76mm gun",
+        "notes": "Capacity for 2 Lynx Mk88A helicopters."
+      },
+
+      {
+        "service": "Navy",
+        "domain": "naval",
+        "category": "Frigate",
+        "subcategory": "FFGHM",
+        "platform_name": "Baden-Württemberg (F125)",
+        "variant": null,
+        "role": "stabilisation frigate",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 4, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": "Harpoon, RAM, 127mm gun",
+        "notes": "Capacity for 2 NH90 helicopters."
+      },
+
+      {
+        "service": "Navy",
+        "domain": "naval",
+        "category": "Frigate",
+        "subcategory": "FFGHM",
+        "platform_name": "Brandenburg (F123)",
+        "variant": null,
+        "role": "multirole frigate",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 4, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": "Harpoon, Sea Sparrow, ESSM, RAM",
+        "notes": null
+      },
+
+      {
+        "service": "Navy",
+        "domain": "naval",
+        "category": "Corvette",
+        "subcategory": "FSGM",
+        "platform_name": "Braunschweig (K130)",
+        "variant": null,
+        "role": "patrol and coastal combatant",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 5, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": "RBS15 Mk3 AShM, RAM, 76mm gun",
+        "notes": "Helicopter landing platform."
+      },
+
+      {
+        "service": "Navy",
+        "domain": "naval",
+        "category": "Mine countermeasures",
+        "subcategory": "MHO",
+        "platform_name": "Frankenthal",
+        "variant": null,
+        "role": "minehunter",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 10, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": "7 standard, 3 modernised MJ332CL; 2 used as diving support."
+      },
+
+      {
+        "service": "Navy",
+        "domain": "naval",
+        "category": "Mine countermeasures",
+        "subcategory": "MSO",
+        "platform_name": "Ensdorf",
+        "variant": null,
+        "role": "minehunter/sweeper",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 2, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Navy",
+        "domain": "naval",
+        "category": "Support ship",
+        "subcategory": "AG, AGI, AGOR, AOR, AORH, ATF, AXS",
+        "platform_name": "Multiple classes (Kalkgrund, Schwedeneck, Oste, Planet, Rhön, Elbe, Berlin, Rugen, Gorch Fock)",
+        "variant": null,
+        "role": "auxiliary, tanker, intelligence, training and support",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 22, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": "Includes AG 4, AGI 3, AGOR 1, AOR 8, AORH 3, ATF 2, AXS 1."
+      },
+
+      {
+        "service": "Navy",
+        "domain": "naval",
+        "category": "USV",
+        "subcategory": "Mine warfare",
+        "platform_name": "Seehund",
+        "variant": null,
+        "role": "uncrewed mine warfare platform",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 12, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Navy",
+        "domain": "naval",
+        "category": "UUV",
+        "subcategory": "Mine warfare and data",
+        "platform_name": "Deep Trekker Revolution / REMUS 1000 / Seafox",
+        "variant": null,
+        "role": "underwater unmanned systems",
+        "origin_country": null,
+        "generation": null,
+        "quantities": { "total": null, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": "Quantities not specified."
+      },
+
+      {
+        "service": "Navy",
+        "domain": "air",
+        "category": "Fixed-wing aircraft",
+        "subcategory": "Maritime patrol",
+        "platform_name": "AP-3C Orion",
+        "variant": null,
+        "role": "ASW and maritime patrol",
+        "origin_country": "Australia/US origin",
+        "generation": null,
+        "quantities": { "total": 2, "active": 2, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "combat capable",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Navy",
+        "domain": "air",
+        "category": "Fixed-wing aircraft",
+        "subcategory": "Light transport/pollution control",
+        "platform_name": "Do-228",
+        "variant": null,
+        "role": "light transport and pollution control",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 2, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Navy",
+        "domain": "air",
+        "category": "Helicopter",
+        "subcategory": "ASW",
+        "platform_name": "Lynx Mk88A",
+        "variant": null,
+        "role": "anti-submarine warfare",
+        "origin_country": "United Kingdom",
+        "generation": null,
+        "quantities": { "total": 22, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Navy",
+        "domain": "air",
+        "category": "Helicopter",
+        "subcategory": "SAR/ASW",
+        "platform_name": "NH90 NFH (Sea Lion)",
+        "variant": null,
+        "role": "naval ASW and SAR",
+        "origin_country": "Multinational",
+        "generation": null,
+        "quantities": { "total": 18, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "Fighter",
+        "subcategory": "Multirole fighter",
+        "platform_name": "Eurofighter Typhoon",
+        "variant": null,
+        "role": "fighter/air defence",
+        "origin_country": "Multinational (GER/UK/ITA/ESP)",
+        "generation": "4.5",
+        "quantities": { "total": 138, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "combat capable",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "Strike aircraft",
+        "subcategory": "Attack",
+        "platform_name": "Tornado IDS",
+        "variant": null,
+        "role": "strike/attack",
+        "origin_country": "Germany/Italy/UK design",
+        "generation": "4th",
+        "quantities": { "total": 68, "active": 60, "reserve": null, "stored": 8, "on_order": null, "delivered_this_year": null },
+        "status": "combat capable",
+        "weapon_fit": null,
+        "notes": "8 in store."
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "Strike aircraft",
+        "subcategory": "Attack/EW",
+        "platform_name": "Tornado ECR",
+        "variant": null,
+        "role": "SEAD/EW",
+        "origin_country": "Germany/Italy/UK design",
+        "generation": "4th",
+        "quantities": { "total": 20, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "combat capable",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "Fixed-wing aircraft",
+        "subcategory": "ISR",
+        "platform_name": "A319CJ (Open Skies)",
+        "variant": null,
+        "role": "treaty ISR",
+        "origin_country": "Europe",
+        "generation": null,
+        "quantities": { "total": 1, "active": 1, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "Tanker/Transport",
+        "subcategory": "KC-130J Hercules",
+        "platform_name": "KC-130J",
+        "variant": null,
+        "role": "tanker/transport",
+        "origin_country": "United States",
+        "generation": null,
+        "quantities": { "total": 3, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": "Joint FRA-GER squadron."
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "Transport aircraft",
+        "subcategory": "Heavy",
+        "platform_name": "A400M Atlas",
+        "variant": null,
+        "role": "strategic/tactical transport",
+        "origin_country": "Multinational (Airbus)",
+        "generation": null,
+        "quantities": { "total": 47, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": "Several fitted with aerial refuelling kit."
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "Transport aircraft",
+        "subcategory": "Medium",
+        "platform_name": "C-130J-30 Hercules",
+        "variant": null,
+        "role": "tactical transport",
+        "origin_country": "United States",
+        "generation": null,
+        "quantities": { "total": 3, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": "Joint FRA-GER squadron."
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "Transport aircraft",
+        "subcategory": "Passenger/VIP",
+        "platform_name": "A321, A321LR, A350, A319, Global 5000, Global 6000",
+        "variant": null,
+        "role": "VIP and passenger transport",
+        "origin_country": null,
+        "generation": null,
+        "quantities": { "total": 15, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": "1 A321; 2 A321LR; 3 A350 (VIP); 2 A319; 4 Global 5000; 3 Global 6000."
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "Trainer aircraft",
+        "subcategory": "Jet and turboprop",
+        "platform_name": "T-6A Texan II; T-38C Talon",
+        "variant": null,
+        "role": "pilot training",
+        "origin_country": "United States",
+        "generation": null,
+        "quantities": { "total": 109, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in use (mostly US-based training)",
+        "weapon_fit": null,
+        "notes": "69 T-6A, 40 T-38C; ENJJPT and other US-based training units."
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "Helicopter",
+        "subcategory": "MRH",
+        "platform_name": "H145M",
+        "variant": null,
+        "role": "multi-role/light",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 16, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": "Used by Air Force transport helicopter wing."
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "Helicopter",
+        "subcategory": "Heavy transport",
+        "platform_name": "CH-53G/GA/GS/GE Stallion",
+        "variant": null,
+        "role": "heavy transport helicopter",
+        "origin_country": "United States/Germany",
+        "generation": null,
+        "quantities": { "total": 60, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "Helicopter",
+        "subcategory": "Medium transport",
+        "platform_name": "AS532U2 Cougar II",
+        "variant": null,
+        "role": "VIP/transport",
+        "origin_country": "France",
+        "generation": null,
+        "quantities": { "total": 3, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": "VIP role."
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "UAV",
+        "subcategory": "ISR heavy",
+        "platform_name": "Heron TP",
+        "variant": null,
+        "role": "ISR UAV",
+        "origin_country": "Israel",
+        "generation": null,
+        "quantities": { "total": 1, "active": 1, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "leased",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "SAM",
+        "subcategory": "Long-range",
+        "platform_name": "M902 Patriot PAC-3",
+        "variant": null,
+        "role": "long-range air defence",
+        "origin_country": "United States",
+        "generation": null,
+        "quantities": { "total": 70, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": "Patriot PAC-3 missiles",
+        "notes": "Approximate launcher count (ε70)."
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "SAM",
+        "subcategory": "Medium-range",
+        "platform_name": "IRIS-T SLM",
+        "variant": null,
+        "role": "medium-range air defence",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 3, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": "IRIS-T SLM missiles",
+        "notes": null
+      },
+
+      {
+        "service": "Air Force",
+        "domain": "air",
+        "category": "SAM",
+        "subcategory": "Point-defence",
+        "platform_name": "ASRAD Ozelot",
+        "variant": null,
+        "role": "short-range air defence",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 20, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": "FIM-92 Stinger",
+        "notes": null
+      },
+
+      {
+        "service": "Joint Support Service",
+        "domain": "land",
+        "category": "AUV",
+        "subcategory": "Armoured utility vehicle",
+        "platform_name": "Dingo 2",
+        "variant": null,
+        "role": "protected mobility",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 206, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Joint Support Service",
+        "domain": "land",
+        "category": "AUV",
+        "subcategory": "Armoured utility vehicle",
+        "platform_name": "Eagle IV/V",
+        "variant": null,
+        "role": "protected mobility",
+        "origin_country": "Switzerland/Germany",
+        "generation": null,
+        "quantities": { "total": 245, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Joint Support Service",
+        "domain": "land",
+        "category": "ARV",
+        "subcategory": "Armoured recovery vehicle",
+        "platform_name": "BPz-2",
+        "variant": null,
+        "role": "recovery",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 23, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Joint Support Service",
+        "domain": "land",
+        "category": "ARV",
+        "subcategory": "Armoured recovery vehicle",
+        "platform_name": "BPz-3 Büffel",
+        "variant": null,
+        "role": "recovery",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 12, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Joint Support Service",
+        "domain": "land",
+        "category": "NBC vehicle",
+        "subcategory": "Reconnaissance",
+        "platform_name": "TPz-1 Fuchs A6/A7/A8 NBC",
+        "variant": null,
+        "role": "NBC reconnaissance",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 35, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Joint Medical Service",
+        "domain": "land",
+        "category": "APC",
+        "subcategory": "Ambulance APC (wheeled)",
+        "platform_name": "Boxer (ambulance)",
+        "variant": null,
+        "role": "armoured ambulance",
+        "origin_country": "Germany/Netherlands",
+        "generation": null,
+        "quantities": { "total": 72, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Joint Medical Service",
+        "domain": "land",
+        "category": "APC",
+        "subcategory": "Ambulance APC (wheeled)",
+        "platform_name": "TPz-1 Fuchs (ambulance)",
+        "variant": null,
+        "role": "armoured ambulance",
+        "origin_country": "Germany",
+        "generation": null,
+        "quantities": { "total": 37, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      },
+
+      {
+        "service": "Joint Medical Service",
+        "domain": "land",
+        "category": "AUV",
+        "subcategory": "Armoured ambulance",
+        "platform_name": "Eagle IV/V (ambulance)",
+        "variant": null,
+        "role": "armoured ambulance",
+        "origin_country": "Switzerland/Germany",
+        "generation": null,
+        "quantities": { "total": 42, "active": null, "reserve": null, "stored": null, "on_order": null, "delivered_this_year": null },
+        "status": "in service",
+        "weapon_fit": null,
+        "notes": null
+      }
+    ]
+  },
+  "deployments": {
+    "national_deployments": [
+      {
+        "location_country": "Baltic Sea",
+        "location_region": "Europe",
+        "mission_name": "SNMCMG 1",
+        "mission_type": "NATO Standing Naval Mine Countermeasures Group",
+        "organisation": "NATO",
+        "personnel": 125,
+        "forces_description": "1 minehunter (MHO); 1 auxiliary oiler replenishment ship (AOR).",
+        "platforms": ["MHO", "AOR"],
+        "notes": null
+      },
+      {
+        "location_country": "Bosnia-Herzegovina",
+        "location_region": "Europe",
+        "mission_name": "EUFOR (Operation Althea)",
+        "mission_type": "Stabilisation mission",
+        "organisation": "EU",
+        "personnel": 30,
+        "forces_description": "German contribution to EUFOR Althea.",
+        "platforms": [],
+        "notes": null
+      },
+      {
+        "location_country": "France",
+        "location_region": "Europe",
+        "mission_name": "Eurocorps / Franco-German brigade",
+        "mission_type": "Multinational formation",
+        "organisation": "NATO/EU",
+        "personnel": 400,
+        "forces_description": "Includes German element of Eurocorps.",
+        "platforms": [],
+        "notes": null
+      },
+      {
+        "location_country": "Iraq",
+        "location_region": "Middle East",
+        "mission_name": "Operation Inherent Resolve / NATO Mission Iraq",
+        "mission_type": "Counter-ISIS and training",
+        "organisation": "US-led coalition and NATO",
+        "personnel": 140,
+        "forces_description": "90 personnel for Operation Inherent Resolve; 50 for NATO Mission Iraq.",
+        "platforms": [],
+        "notes": null
+      },
+      {
+        "location_country": "Jordan",
+        "location_region": "Middle East",
+        "mission_name": "Operation Inherent Resolve (Jordan)",
+        "mission_type": "Air operations support",
+        "organisation": "US-led coalition",
+        "personnel": 150,
+        "forces_description": "Includes 1 A400M aircraft.",
+        "platforms": ["A400M Atlas"],
+        "notes": null
+      },
+      {
+        "location_country": "Latvia",
+        "location_region": "Europe",
+        "mission_name": "NATO Baltic Air Policing",
+        "mission_type": "Air policing",
+        "organisation": "NATO",
+        "personnel": 150,
+        "forces_description": "5 Eurofighter Typhoon aircraft.",
+        "platforms": ["Eurofighter Typhoon"],
+        "notes": null
+      },
+      {
+        "location_country": "Kosovo",
+        "location_region": "Europe",
+        "mission_name": "KFOR",
+        "mission_type": "NATO peace support",
+        "organisation": "NATO",
+        "personnel": 300,
+        "forces_description": "Includes 1 infantry company.",
+        "platforms": [],
+        "notes": null
+      },
+      {
+        "location_country": "Lebanon",
+        "location_region": "Middle East",
+        "mission_name": "UNIFIL",
+        "mission_type": "UN peacekeeping",
+        "organisation": "UN",
+        "personnel": 78,
+        "forces_description": "1 German corvette (FSGM).",
+        "platforms": ["Corvette (FSGM)"],
+        "notes": null
+      },
+      {
+        "location_country": "Lithuania",
+        "location_region": "Europe",
+        "mission_name": "NATO Forward Land Forces",
+        "mission_type": "Enhanced forward presence",
+        "organisation": "NATO",
+        "personnel": 1000,
+        "forces_description": "1 armoured brigade HQ; 1 armoured infantry battlegroup with Leopard 2A6, Fennek, Marder 1A3, Boxer.",
+        "platforms": ["Leopard 2A6", "Fennek", "Marder 1A3", "Boxer"],
+        "notes": "Permanent brigade planned by 2027."
+      },
+      {
+        "location_country": "Poland",
+        "location_region": "Europe",
+        "mission_name": "MNC-NE",
+        "mission_type": "Multinational Corps Northeast",
+        "organisation": "NATO",
+        "personnel": 95,
+        "forces_description": "German element of MNC-NE.",
+        "platforms": [],
+        "notes": null
+      },
+      {
+        "location_country": "South Sudan",
+        "location_region": "Africa",
+        "mission_name": "UNMISS",
+        "mission_type": "UN peacekeeping",
+        "organisation": "UN",
+        "personnel": 11,
+        "forces_description": "German military observers and support.",
+        "platforms": [],
+        "notes": null
+      },
+      {
+        "location_country": "United States",
+        "location_region": "North America",
+        "mission_name": "Training detachments",
+        "mission_type": "Pilot and missile training",
+        "organisation": "Bilateral (GER–US)",
+        "personnel": null,
+        "forces_description": "Training units with T-38 Talon and T-6A Texan II at US bases; missile training at Fort Bliss.",
+        "platforms": ["T-38C Talon", "T-6A Texan II", "Patriot training units"],
+        "notes": null
+      },
+      {
+        "location_country": "Western Sahara",
+        "location_region": "Africa",
+        "mission_name": "MINURSO",
+        "mission_type": "UN mission",
+        "organisation": "UN",
+        "personnel": 4,
+        "forces_description": "German contribution to MINURSO.",
+        "platforms": [],
+        "notes": null
+      }
+    ],
+    "foreign_forces_present": [
+      {
+        "sending_country": "France",
+        "personnel": 2000,
+        "forces_description": "1 Franco-German mechanised brigade (1 armoured cavalry regiment, 1 mechanised infantry regiment).",
+        "units": ["Franco-German Brigade"],
+        "equipment_summary": "French armoured and mechanised equipment integrated with German units.",
+        "notes": null
+      },
+      {
+        "sending_country": "United Kingdom",
+        "personnel": 185,
+        "forces_description": "UK forces stationed in Germany.",
+        "units": [],
+        "equipment_summary": null,
+        "notes": null
+      },
+      {
+        "sending_country": "United States",
+        "personnel": 38700,
+        "forces_description": "US European Command (EUCOM) and associated Army, Air Force, Marine Corps and Space Force units based in Germany.",
+        "units": [
+          "EUCOM HQ (Stuttgart-Vaihingen)",
+          "US Army Europe & Africa HQ (Wiesbaden)",
+          "3rd Air Force HQ (Ramstein AB)",
+          "Multiple Army brigades and support units",
+          "USAF fighter and transport wings",
+          "US Space Force and USMC elements"
+        ],
+        "equipment_summary": "US forces include M1A2 Abrams, Bradley variants, Stryker, M109A6, M777A2, M270A2, HIMARS, AH-64E, CH-47F, UH-60 variants, Patriot PAC-3 MSE, Avenger, MQ-9A Reaper, various USAF aircraft and Aegis Ashore BMD unit.",
+        "notes": "US presence includes approximately 24,400 Army, 400 Navy, 13,250 USAF, 150 US Space Force, and 500 USMC personnel."
+      }
+    ]
+  }
+}
